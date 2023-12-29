@@ -1,0 +1,21 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+    
+   
+}
+
+.center-div{
+    padding-top: 20%;
+}
+
+.btn.btn-success{
+    padding: .4em 2em;
+}
+
+form{
+    padding: 0 3em;
+}
+
+#login .title > span{
+    font-size: .8em;
+}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <%- include('../adminPartials/header') %>
+
+<nav>
+  <ul class="menu-aside">
+      <li class="menu-item ">
+          <a class="menu-link" href="/admin/adminDashboard"> <i class="icon material-icons md-home"></i>
+              <span class="text">Dashboard</span>
+          </a>
+      </li>
+     
+      <li class="menu-item active ">
+          <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-monetization_on"></i>
+          
+              <span class="text">ProductList</span>
+          </a>
+         
+      </li>
+      <li class="menu-item ">
+          <a class="menu-link" href="/admin/order"> <i class="icon material-icons md-shopping_cart"></i>
+          
+              <span class="text">Orders</span>
+          </a>
+         
+      </li>
+      
+
+
+   
+      <li class="menu-item ">
+          <a class="menu-link" href="/admin/userslist"> <i class="icon material-icons md-store"></i>
+              <span class="text">Users</span>
+          </a>
+         
+      </li>
+      
+      <li class="menu-item ">
+          <a class="menu-link" href="/admin/Categories"> <i class="icon material-icons md-category"></i>
+          </i>
+              <span class="text">Categories</span>
+          </a>
+         
+      </li>
+     
+      <li class="menu-item has-submenu">
+        <a class="menu-link" href="#" ><i class="icon material-icons md-local_offer"></i>
+            <span class="text">Coupon</span>
+        </a>
+        <div class="submenu">
+            <a href="/admin/couponList">Coupon List</a>
+            <a href="/admin/addcoupon">Add Coupon</a>
+        </div>
+    </li>
+ 
+  <li class="menu-item has-submenu">
+    <a class="menu-link" href="#" > <i class="icon material-icons md-image"></i>
+        <span class="text">Banner</span>
+    </a>
+    <div class="submenu">
+        <a href="/admin/bannerList">Banner List</a>
+        <a href="/admin/banner">Add Banner</a>
+    </div>
+</li>
+<li class="menu-item ">
+  <a class="menu-link" href="/admin/offer"><i class="icon material-icons md-favorite"></i>
+
+  </i>
+      <span class="text">Offers</span>
+  </a>
+ 
+</li>
+  
+  </ul>
+</nav>
+</aside>
+<main class="main-wrap">
+<!-- <header class="main-header navbar"> -->
+  <!-- <div class="col-search">
+      <form class="searchform">
+          <div class="input-group">
+              <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+              <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+          </div>
+          <datalist id="search_terms">
+              <option value="Products">
+              <option value="New orders">
+              <option value="Apple iphone">
+              <option value="Ahmed Hassan">
+          </datalist>
+      </form>
+  </div> -->
+  <!-- <div class="col-nav">
+      <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+      <ul class="nav">
+         
+          <li class="dropdown nav-item">
+              <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="asset/imgs/people/avatar2.jpg" alt="User"></a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                  <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                  <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
+                  <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                  <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                  <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+              </div>
+          </li>
+      </ul>
+  </div>
+</header> -->
+<section class="content-main">
+
+<style>
+  .description-truncate {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; 
+  }
+</style>
+<div class="content-header">
+  <div>
+    <h2 class="content-title card-title">Products List</h2>
+    <p></p>
+  </div>
+  <div>
+    <a href="/admin/addProduct" class="btn btn-primary btn-sm rounded"
+      >Create new</a
+    >
+  </div>
+</div>
+
+
+<div class="card-body">
+  <div class="table-responsive">
+    <table  id="products-table" class="table table-hover">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Description</th>
+          <th class="text-end">Edit</th>
+          <th class="text-end">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% product.forEach(function(product) { %>
+          <tr>
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+              </div>
+            </td>
+            <td>
+              <a class="itemside" href="#">
+                <div class="left">
+                  <img src="/upload/<%= product.productimage[0] %>" class="img-sm img-thumbnail" alt="Item">
+
+                </div>
+                <div class="info">
+                  <h6 class="mb-0"><%- product.productname %></h6>
+                </div>
+              </a>
+            </td>
+            <td><%- product.brand %></td>
+            <td>
+              <span class="badge rounded-pill alert-success"><%- product.category %></span>
+            </td>
+            <td><span class="badge rounded-pill alert-success"><%- product.price %></span></td>
+            <td><span class="badge rounded-pill alert-success"><%- product.quantity %></span></td>
+            <td class="description-truncate"><%- product.description %></td>
+            <td class="text-end">
+              <a href="/admin/editproduct?id=<%= product._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                <i class="material-icons md-edit"></i> Edit
+              </a>
+            </td>
+            <td class="text-end">
+              <a href="/admin/delete?id=<%= product._id %>" class="btn btn-sm font-sm btn-light rounded">
+                <i class="material-icons md-delete_forever"></i> Delete
+              </a>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="pagination-area mt-15 mb-50">
+  <nav aria-label="Page navigation example">
+  <% if (totalPages > 1) { %>
+    <% if (currentPage > 1) { %>
+      <a href="/admin/products?page=<%= currentPage - 1 %>" class="btn btn-sm font-sm btn-light rounded">Previous</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <% if (i === currentPage) { %>
+        <span class="active btn btn-sm font-sm btn-light rounded"><%= i %></span>
+        <% } else { %>
+        <a href="/admin/products?page=<%= i %>"  class="btn btn-sm font-sm btn-light rounded"><%= i %></a>
+      <% } %>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+      <a href="/admin/products?page=<%= currentPage + 1 %>" class="btn btn-sm font-sm btn-light rounded">Next</a>
+    <% } %>
+  <% } %>
+</nav>
+</div>
+
+
+<script src="asset/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="asset/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="asset/js/vendors/select2.min.js"></script>
+<script src="asset/js/vendors/perfect-scrollbar.js"></script>
+<script src="asset/js/vendors/jquery.fullscreen.min.js"></script>
+<!-- Main Script -->
+<script src="asset/js/main.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+  
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+  $(document).ready(function() {
+      $('#products-table').DataTable();
+  });
+</script>
+
+
+</body>
+
+</html>
+
+    
+</body>
+</html>
