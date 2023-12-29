@@ -1,3 +1,7 @@
+
+
+<%- include('../partials/header') %>
+
 <main class="main">
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container">
@@ -23,17 +27,30 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
-                            <form action="#">
+                            <form action="/signup" method="POST">
                                 <div class="form-group">
-                                    <label for="singin-email-2">Username or email address *</label>
+                                    <label for="singin-email-2">Email address *</label>
                                     <input type="text" class="form-control" id="singin-email-2" name="singin-email" required>
                                 </div><!-- End .form-group -->
+
+
+                                <div class="form-group">
+                                    <label for="singin-username">Username *</label>
+                                    <input type="text" class="form-control" id="singin-username" name="singin-username" required>
+                                </div><!-- End .form-group -->
+
 
                                 <div class="form-group">
                                     <label for="singin-password-2">Password *</label>
                                     <input type="password" class="form-control" id="singin-password-2" name="singin-password" required>
                                 </div><!-- End .form-group -->
 
+
+                                <div class="form-group">
+                                    <label for="singin-phnumber">Phone Number*</label>
+                                    <input type="tel" class="form-control" id="singin-phnumber" name="singin-phnumber" required>
+                                </div><!-- End .form-group -->
+                                
                                 <div class="form-footer">
                                     <button type="submit" class="btn btn-outline-primary-2">
                                         <span>LOG IN</span>
@@ -114,3 +131,5 @@
         </div><!-- End .container -->
     </div><!-- End .login-page section-bg -->
 </main><!-- End .main -->
+<%- include('../partials/footer') %>
+
