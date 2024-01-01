@@ -1,57 +1,92 @@
-const userCollection = require("../models/userModels");
+const collection = require("../models/userModels");
+const bcrypt = require("bcrypt");
 
 
-const userHome = (req, res) => {
-  res.render('userViews/landingpage.ejs')
-}
 
-const signupLoginPage = (req,res)=>{
-    res.render('userViews/signupLoginPage')    
-}
 
-const signup = async (req,res)=>{
-    // let encryptedPassword = await bcrypt.hash(req.body.password, 10);
-    let newUser = new userCollection({
-      username: req.body.username,
-      email: req.body.email,
-      phonenumber: req.body.phonenumber,
-      password: encryptedPassword,
-    });
+const userPage = async (req, res) => {
+  // const productdata=await product.find({});
+  // const offerData=await Offers.find({});
+  res.render("userViews/landingpage", );
+};
 
-    await newUser.save();
-    req.session.user = true;
-    res.redirect("/home");
-  };
-// const checkUser = async (req, res) => {
-//   try {
-//     const checking = await collection.findOne({ email: req.body.email });
-//     console.log(checking)
-//     if (checking) {
-//       console.log(checking);
-//       res.render("userViews/signupLoginPage", { notice: "Already registered" });
-//     } else {
-//       const data = new collection({
-//         name: req.body.name,
-//         email: req.body.email,
-//         phone: req.body.phone,
-//         password: req.body.password,
-//         admin: 0,
-//       });
-//       await data.save();
-// res.redirect
-//       res.render('userViews/signupLoginPage', { model: "1" });
-//     }
-//   } catch (error) {
-//     res.send(error.messsage);
-//   }
-// };
+const userLogin = async (req, res) => {
+  console.log("1");
+  res.render("userViews/signupLoginPage",{
+    notice: "",
+    user: req.session.user_id
+  }); 
+};
+
+
+const checkUser = async (req, res) => {
+  console.log('2');
+  try {
+    const checking = await collection.findOne({ email: req.body.email });
+    console.log(checking)
+    if (checking) {
+      console.log(checking);
+      res.render("userViews/signupLoginPage", { notice: "Already registered" });
+    } else {
+      console.log('3');
+      const data = new collection({
+        username: req.body.username,
+        email: req.body.email,
+        phonenumber: req.body.phonenumber,
+        password: req.body.password,
+        admin: 0,
+      });
+      await data.save();
+
+      res.render("userViews/signupLoginPage.ejs", { model: "1" });
+    }
+  } catch (error) {
+    res.send(error.messsage);
+  }
+};
 
 // const userSignup = (req, res) => {
-//   res.render("userViews/signupLoginPage", {
+//   res.render("userViews/signupLoginPage.ejs", {
 //     notice: "",
 //     user: req.session.user_id
 //   });
 // };
 
 
-module.exports = { userHome,signup,signupLoginPage}
+const verifyLogin = async (req, res) => {
+  try {
+    console.log("loginakkum");
+    const userDataFromUrl = await collection.findOne({ email: req.body.email });
+
+    if (userDataFromUrl) {
+      console.log('a');
+      if (userDataFromUrl.block === 0) {      console.log('b');
+
+        if (userDataFromUrl.password === req.body.password) {      console.log('c');
+
+          req.session.user_id = userDataFromUrl._id;
+          res.redirect("/");
+          console.log("login Successfull");
+        } else {
+          res.render("userViews/signupLoginPage", { message: "Password Incorrect" });
+          console.log("wrong password");
+        }
+      } else {
+        res.render("userViews/signupLoginPage", { message: "Account blocked" });
+        console.log("wrong password");
+      }
+    } else {
+      res.render("userViews/signupLoginPage", { message: "Username Incorrect" });
+    }
+  } catch (error) {
+    res.render('error', { error: error.message });
+  }
+};
+
+const userDashboard = async (req, res) => {
+  const user = req.session.user_id;
+  res.render("userViews/landingpage", { user: user });
+};
+
+
+module.exports = { userPage,userLogin,checkUser,verifyLogin,userDashboard}

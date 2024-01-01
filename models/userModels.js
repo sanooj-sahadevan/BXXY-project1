@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const LogInSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
     },
@@ -10,26 +10,26 @@ const LogInSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    phone: {
+    phonenumber: {
       type: String,
       required: true,
     },
     password: {
       type: String,
-      required: true,
-    },admin: {
-      type: Number,
-      default: 0,
+        required: true}
+    // },admin: {
+    //   type: Number,
+    //   default: 0,
     
-    },
-    block: {
-      type: Number,
-      default: 0,
-    },
-  },
-  {
-    versionKey: false,
+    // },
+    // block: {
+    //   type: Number,
+    //   default: 0,
+    // },
   }
+  // {
+  //   versionKey: false,
+  // }
 );
 
 module.exports = mongoose.model("user", LogInSchema);
