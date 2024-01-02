@@ -16,16 +16,16 @@ const LogInSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-        required: true}
+        required: true},
     // },admin: {
     //   type: Number,
     //   default: 0,
     
     // },
-    // block: {
-    //   type: Number,
-    //   default: 0,
-    // },
+    block: {
+      type: Number,
+      default: 0,
+    },
   }
   // {
   //   versionKey: false,

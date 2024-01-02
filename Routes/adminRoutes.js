@@ -10,9 +10,12 @@ const adminAuth = require('../Authentication.js/adminAuth.js')
 
 
 
-adminRoutes.get('/',adminAuth.isLogout,adminController.adminHome)
-adminRoutes.get('/,adminLogin', adminController.adminLogin)
+
+// adminRoutes.get('/',adminAuth.isLogout,adminController.adminHome)
+adminRoutes.get('/admin', adminController.adminLogin)
 adminRoutes.post('/adminLogin', adminController.validateAdmin)
+adminRoutes.get('/adminHome',adminController.adminHome)
+adminRoutes.get('/products', adminController.productlist)
 
 
 

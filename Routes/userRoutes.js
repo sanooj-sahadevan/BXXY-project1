@@ -25,4 +25,8 @@ userRoutes.get('/home',userController.userPage)
 userRoutes.post('/login',userController.verifyLogin)
 // userRoutes.get('/logout',userController.logout)
 
+
+
+userRoutes.get('/productlist',userController.productspage)
+
 module.exports = userRoutes

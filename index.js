@@ -43,6 +43,6 @@ app.use(adminRoutes)
 
 
 
-app.listen(5007, () => {
+app.listen(3000, () => {
   console.log("server running");
 });

@@ -7,14 +7,14 @@ const bcrypt = require("bcrypt");
 const userPage = async (req, res) => {
   // const productdata=await product.find({});
   // const offerData=await Offers.find({});
-  res.render("userViews/landingpage", );
+  res.render("userViews/landingpage",{user:req.session.user} );
 };
 
 const userLogin = async (req, res) => {
   console.log("1");
   res.render("userViews/signupLoginPage",{
     notice: "",
-    user: req.session.user_id
+    user: req.session.user
   }); 
 };
 
@@ -62,20 +62,20 @@ const verifyLogin = async (req, res) => {
       console.log('a');
       if (userDataFromUrl.block === 0) {      console.log('b');
 
-        if (userDataFromUrl.password === req.body.password) {      console.log('c');
+        if (userDataFromUrl.password === req.body.password) {      console.log('c ');
 
-          req.session.user_id = userDataFromUrl._id;
+          req.session.user = userDataFromUrl._id;
           res.redirect("/");
           console.log("login Successfull");
-        } else {
+        } else {console.log('third');
           res.render("userViews/signupLoginPage", { message: "Password Incorrect" });
           console.log("wrong password");
         }
-      } else {
+      } else {console.log('second');
         res.render("userViews/signupLoginPage", { message: "Account blocked" });
         console.log("wrong password");
       }
-    } else {
+    } else {console.log('first');
       res.render("userViews/signupLoginPage", { message: "Username Incorrect" });
     }
   } catch (error) {
@@ -84,9 +84,16 @@ const verifyLogin = async (req, res) => {
 };
 
 const userDashboard = async (req, res) => {
-  const user = req.session.user_id;
+  const user = req.session.user;
   res.render("userViews/landingpage", { user: user });
 };
 
 
-module.exports = { userPage,userLogin,checkUser,verifyLogin,userDashboard}
+const productspage = async (req,res) =>{
+  res.render('userViews/productlist',{ user: req.session.user
+  })
+}
+
+
+
+module.exports = { userPage,userLogin,checkUser,verifyLogin,userDashboard,productspage}
