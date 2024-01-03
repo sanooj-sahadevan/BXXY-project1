@@ -5,6 +5,8 @@ const session = require("express-session");
 const userRoutes = require("./Routes/userRoutes.js")
 const adminRoutes = require('./Routes/adminRoutes.js');
 
+const port = process.env.PORT || 3000;
+
 
 
 const {connectToMongoDB} = require('./config/mongooseConnect.js');
@@ -43,6 +45,4 @@ app.use(adminRoutes)
 
 
 
-app.listen(3000, () => {
-  console.log("server running");
-});
+app.listen(port, () => { console.log('listening to server on http://localhost:3000') })

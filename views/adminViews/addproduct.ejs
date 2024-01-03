@@ -1,0 +1,254 @@
+<%- include('../adminPartials/header') %>
+
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+                <form class="searchform">
+                    <div class="input-group">
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button"> <i
+                                class="material-icons md-search"></i></button>
+                    </div>
+                    <datalist id="search_terms">
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
+                    </datalist>
+                </form>
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i
+                                class="material-icons md-cast"></i></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
+                            aria-expanded="false"><i class="material-icons md-public"></i></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                                    alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
+                                    alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
+                                    alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
+                                    alt="Français">中国人</a>
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="assets/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
+                                Profile</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
+                                Settings</a>
+                            <a class="dropdown-item" href="#"><i
+                                    class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
+                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
+                                center</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#"><i
+                                    class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">Add New Product</h2>
+                        <div>
+                            <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
+                            <button class="btn btn-md rounded font-sm hover-up">Publich</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Basic</h4>
+                        </div>
+                        <div class="card-body">
+
+
+                            <form action="/addproduct" method="POST" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <input name="productName" id="productName" type="name" class="form-control"
+                                            placeholder="Product Name" required>
+                                    </div>
+                                    <!-- <div class="input-group mb-3">
+                                        <label class="container">
+                                            <span>Select Parent Category</span>
+                                            <select name="parentCategory" class="form-select" aria-label="Default select example">
+                                               
+                                              </select>
+                                              
+                                        </label>
+                                    </div> -->
+                                    <div class="input-group mb-3">
+                                        <img id="preview1" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <div class="input-group mb-3">
+                                            <input id="productImage1" name="productImage1" type="file" class="form-control"
+                                                placeholder="Product Image1"  required>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <img id="preview2" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <div class="input-group mb-3">
+                                            <input id="productImage2" name="productImage2" type="file" class="form-control"
+                                                placeholder="Product Image2"  required>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <img id="preview3" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <div class="input-group mb-3">
+                                            <input id="productImage3" name="productImage3" type="file" class="form-control"
+                                                placeholder="Product Image3"  required>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input name="productPrice" type="tel" class="form-control" placeholder="Product Price"
+                                            required>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input name="productStock" type="tel" class="form-control" placeholder="Product Stock"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info">Save changes</button>
+                                </div>
+                            </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div> <!-- card end// -->
+                </div>
+
+            </div>
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script> ©, Evara - HTML Ecommerce Template .
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const imageInput = document.querySelector('input[name="productimage"]');
+                const imagePreview = document.querySelector('#image-preview');
+                const cropButton = document.querySelector('#crop-button');
+                let croppers = [];
+
+                imageInput.addEventListener('change', function (e) {
+                    if (e.target.files && e.target.files.length > 0) {
+                        imagePreview.innerHTML = ''; // Clear previous previews
+
+                        Array.from(e.target.files).forEach(function (file) {
+                            const reader = new FileReader();
+                            reader.onload = function (event) {
+                                const imageElement = document.createElement('img');
+                                imageElement.src = event.target.result;
+                                imageElement.classList.add('image-preview');
+                                imagePreview.appendChild(imageElement);
+
+                                const cropper = new Cropper(imageElement, {
+                                    aspectRatio: 1, // Set the aspect ratio of the crop box
+                                    viewMode: 1, // Set the crop box to restrict the image within the container
+                                });
+
+                                croppers.push(cropper);
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                    }
+                });
+
+                cropButton.addEventListener('click', function () {
+                    document.querySelector('#cropped-images').innerHTML = ''; // Clear previous cropped images
+
+                    croppers.forEach(function (cropper) {
+                        const canvas = cropper.getCroppedCanvas();
+                        const croppedImage = document.createElement('img');
+                        croppedImage.src = canvas.toDataURL();
+                        croppedImage.classList.add('croppedImages');
+                        document.querySelector('#cropped-images').appendChild(croppedImage);
+                        cropper.destroy();
+
+                    });
+
+                    croppers = []; // Reset the croppers array
+                });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <%- include('../adminPartials/footer') %>
