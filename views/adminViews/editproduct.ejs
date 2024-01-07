@@ -1,27 +1,24 @@
 <%- include('../adminPartials/header') %>
-
     <main class="main-wrap">
         <header class="main-header navbar">
             <div class="col-search">
                 <form class="searchform">
                     <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
-                        <button class="btn btn-light bg" type="button">
-                            <i class="material-icons md-search"></i>
-                        </button>
+                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                        <button class="btn btn-light bg" type="button"> <i
+                                class="material-icons md-search"></i></button>
                     </div>
                     <datalist id="search_terms">
-                        <option value="Products"></option>
-                        <option value="New orders"></option>
-                        <option value="Apple iphone"></option>
-                        <option value="Ahmed Hassan"></option>
+                        <option value="Products">
+                        <option value="New orders">
+                        <option value="Apple iphone">
+                        <option value="Ahmed Hassan">
                     </datalist>
                 </form>
             </div>
             <div class="col-nav">
-                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside">
-                    <i class="material-icons md-apps"></i>
-                </button>
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link btn-icon" href="#">
@@ -30,8 +27,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="#">
-                            <i class="material-icons md-nights_stay"></i>
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -43,19 +39,19 @@
                             aria-expanded="false"><i class="material-icons md-public"></i></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
                             <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
-                                    alt="English" />English</a>
+                                    alt="English">English</a>
                             <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
-                                    alt="Français" />Français</a>
+                                    alt="Français">Français</a>
                             <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
-                                    alt="Français" />日本語</a>
+                                    alt="Français">日本語</a>
                             <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
-                                    alt="Français" />中国人</a>
+                                    alt="Français">中国人</a>
                         </div>
                     </li>
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
-                            aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User" /></a>
+                            aria-expanded="false"> <img class="img-xs rounded-circle"
+                                src="assets/imgs/people/avatar2.jpg" alt="User"></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
                             <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
                                 Profile</a>
@@ -75,149 +71,125 @@
             </div>
         </header>
         <section class="content-main">
-            <div class="content-header">
-                <div>
-                    <h2 class="content-title card-title">Products List</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div>
-                    <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
-            <a href="#" class="btn btn-light rounded  font-md">Import</a> -->
-                    <a href="/addProduct" class="btn btn-primary btn-sm rounded">Add new product</a>
-                </div>
-            </div>
+
             <div class="card mb-4">
-                <header class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col col-check flex-grow-0">
-                            <div class="form-check ms-2">
-                                <input class="form-check-input" type="checkbox" value="" />
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                    <select class="form-select">
-                        <option selected>All category</option>
-                        <option>Electronics</option>
-                        <option>Clothes</option>
-                        <option>Automobile</option>
-                    </select>
-                </div> -->
-                        <div class="col-md-2 col-6">
-                            <input type="date" value="02.05.2021" class="form-control" />
-                        </div>
-                        <div class="col-md-2 col-6">
-                            <select class="form-select">
-                                <option selected>Status</option>
-                                <option>Active</option>
-                                <option>Disabled</option>
-                                <option>Show all</option>
-                            </select>
-                        </div>
-                    </div>
-                </header>
-                <!-- card-header end// -->
-                <div class="card-body">
-                    <table id="example" class="display" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Parent Category</th>
-                                <th>Product Image1</th>
-                                <th>Product Image2</th>
-                                <th>Product Image3</th>
-                                <th>Price in INR</th>
-                                <th>In stock</th>
-                                <th>List/Unlist</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% productData.productName %>
-
-                                <form action="/editProduct" method="POST" enctype="multipart/form-data">
-                                    <div class="modal-body">
-                                        <div class="input-group mb-3">
-                                            <input name="productName" id="productName" type="name" class="form-control"
-                                                placeholder="Product Name" required />
-                                        </div>
-                                        <!-- <div class="input-group mb-3">
-                                                            <label class="container">
-                                                                <span>Select Parent Category</span>
-                                                                <select name="parentCategory" class="form-select" aria-label="Default select example">
-                                                                   
-                                                                  </select>
-                                                                  
-                                                            </label>
-                                                        </div> -->
-                                        <div class="input-group mb-3">
-                                            <img id="preview1" src="" style="width: 100px; height: 100px; display: none"
-                                                alt="Img" />
-                                            <div class="input-group mb-3">
-                                                <input id="productImage1" name="productImage1" type="file"
-                                                    class="form-control" placeholder="Product Image1"
-                                                    onchange="displayImage1()" required />
-                                            </div>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <img id="preview2" src="" style="width: 100px; height: 100px; display: none"
-                                                alt="Img" />
-                                            <div class="input-group mb-3">
-                                                <input id="productImage2" name="productImage2" type="file"
-                                                    class="form-control" placeholder="Product Image2"
-                                                    onchange="displayImage2()" required />
-                                            </div>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <img id="preview3" src="" style="width: 100px; height: 100px; display: none"
-                                                alt="Img" />
-                                            <div class="input-group mb-3">
-                                                <input id="productImage3" name="productImage3" type="file"
-                                                    class="form-control" placeholder="Product Image3"
-                                                    onchange="displayImage3()" required />
-                                            </div>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input name="productPrice" type="tel" class="form-control"
-                                                placeholder="Product Price" required />
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <input name="productStock" type="tel" class="form-control"
-                                                placeholder="Product Stock" required />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Close
-                                        </button>
-                                        <button type="submit" class="btn btn-info">Save changes</button>
-                                    </div>
-                                </form>
-
-                                <% %>
-                        </tbody>
-                    </table>
-
-                </div> <!-- card-body end// -->
 
 
             </div> <!-- card end// -->
-            <div class="pagination-area mt-30 mb-50">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i
-                                    class="material-icons md-chevron_right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
+
+
+            <!DOCTYPE html>
+            <html lang="en">
+
+            <head>
+                <meta charset="UTF-8">
+                <title>Edit Product</title>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            </head>
+
+            <body>
+                <div class="container mt-5">
+                    <h2>Edit Product</h2>
+
+
+
+
+
+                    <form action="/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" class="form-control" id="productName"
+                                value="<%= productData.productName %>" name="productName" required>
+                        </div>
+
+
+
+
+
+                        <div class="input-group mb-3">
+                            <img src="/upload/<%= productData.productImage1 %>" alt=""
+                                style="width: 100px; height: 100px">
+                            <div class="input-group mb-3">
+                                <input name="productImage1" type="file" class="form-control"   onchange="displayImage1()" >
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <img src="/upload/<%= productData.productImage2 %>" alt=""
+                                style="width: 100px; height: 100px">
+                            <div class="input-group mb-3">
+                                <input name="productImage2" type="file"   class="form-control"    onchange="displayImage2()" >
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <img src="/upload/<%= productData.productImage3 %>" alt=""
+                                style="width: 100px; height: 100px">
+                            <div class="input-group mb-3">
+                                <input name="productImage3" type="file" class="form-control"   onchange="displayImage3()" >
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input name="productPrice" type="text" class="form-control"
+                                value="<%= productData.productPrice %>">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input name="productStock" type="text" class="form-control"
+                                value="<%= productData.productStock %>">
+                        </div>
+
+
+
+
+                        <!-- <div class="form-group">
+              <label for="productDescription">Product Description</label>
+              <textarea class="form-control" id="productDescription" name="productDescription" rows="4" required></textarea>
+            </div> -->
+                        <!-- <div class="form-group">
+              <label for="productPrice">Product Price</label>
+              <input type="number" class="form-control" id="productPrice" name="productPrice" required >
+            </div> -->
+                        <div class="form-group">
+                            <label for="productImage">Product Image</label>
+                            <input type="file" class="form-control-file" id="productImage" name="productImage">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            </body>
+
+            </html>
+
+
+
+
+
+
+
+
+
+
+            <!-- <div class="pagination-area mt-15 mb-50">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">16</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                </ul>
+            </nav>
+        </div> -->
         </section> <!-- content-main end// -->
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
                 <div class="col-sm-6">
+                    <script data-cfasync="false"
+                        src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
                     <script>
                         document.write(new Date().getFullYear())
                     </script> ©, Evara - HTML Ecommerce Template .
@@ -235,14 +207,51 @@
 
 
 
-    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/vendors/select2.min.js"></script>
-    <script src="assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
-    <!-- Main Script -->
-    <script src="assets/js/main.js" type="text/javascript"></script>
-    </body>
+
+
+
+
+
+
+    {{!-- onchange image display --}}
+    <script>
+        function displayImage1() {
+            const reader = new FileReader()
+            reader.onload = () => {
+                preview1.src = reader.result
+            }
+            const file = document.querySelector("#productImage1").files[0];
+            if (file) {
+                preview1.style.display = 'block'
+                reader.readAsDataURL(file)
+            }
+        }
+        function displayImage2() {
+            const reader = new FileReader()
+            reader.onload = () => {
+                preview2.src = reader.result
+            }
+            const file = document.querySelector("#productImage2").files[0];
+            if (file) {
+                preview2.style.display = 'block'
+                reader.readAsDataURL(file)
+            }
+        }
+        function displayImage3() {
+            const reader = new FileReader()
+            reader.onload = () => {
+                preview3.src = reader.result
+            }
+            const file = document.querySelector("#productImage3").files[0];
+            if (file) {
+                preview3.style.display = 'block'
+                reader.readAsDataURL(file)
+            }
+        }
+    </script>
+
+
+
 
 
 

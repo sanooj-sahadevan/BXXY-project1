@@ -4,6 +4,7 @@ const multer = require('multer')
 const path = require('path')
 const adminController = require('../controller/adminController')
 const productController = require('../controller/productController.js')
+const categoryController = require('../controller/categoryController.js')
 const upload= require('../service/multer.js')
 
 
@@ -49,7 +50,7 @@ adminRoutes.get('/deleteProduct/:id',  productController.deleteProduct)
 // -------------------------------------------------------CATEGORIES------------------------------------------------------------------------------
 
 
-
+adminRoutes.get('/categories',categoryController.categoriesPage)
 // admin_router.get('/Categories', adminController.category_list);
 
 

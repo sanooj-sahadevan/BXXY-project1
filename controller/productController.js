@@ -2,21 +2,23 @@ const adminCollection = require("../models/Model");
 const productCollection = require("../models/productModel.js");
 
 const editProduct = async (req, res) => {
+  console.log("edit");
   try {
     let existingProduct = await productCollection.findOne({
       productName: { $regex: new RegExp(req.body.productName, "i") },
     });
     if (!existingProduct || existingProduct._id == req.params.id) {
+      console.log("edit1");
+
       const updateFields = {
         $set: {
           productName: req.body.productName,
-          parentCategory: req.body.parentCategory,
+          // parentCategory: req.body.parentCategory,
           productPrice: req.body.productPrice,
           productStock: req.body.productStock,
         },
       };
 
-      // Check and conditionally add image fields to the update query
       if (req.files[0]) {
         updateFields.$set.productImage1 = req.files[0].filename;
       }
@@ -29,15 +31,16 @@ const editProduct = async (req, res) => {
         updateFields.$set.productImage3 = req.files[2].filename;
       }
 
-      // Perform the update
       await productCollection.findOneAndUpdate(
         { _id: req.params.id },
         updateFields
       );
-      res.redirect("/admin/productManagement");
+      console.log("edit3");
+
+      res.redirect("/products");
     } else {
       req.session.productAlreadyExists = existingProduct;
-      res.redirect("/admin/productManagement");
+      res.redirect("/products");
     }
   } catch (error) {
     console.error(error);
@@ -47,13 +50,10 @@ const editProduct = async (req, res) => {
 const editProductpage = async (req, res) => {
   try {
     console.log("editpage");
-    const productId = req.params.id; // Fetch the product ID from URL parameter
+    const productId = req.params.id;
+    console.log(productId);
 
-    // Fetch or retrieve productData based on productId
-
-    const productData = await productCollection.findById(productId); // Assuming you're using a model like Mongoose
-
-
+    const productData = await productCollection.findByIdAndUpdate(productId); // Assuming you're using a model like Mongoose
 
     res.render("adminViews/editproduct.ejs", {
       productData,
@@ -100,6 +100,7 @@ const deleteProduct = async (req, res) => {
 
 const addProduct = async (req, res) => {
   console.log("kk");
+  console.log(productCollection);
   try {
     let existingProduct = await productCollection.findOne({
       productName: req.body.productName,

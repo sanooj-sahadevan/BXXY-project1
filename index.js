@@ -4,6 +4,7 @@ const path = require("path");
 const session = require("express-session");
 const userRoutes = require("./Routes/userRoutes.js");
 const adminRoutes = require("./Routes/adminRoutes.js");
+const morgan= require('morgan')
 require("dotenv").config();
 
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 const { connectToMongoDB } = require("./config/mongooseConnect.js");
 connectToMongoDB();
 
+app.use(morgan('dev'))
 
 const nocache = require("nocache");
 app.use(nocache());
