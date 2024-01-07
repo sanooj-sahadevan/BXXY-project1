@@ -3,7 +3,7 @@ const adminRoutes = express()
 const multer = require('multer')
 const path = require('path')
 const adminController = require('../controller/adminController')
-const adminAuth = require('../Authentication.js/adminAuth.js')
+const productController = require('../controller/productController.js')
 const upload= require('../service/multer.js')
 
 
@@ -15,18 +15,38 @@ const upload= require('../service/multer.js')
 // adminRoutes.set('views', './views/Admin');
 
 
+// --------------------------------------------------ADMIN--------------------------------------------------------------------------------
 
-
-// adminRoutes.get('/',adminAuth.isLogout,adminController.adminHome)
 adminRoutes.get('/admin', adminController.adminLogin)
 adminRoutes.post('/adminLogin', adminController.validateAdmin)
 adminRoutes.get('/adminHome',adminController.adminHome)
-adminRoutes.get('/products', adminController.productlist)
-adminRoutes.get('/editProduct', adminController.editAdminPage)
-adminRoutes.get('/addProduct', adminController.addProductPage)
-// adminRoutes.post('/addproduct', upload.fields([{ name: 'images', maxCount: 5 }]), adminController.addProduct);
-adminRoutes.post('/addproduct', upload.any(), adminController.addProduct);
-adminRoutes.get('/productEdit', adminController.editProduct)
+adminRoutes.post('/adminlogout', adminController.adminLogout)
+
+// -------------------------------------------------------PRODUCT------------------------------------------------------------------------------
+
+adminRoutes.get('/products', productController.productlist)
+
+// ----------------------EditProduct--
+
+adminRoutes.get('/productEdit/:id', productController.editProductpage);
+adminRoutes.post('/editProduct/:id', upload.any(), productController.editProduct)
+
+// ----------------------AddProduct--
+
+adminRoutes.get('/addProduct', productController.addProductPage)
+adminRoutes.post('/addproduct', upload.any(), productController.addProduct);
+
+// ----------------------List-UnlistProduct--
+
+adminRoutes.post('/unlist/:id',productController.unListProduct)
+adminRoutes.post('/list/:id',productController.listProduct)
+
+// ----------------------DeleteProduct--
+
+adminRoutes.get('/deleteProduct/:id',  productController.deleteProduct)
+
+
+// -------------------------------------------------------CATEGORIES------------------------------------------------------------------------------
 
 
 

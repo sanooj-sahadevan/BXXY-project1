@@ -106,37 +106,44 @@
                                         </label>
                                     </div> -->
                                     <div class="input-group mb-3">
-                                        <img id="preview1" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <img id="preview1" src="" style="width: 100px; height: 100px; display:none"
+                                            alt="Img">
                                         <div class="input-group mb-3">
-                                            <input id="productImage1" name="productImage1" type="file" class="form-control"
-                                                placeholder="Product Image1"  required>
+                                            <input id="productImage1" name="productImage1" type="file"
+                                                class="form-control" placeholder="Product Image1"
+                                                onchange="displayImage1()" required>
                                         </div>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <img id="preview2" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <img id="preview2" src="" style="width: 100px; height: 100px; display:none"
+                                            alt="Img">
                                         <div class="input-group mb-3">
-                                            <input id="productImage2" name="productImage2" type="file" class="form-control"
-                                                placeholder="Product Image2"  required>
+                                            <input id="productImage2" name="productImage2" type="file"
+                                                class="form-control" placeholder="Product Image2"
+                                                onchange="displayImage2()" required>
                                         </div>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <img id="preview3" src="" style="width: 100px; height: 100px; display:none" alt="Img">
+                                        <img id="preview3" src="" style="width: 100px; height: 100px; display:none"
+                                            alt="Img">
                                         <div class="input-group mb-3">
-                                            <input id="productImage3" name="productImage3" type="file" class="form-control"
-                                                placeholder="Product Image3"  required>
+                                            <input id="productImage3" name="productImage3" type="file"
+                                                class="form-control" placeholder="Product Image3"
+                                                onchange="displayImage3()" required>
                                         </div>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input name="productPrice" type="tel" class="form-control" placeholder="Product Price"
-                                            required>
+                                        <input name="productPrice" type="tel" class="form-control"
+                                            placeholder="Product Price" required>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input name="productStock" type="tel" class="form-control" placeholder="Product Stock"
-                                            required>
+                                        <input name="productStock" type="tel" class="form-control"
+                                            placeholder="Product Stock" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-info">Save changes</button>
                                 </div>
                             </form>
@@ -234,10 +241,60 @@
                     croppers = []; // Reset the croppers array
                 });
             });
+
+
+
+
+
+
+
+
+
+         </script>
+
+
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
         </script>
 
-
-
+        {{!-- onchange image display --}}
+        <script>
+            function displayImage1() {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    preview1.src = reader.result
+                }
+                const file = document.querySelector("#productImage1").files[0];
+                if (file) {
+                    preview1.style.display = 'block'
+                    reader.readAsDataURL(file)
+                }
+            }
+            function displayImage2() {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    preview2.src = reader.result
+                }
+                const file = document.querySelector("#productImage2").files[0];
+                if (file) {
+                    preview2.style.display = 'block'
+                    reader.readAsDataURL(file)
+                }
+            }
+            function displayImage3() {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    preview3.src = reader.result
+                }
+                const file = document.querySelector("#productImage3").files[0];
+                if (file) {
+                    preview3.style.display = 'block'
+                    reader.readAsDataURL(file)
+                }
+            }
+        </script>
 
 
 
