@@ -9,7 +9,7 @@
                                 class="material-icons md-search"></i></button>
                     </div>
                     <datalist id="search_terms">
-                        <option value="Products">
+                        <option value="Categories">
                         <option value="New orders">
                         <option value="Apple iphone">
                         <option value="Ahmed Hassan">
@@ -83,79 +83,28 @@
 
             <head>
                 <meta charset="UTF-8">
-                <title>Edit Product</title>
+                <title>Add Category</title>
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
             </head>
 
             <body>
                 <div class="container mt-5">
-                    <h2>Edit Product</h2>
-
-
-
-
-
-                    <form action="/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data">
+                    <h2>Add Category</h2>
+                    <form action="/categories/add" method="POST" class="mt-4">
                         <div class="form-group">
-                            <label for="productName">Product Name</label>
-                            <input type="text" class="form-control" id="productName"
-                                value="<%= productData.productName %>" name="productName" required>
+                            <label for="categoriesName">Category Name</label>
+                            <input type="text" class="form-control" id="categoriesName" name="categoriesName" required>
                         </div>
-
-
-
-
-
-                        <div class="input-group mb-3">
-                            <img src="/upload/<%= productData.productImage1 %>" alt=""
-                                style="width: 100px; height: 100px">
-                            <div class="input-group mb-3">
-                                <input name="productImage1" type="file" class="form-control"   onchange="displayImage1()" >
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <img src="/upload/<%= productData.productImage2 %>" alt=""
-                                style="width: 100px; height: 100px">
-                            <div class="input-group mb-3">
-                                <input name="productImage2" type="file"   class="form-control"    onchange="displayImage2()" >
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <img src="/upload/<%= productData.productImage3 %>" alt=""
-                                style="width: 100px; height: 100px">
-                            <div class="input-group mb-3">
-                                <input name="productImage3" type="file" class="form-control"   onchange="displayImage3()" >
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input name="productPrice" type="text" class="form-control"
-                                value="<%= productData.productPrice %>">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input name="productStock" type="text" class="form-control"
-                                value="<%= productData.productStock %>">
-                        </div>
-
-
-
-
-                        <!-- <div class="form-group">
-              <label for="productDescription">Product Description</label>
-              <textarea class="form-control" id="productDescription" name="productDescription" rows="4" required></textarea>
-            </div> -->
-                        <!-- <div class="form-group">
-              <label for="productPrice">Product Price</label>
-              <input type="number" class="form-control" id="productPrice" name="productPrice" required >
-            </div> -->
+                
                         <div class="form-group">
-                            <label for="productImage">Product Image</label>
-                            <input type="file" class="form-control-file" id="productImage" name="productImage">
+                            <label for="categoriesDescription">Category Description</label>
+                            <textarea class="form-control" id="categoriesDescription" rows="3" name="categoriesDescription"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                
+                        <button type="submit" class="btn btn-primary">Add Category</button>
                     </form>
                 </div>
-
-
+                
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

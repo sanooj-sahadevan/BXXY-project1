@@ -50,7 +50,23 @@ adminRoutes.get('/deleteProduct/:id',  productController.deleteProduct)
 // -------------------------------------------------------CATEGORIES------------------------------------------------------------------------------
 
 
-adminRoutes.get('/categories',categoryController.categoriesPage)
+adminRoutes.get('/categories', categoryController.categoriesPage)
+// adminRoutes.post('categories/unList/:id', categoryController.unlistCategory)
+adminRoutes.post('/categories/list/:id', categoryController.listCategory)
+adminRoutes.get('/categories/delete/:id', categoryController.deleteCategory)
+adminRoutes.post('/categories/add',  categoryController.addCategory)
+
+
+adminRoutes.get('/categories/edit/:id', categoryController.editCategory)
+adminRoutes.post('/editCategories/:id', categoryController.editCategoriesPage)
+
+
+adminRoutes.get('/addCategories', categoryController.addCategoriesPage)
+adminRoutes.post('/categories/unlist/:id',categoryController.unlistCategory)
+
+
+
+
 // admin_router.get('/Categories', adminController.category_list);
 
 
