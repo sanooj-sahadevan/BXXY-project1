@@ -177,7 +177,7 @@
                                         <%= product.productName %>
                                     </td>
                                     <td>
-                                        <%= product.parentCategory %>
+                                        <%= product.categoryName %>
                                     </td>
                                     <td><img src="upload/<%= product.productImage1 %>" alt=""
                                             style="width: 100px; height: 100px"></td>
@@ -191,86 +191,60 @@
                                         <%= product.productStock %>
                                     </td>
 
-                                    <!-- <% if (product.isListed) { %>
+
+
+                                    <% if (product.isListed) { %>
                                         <td>
-                                            <form action="/admin/productManagement/unList/<%= product._id %>"
-                                                method="POST">
+                                            <form action="/unlist/<%= product._id %>" method="POST">
                                                 <button type="submit" class="btn btn-success">Unlist</button>
                                             </form>
                                         </td>
                                         <% } else { %>
                                             <td>
-                                                <form action="/admin/productManagement/list/<%= product._id %>"
-                                                    method="POST">
-                                                    <button type="submit" class="btn btn-danger">List</button>
-                                                </form>
-                                            </td>
-                                            <% } %> -->
-
-
-
-
-                                            <% if (product.isListed) { %>
-                                                <td>
-                                                <form action="/unlist/<%= product._id %>" method="POST">
-                                                    <button type="submit" class="btn btn-success">Unlist</button>
-                                                </form>
-                                            </td>
-                                            <% } else { %>
-                                                <td>
                                                 <form action="/list/<%= product._id %>" method="POST">
                                                     <button type="submit" class="btn btn-danger">List</button>
                                                 </form>
                                             </td>
                                             <% } %>
-                                            
-
-                                                <td> 
 
 
-                                                    <!-- <td>
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModal<%= index %>">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                    
-                                                        <button type="button" class="btn btn-info"
-                                                            onclick="return confirm('Are you sure you want to delete <%= this.categoryName %> product?')">
-                                                            <a href="/admin/productManagement/delete/<%= this._id %>">
-                                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                            </a>
-                                                        </button>
-                                                    </td> -->
-                                                    
+                                                <td>
 
 
-                                                    <a href="/productEdit/<%= product._id %>" class="btn btn-primary btn-sm rounded">edit</a>
 
 
-                                                    
-                                                    
-                                                    
-                                    
-                                                   
+
+                                                    <a href="/productEdit/<%= product._id %>"
+                                                        class="btn btn-primary btn-sm rounded">edit</a>
+
+
+
+
+
+
+
 
                                                     <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                         data-bs-target="#editModal<%= index %>">
                                         <i class="fas fa-edit"></i>
                                     </button> -->
 
-                                    <a class="btn btn-info" onclick="return deleteConfirmation('<%= product.categoryName %>', '<%= product._id %>')" href="#">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </a>
-                                    
-                                    <script>
-                                        function deleteConfirmation(categoryName, productId) {
-                                            if (confirm(`Are you sure you want to delete ${categoryName} product?`)) {
-                                                window.location.href = `/deleteProduct/${productId}`;
-                                                return true;
-                                            }
-                                            return false;
-                                        }
-                                    </script>
-                                    
+                                                    <a class="btn btn-info"
+                                                        onclick="return deleteConfirmation('<%= product.categoryName %>', '<%= product._id %>')"
+                                                        href="#">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                                    </a>
+
+                                                    <script>
+                                                        function deleteConfirmation(categoryName, productId) {
+                                                            if (confirm(`Are you sure you want to delete ${categoryName} product?`)) {
+                                                                window.location.href = `/deleteProduct/${productId}`;
+                                                                return true;
+                                                            }
+                                                            return false;
+                                                        }
+                                                    </script>
+
                                                     <!-- <button <a href="/deleteProduct/<%= product._id %>"
                                                         onclick="return confirm('Are you sure you want to delete <%= product.categoryName %> product?')"
                                                         class="btn btn-info">

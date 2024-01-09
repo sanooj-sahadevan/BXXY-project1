@@ -75,15 +75,24 @@
 
 
                                   
-                                    <% if (user) { %>
-                                        <li><a href="/home">Log out</a></li>
+                                   
+                                        <!-- <li><a href="/loginpage">LOG IN</a></li> -->
 
+                                        <% if (user) { %>
+                                            <li><a href="/home">Log out</a></li>
+    
+                                            
+                                        <% } else { %>
+                                            <li><a href="/loginpage">LOG IN</a></li>
+    
+                                            
+                                        <% } %>
+    
+    
+    
+                                  
                                         
-                                    <% } else { %>
-                                        <li><a href="/loginpage">LOG IN</a></li>
-
-                                        
-                                    <% } %>
+                                  
                                 
                                         
                                        

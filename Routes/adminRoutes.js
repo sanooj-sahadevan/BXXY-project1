@@ -33,8 +33,8 @@ adminRoutes.get('/productEdit/:id', productController.editProductpage);
 adminRoutes.post('/editProduct/:id', upload.any(), productController.editProduct)
 
 // ----------------------AddProduct--
-
-adminRoutes.get('/addProduct', productController.addProductPage)
+adminRoutes.get('/addProduct',productController.addProductPage)
+// adminRoutes.get('/addProduct', productController.addProductPage)
 adminRoutes.post('/addproduct', upload.any(), productController.addProduct);
 
 // ----------------------List-UnlistProduct--

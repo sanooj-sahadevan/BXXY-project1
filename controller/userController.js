@@ -23,40 +23,38 @@ const userLogin = async (req, res) => {
 
 const verifyLogin = async (req, res) => {
   try {
-    console.log("loginakkum");
-    const userDataFromUrl = await collection.findOne({ email: req.body.email });
+      console.log("loginakkum");
+      const checking = await collection.findOne({ email: req.body.email });
 
-    if (userDataFromUrl) {
-      console.log("a");
-      if (userDataFromUrl.block === 0) {
-        console.log("b");
-
-        if (userDataFromUrl.password === req.body.password) {
-          console.log("c ");
-          const user = req.session.user;
-          req.session.user = userDataFromUrl._id;
-          console.log(user);
-          res.redirect("/");
-          console.log("login Successfull");
+      if (checking) {
+        
+        if (checking.block === 0) {
+          
+          if (checking.password === req.body.password) {
+           
+            req.session.user = checking._id;
+            console.log(checking._id);
+            res.redirect("/");
+            console.log("login Successfull");
+          } else {
+            console.log("third");
+            res.redirect('loginpage')
+            res.render("userViews/signupLoginPage", {
+              message: "Password Incorrect",
+            });
+            console.log("wrong password");
+          }
         } else {
-          console.log("third");
-          res.redirect('loginpage')
-          // res.render("userViews/signupLoginPage", {
-          //   message: "Password Incorrect",
-          // });
+          console.log("second");
+          res.render("userViews/signupLoginPage", { message: "Account blocked" });
           console.log("wrong password");
         }
       } else {
-        console.log("second");
-        res.render("userViews/signupLoginPage", { message: "Account blocked" });
-        console.log("wrong password");
+        console.log("first");
+        res.render("userViews/signupLoginPage", {
+          message: "Username Incorrect",
+        });
       }
-    } else {
-      console.log("first");
-      res.render("userViews/signupLoginPage", {
-        message: "Username Incorrect",
-      });
-    }
   } catch (error) {
     res.render("error", { error: error.message });
   }
@@ -77,7 +75,7 @@ const productspage = async (req, res) => {
   try {
     let productData = await productCollection.find();
     res.render("userViews/productlist", {
-      productData,
+      productData,user: req.session.user,
       productExist: req.session.productAlreadyExists,
     });
   } catch (error) {
@@ -86,15 +84,12 @@ const productspage = async (req, res) => {
 };
 
 const checkUser = async (req, res) => {
-  console.log("2");
   try {
     const checking = await collection.findOne({ email: req.body.email });
-    console.log(checking);
+
     if (checking) {
-      console.log(checking);
       res.render("userViews/signupLoginPage", { notice: "Already registered" });
     } else {
-      console.log("3");
       const data = new collection({
         username: req.body.username,
         email: req.body.email,
@@ -103,13 +98,14 @@ const checkUser = async (req, res) => {
         admin: 0,
       });
       await data.save();
-      console.log("saveID");
 
-      // res.render("userViews/otp.ejs", { model: "1" });
-      req.session.userEmail = req.body.email; // Store email in session
-      res.redirect("/otpPage"); // Redirect to a route for sending OTP
+      // Set the userEmail in the session
+      req.session.userEmail = req.body.email;
+
+      res.redirect("/otpPage");
     }
   } catch (error) {
+    console.error(error);
     res.send(error.message);
   }
 };
@@ -121,28 +117,28 @@ const generateOTP = () => {
 const sendOTP = async (email, otp) => {
   try {
     await transporter.sendMail({
-      from: "peacesllr@gmail.com", // Use process.env.GMAIL_ID directly
+      from: "peacesllr@gmail.com",
       to: `${email}`,
       subject: "Registration OTP for BXXY",
       text: `Your OTP is ${otp}`,
     });
-    return true; // Email sent successfully
+    return true; 
   } catch (error) {
     console.error(error);
-    return false; // Failed to send email
+    return false; 
   }
 };
 
 const otpPage = async (req, res) => {
   try {
-    const userEmail = req.session.userEmail; // Retrieve stored email
+    const userEmail = req.session.userEmail; 
     const otp = generateOTP();
     console.log("Generated OTP:", otp);
 
     const emailSent = await sendOTP(userEmail, otp);
 
     if (emailSent) {
-      res.render("userViews/otp.ejs", { currentOTP: otp });
+      res.render("userViews/otp.ejs", { currentOTP: otp, user: req.session.user });
     } else {
       throw new Error("Error sending OTP");
     }
@@ -153,7 +149,7 @@ const otpPage = async (req, res) => {
 };
 
 const sucessOTP = (req, res) => {
-  res.render("userViews/signupLoginPage.ejs");
+  res.render("userViews/signupLoginPage.ejs",{user: req.session.user});
 };
 
 module.exports = {

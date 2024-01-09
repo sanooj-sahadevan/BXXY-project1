@@ -5,10 +5,10 @@ const productSchema= new mongoose.Schema({
         type: String,
         required: true
     },
-    // parentCategory:{
-    //     type: String,
-    //     required: true
-    // },
+    parentCategory:{
+        type: String,
+        required: true
+    },
     productImage1:{
         type: String,
     },

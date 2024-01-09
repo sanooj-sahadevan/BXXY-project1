@@ -96,15 +96,25 @@
                                         <input name="productName" id="productName" type="name" class="form-control"
                                             placeholder="Product Name" required>
                                     </div>
-                                    <!-- <div class="input-group mb-3">
+
+                            
+
+                                    <div class="input-group mb-3">
                                         <label class="container">
                                             <span>Select Parent Category</span>
                                             <select name="parentCategory" class="form-select" aria-label="Default select example">
-                                               
+                                                <% categories.forEach((value)=>{ %>
+                                                    <option value="<%=value.categoryName  %>">
+                                                      <%= value.category %>
+                                                    </option>
+                                                    <% }) %>
+                  
                                               </select>
                                               
                                         </label>
-                                    </div> -->
+                                    </div>
+                                   
+
                                     <div class="input-group mb-3">
                                         <img id="preview1" src="" style="width: 100px; height: 100px; display:none"
                                             alt="Img">

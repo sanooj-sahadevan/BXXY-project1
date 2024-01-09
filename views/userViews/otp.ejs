@@ -1,53 +1,76 @@
-
-
 <%- include('../partials/header') %>
-<main class="main">
+
+  <main class="main">
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index-10.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Login</li>
-            </ol>
-        </div><!-- End .container -->
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index-10.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Pages</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Login</li>
+        </ol>
+      </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
 
     <!-- <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')"> -->
-        <div class="container">
-            <div class="form-box">
-                <div class="form-tab">
-                    <ul class="nav nav-pills nav-fill" role="tablist">
-                        <!-- <li class="nav-item">
+    <div class="container">
+      <div class="form-box">
+        <div class="form-tab">
+          <ul class="nav nav-pills nav-fill" role="tablist">
+            <!-- <li class="nav-item">
                             <a class="nav-link" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
                         </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">OTP Verification</a>
-                        </li>
-                        <style>
-                            /* Add your custom styles here */
-                            .resend-link {
-                              color: #007bff;
-                              cursor: pointer;
-                            }
-                          </style>
-                        </head>
-                        <body>
-                        
-                        <div class="container mt-4">
-                          <div class="row justify-content-center">
-                            <div class="col-md-6">
-                             
-                              <p>Please enter the OTP sent to your mobile number.</p>
-                              <form action="/otp" method="POST" id="otpForm">
-                                <div class="form-group">
-                                  <input type="text" class="form-control" id="otpInput" name="" placeholder="Enter OTP" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Verify OTP</button>
-                                <p class="mt-3">Didn't receive OTP? <span id="resendOTP" class="resend-link">Resend</span></p>
-                              </form>
+            <li class="nav-item">
+              <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab"
+                aria-controls="register-2" aria-selected="true">OTP Verification</a>
+            </li>
+            <style>
+              /* Add your custom styles here */
+              .resend-link {
+                color: #007bff;
+                cursor: pointer;
+              }
+            </style>
+            </head>
+
+            <body>
+
+              <div class="container mt-4">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+
+                    <p>Please enter the OTP sent to your mobile number.</p>
+                    <form action="/otp" method="POST" id="otpForm">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="otpInput" name="" placeholder="Enter OTP" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Verify OTP</button>
+                <a href="/resendOTP">     <p class="mt-3">Didn't receive OTP? <span id="resendOTP" class="resend-link">Resend</span></p></a> 
+
+                <div class="form-group">
+                  <label>Time Left: </label>
+                  <span>
+                    <h4 id="timer"></h4>
+                  </span>
+                </div>
+                     
+
+                      <!-- <div class="form-group">
+                        <label>Time Left: </label>
+                        <span>
+                          <h4 id="timer"></h4>
+                        </span>
+                      </div> -->
+                      
 
 
-                              <!-- <form action="/otp" method="POST" role="form" class="regForm">
+                    </form>
+                    
+                    <!-- <form  action="/resendOTP" method="POST">
+                      <button id="ResendOTP" type="submit" class="btn btn-danger" style="display: none;"> Resend OTP</button>
+                    </form> -->
+
+
+                    <!-- <form action="/otp" method="POST" role="form" class="regForm">
                                 <div class="form-group">
                                   <label>Username</label>
                                   <input name="username" title="Please enter your username (at least 3 characters)" type="text"
@@ -92,14 +115,50 @@
 
 
 
-                            </div>
-                          </div>
-                        </div>
-                    </ul>
-                    
-                </div><!-- End .form-tab -->
-            </div><!-- End .form-box -->
-        </div><!-- End .container -->
+                  </div>
+                </div>
+              </div>
+          </ul>
+
+        </div><!-- End .form-tab -->
+      </div><!-- End .form-box -->
+    </div><!-- End .container -->
     </div><!-- End .login-page section-bg -->
-</main><!-- End .main -->
-<%- include('../partials/footer') %>
+  </main><!-- End .main -->
+
+
+
+  <script>
+    let a = 60
+    h = document.getElementById('timer')
+    let otpTimer = setInterval(() => {
+      h.innerText = a--
+      if (a === -1) {
+        clearInterval(otpTimer);
+        verifyOTP.style.display='none'
+        ResendOTP.style.display='block'
+      }
+    }, 1000)
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <%- include('../partials/footer') %>

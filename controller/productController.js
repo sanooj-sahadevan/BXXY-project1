@@ -1,5 +1,6 @@
 const adminCollection = require("../models/Model");
 const productCollection = require("../models/productModel.js");
+const categoryCollection = require("../models/category.js");
 
 const editProduct = async (req, res) => {
   console.log("edit");
@@ -52,16 +53,15 @@ const editProductpage = async (req, res) => {
     console.log("editpage");
     const productId = req.params.id;
     console.log(productId);
-
-    const productData = await productCollection.findByIdAndUpdate(productId); // Assuming you're using a model like Mongoose
-
+    const productData = await productCollection.findOne({_id:productId}); 
+    const categories = await categoryCollection.find({})
+    console.log(categories);
     res.render("adminViews/editproduct.ejs", {
-      productData,
-      productExists: req.session.productAlreadyExists,
+      productData,categories
+      // productExists: req.session.productAlreadyExists,
     });
   } catch (error) {
-    console.error("Error rendering edit product page:", error);
-    res.status(500).send("Internal Server Error");
+    console.error( error);
   }
 };
 
@@ -110,7 +110,7 @@ const addProduct = async (req, res) => {
       await productCollection.insertMany([
         {
           productName: req.body.productName,
-          // parentCategory: req.body.parentCategory,
+          parentCategory: req.body.parentCategory,
           productImage1: req.files[0].filename,
           productImage2: req.files[1].filename,
           productImage3: req.files[2].filename,
@@ -135,14 +135,31 @@ const editAdminPage = async (req, res) => {
 };
 
 const addProductPage = async (req, res) => {
-  res.render("adminViews/addproduct");
+  try {
+    const categories = await categoryCollection.find({});
+
+    console.log(categories);
+    res.render("adminViews/addproduct.ejs", {
+      categories,
+    });
+    req.session.productAlreadyExists = null;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const productlist = async (req, res) => {
   try {
     let productData = await productCollection.find();
+    let categoryList = await categoryCollection.find(
+      {},
+      { categoryName: true }
+    );
+
     res.render("adminViews/productlist.ejs", {
       productData,
+      categoryList,
+
       productExist: req.session.productAlreadyExists,
     });
     req.session.productAlreadyExists = null;

@@ -23,6 +23,7 @@ userRoutes.get('/otpPage',userController.otpPage);
 
 
 userRoutes.post('/otp', userController.sucessOTP)
+userRoutes.get('/resendOTP', userController.otpPage)
 
 
 
