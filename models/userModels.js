@@ -23,8 +23,8 @@ const LogInSchema = new mongoose.Schema(
     
     // },
     block: {
-      type: Number,
-      default: 0,
+      type: Boolean,
+      default: false,
     },
   }
   // {

@@ -2,6 +2,8 @@ const express = require('express')
 const userRoutes = express.Router()
 const userController = require("../controller/userController.js")
 const userAuth=require('../Authentication.js/userAuth.js')
+const blockedUserCheck = require('../middleware/blockUserCheck.js')
+
 
 const path = require('path');
 
@@ -34,6 +36,20 @@ userRoutes.post('/login',userController.verifyLogin)
 
 
 
-userRoutes.get('/productlist',userController.productspage)
+userRoutes.get('/productlist',blockedUserCheck,userController.productspage)
+
+
+
+
+userRoutes.get('/forgotPasswordPage', userController.forgotPasswordPage)
+userRoutes.post('/forgotOTP', userController.forgotUserDetailsInModel, userController.sendForgotOTP)
+userRoutes.post('/forgotPasswordPage3', userController.forgotPasswordPage3)
+userRoutes.post('/forgotPasswordReset', userController.forgotPasswordReset)
+
+
+
+
+// userRoutes.post('/forgotOTP', userController.forgotUserDetailsInModel, userController.sendForgotOTP)
+
 
 module.exports = userRoutes

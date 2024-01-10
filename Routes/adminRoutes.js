@@ -66,8 +66,11 @@ adminRoutes.post('/categories/unlist/:id',categoryController.unlistCategory)
 
 
 
-
-// admin_router.get('/Categories', adminController.category_list);
+adminRoutes.get('/userManagement',adminController.userManagement)
+adminRoutes.post('/userManagement/block/:id',adminController.blockUser)
+adminRoutes.post('/userManagement/unBlock/:id',adminController.unBlockUser)
+// adminRoutes.post('/userManagement/block/:id',  adminController.blockUser )
+// adminRoutes.post('/userManagement/unBlock/:id',  adminController.unBlockUser)
 
 
 

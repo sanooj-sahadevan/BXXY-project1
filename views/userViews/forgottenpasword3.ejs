@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+
+<main class="main">
+    <!-- ... (breadcrumb code remains unchanged) ... -->
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6">
+
+                <div class="row userInfo">
+                    <div class="col-sm-12">
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-sm-7">
+                          
+                              <div class="row userInfo">
+                                <div class="col-xs-12 col-sm-6">
+                                  <h3 class="block-title-3">Change Password</h3>
+                          
+                                  <form action="/forgotPasswordReset" method="POST" role="form" class="regForm">
+                                    <div class="form-group">
+                                      <label>New Password</label>
+                                      <input name="newPassword" id="newPassword" type="password" class="form-control" placeholder="Enter New Password">
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Confirm New Password</label>
+                                      <input title="Passwords don't match" type="password" class="form-control" placeholder="Confirm New Password" required data-rule-equalTo="#newPassword">
+                                    </div>
+                                    <div class="form-group">
+                                      <!-- <label>Time Left: </label> -->
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-user"></i>Reset Password</button>
+                                  </form>
+                                </div>
+                              </div>
+                              <!--/row end-->
+                            </div>
+                          </div>
+                          
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+                <!--/row end-->
+            </div>
+        </div>
+    </div>
+
+</main><!-- End .main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include('../partials/footer') %>
