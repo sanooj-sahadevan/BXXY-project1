@@ -75,6 +75,11 @@ adminRoutes.post('/userManagement/unBlock/:id',adminController.unBlockUser)
 
 
 
+adminRoutes.get('/adminLogout',adminController.adminLogout)
+
+
+
+
 
 
 

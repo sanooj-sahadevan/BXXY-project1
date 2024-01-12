@@ -103,7 +103,8 @@ const addProduct = async (req, res) => {
   console.log(productCollection);
   try {
     let existingProduct = await productCollection.findOne({
-      productName: req.body.productName,
+      productName: { $regex: new RegExp(req.body.productName, "i") },
+       productName: req.body.productName,
     });
     if (!existingProduct) {
       console.log("in");
@@ -136,7 +137,7 @@ const editAdminPage = async (req, res) => {
 
 const addProductPage = async (req, res) => {
   try {
-    const categories = await categoryCollection.find({});
+    const categories = await categoryCollection.find({ isListed:true});
 
     console.log(categories);
     res.render("adminViews/addproduct.ejs", {

@@ -36,9 +36,9 @@ userRoutes.post('/login',userController.verifyLogin)
 
 
 
-userRoutes.get('/productlist',blockedUserCheck,userController.productspage)
-
-
+// userRoutes.get('/productlist',blockedUserCheck.blockuser,userController.productspage)
+userRoutes.get('/productList', userController.productspage)
+userRoutes.get('/productDetails/:id', userController.productDetils)
 
 
 userRoutes.get('/forgotPasswordPage', userController.forgotPasswordPage)

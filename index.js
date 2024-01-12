@@ -9,10 +9,16 @@ require("dotenv").config();
 
 const port = process.env.PORT || 3000;
 
+
+
 const { connectToMongoDB } = require("./config/mongooseConnect.js");
 connectToMongoDB();
 
+
+
 app.use(morgan('dev'))
+
+
 
 const nocache = require("nocache");
 app.use(nocache());

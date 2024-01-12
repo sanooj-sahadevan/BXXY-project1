@@ -88,6 +88,48 @@
 
                         
 
+							
+							
+							<div class="row categoryProduct xsResponse clearfix">
+								<% productData.forEach(product => { %>
+								  <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6 grid-view">
+									<div class="product">
+									  <% /* Uncomment the following lines if you want to include the "Add to Wishlist" button
+										<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist" data-placement="left">
+										  <i class="glyphicon glyphicon-heart"></i>
+										</a>
+									  */ %>
+									  <div class="image">
+										<a href="/productDetails/<%= product._id %>">
+										  <img src="/upload/<%= product.productImage1 %>" alt="img" class="img-responsive" />
+										</a>
+									  </div>
+									  <div class="description">
+										<h4>
+										  <a href="/productDetails/<%= product._id %>"><%= product.productName %></a>
+										</h4>
+									  </div>
+									  <div class="price"><span>₹<%= product.productPrice %></span></div>
+									  <div class="action-control">
+										<a href="/productDetails/<%= product._id %>" class="btn btn-primary">
+										  <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"></i> Add to cart</span>
+										</a>
+									  </div>
+									</div>
+								  </div>
+								<% }); %>
+								<!--/.item-->
+							  </div>
+							  
+
+
+
+
+
+
+
+
+
 
 
 

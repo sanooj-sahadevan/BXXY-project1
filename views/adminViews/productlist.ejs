@@ -64,7 +64,7 @@
                             <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
                                 center</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i
+                            <a class="dropdown-item text-danger" href="/adminLogout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
@@ -177,7 +177,7 @@
                                         <%= product.productName %>
                                     </td>
                                     <td>
-                                        <%= product.categoryName %>
+                                        <%= product.parentCategory %>
                                     </td>
                                     <td><img src="upload/<%= product.productImage1 %>" alt=""
                                             style="width: 100px; height: 100px"></td>
@@ -244,20 +244,6 @@
                                                             return false;
                                                         }
                                                     </script>
-
-                                                    <!-- <button <a href="/deleteProduct/<%= product._id %>"
-                                                        onclick="return confirm('Are you sure you want to delete <%= product.categoryName %> product?')"
-                                                        class="btn btn-info">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </a>
-                                                        ></button> -->
-                                                    <!-- <button>
-                                    <div class="custom-delete-btn">
-                                        <a href="/admin/productManagement/delete/<%= product._id %>" onclick="return confirmDelete();">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </button> -->
 
 
 

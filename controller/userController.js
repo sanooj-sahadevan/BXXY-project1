@@ -3,6 +3,11 @@ const bcrypt = require("bcrypt");
 const transporter = require("../service/otp.js");
 const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
+const userModels = require("../models/userModels");
+
+
+
+
 
 const userPage = async (req, res) => {
   res.render("userViews/landingpage", { user: req.session.user });
@@ -31,26 +36,24 @@ const verifyLogin = async (req, res) => {
     if (checking) {
       if (checking.block === false) {
         if (checking.password === req.body.password) {
-          req.session.user = true
+          req.session.user = checking
           console.log(checking._id);
-          // res.redirect("/");
+        
           res.render('userViews/landingpage',{ user: req.session.user})
           console.log("login Successfull");
         } else {
-          console.log("third");
-          res.redirect("loginpage");
+      
           res.render("userViews/signupLoginPage", {
             message: "Password Incorrect",
           });
           console.log("wrong password");
         }
       } else {
-        console.log("second");
         res.render("userViews/signupLoginPage", { message: "Account blocked" });
         console.log("wrong password");
       }
     } else {
-      console.log("first");
+     
       res.render("userViews/signupLoginPage", {
         message: "Username Incorrect",
       });
@@ -70,9 +73,13 @@ const userDashboard = async (req, res) => {
 
 const productspage = async (req, res) => {
   try {
-    let categoryData = await categoryCollection.find({ isListed: true });
-    let productData =
-      req.session?.shopProductData || (await productCollection.find());
+    let categoryData = await categoryCollection.find({ isListed: true })
+    console.log(categoryData);
+
+    let productData = await productCollection.find({isListed: true});
+    // let productData =
+    // req.session?.shopProductData || (await productCollection.find());
+      console.log(productData);
       console.log('product');
     res.render("userViews/productlist", {
       categoryData,
@@ -81,36 +88,36 @@ const productspage = async (req, res) => {
     });
     req.session.shopProductData = null;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching product data:", error);
+    res.status(500).send("Internal Server Error");
   }
-};
+}  
 
 const checkUser = async (req, res) => {
   try {
-    let encryptedPassword = bcrypt.hashSync(req.body.newPassword, 10);
-
-    const checking = await collection.findOne({ email: req.body.email });
-
-    if (checking) {
-      res.render("userViews/signupLoginPage", { notice: "Already registered" });
-    } else {
-      const data = new collection({
-        username: req.body.username,
-        email: req.body.email,
-        phonenumber: req.body.phonenumber,
-        password: encryptedPassword,
-        admin: 0,
-      });
-      await data.save();
-
-      // Set the userEmail in the session
-      req.session.userEmail = req.body.email;
-
-      res.redirect("/otpPage");
+    const existingUser = await collection.findOne({ email: req.body.email });
+    console.log('existing User'+existingUser);
+    if (existingUser) {
+      return res.render("userViews/signupLoginPage", { notice: "Already registered" });
     }
+
+    // Hash the password only when creating a new user
+    // let encryptedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const newUser = new collection({
+      username: req.body.username,
+      email: req.body.email,
+      phonenumber: req.body.phonenumber,
+      password:   req.body.password,
+      admin: 0,
+    });
+
+    await newUser.save();
+    req.session.user= await userModels.findOne({ email: req.body.email })  
+    console.log('req.session.user'+req.session.user);  
+    res.redirect("/otpPage");
   } catch (error) {
     console.error(error);
-    res.send(error.message);
   }
 };
 
@@ -135,12 +142,12 @@ const sendOTP = async (email, otp) => {
 
 const otpPage = async (req, res) => {
   try {
-    const userEmail = req.session.userEmail;
+    const userEmail = req.session.user.email;
     const otp = generateOTP();
     console.log("Generated OTP:", otp);
 
     const emailSent = await sendOTP(userEmail, otp);
-
+    console.log(req.session.user);
     if (emailSent) {
       res.render("userViews/otp", {
         currentOTP: otp,
@@ -240,6 +247,16 @@ const forgotPasswordReset =  async (req, res) => {
 }
 
 
+const productDetils = async (req,res)=>{
+  try {
+    const currentProduct = await productCollection.findOne({_id: req.params.id});
+    res.render("userViews/productDetils.ejs", { user:req.session.user,currentUser: req.session.currentUser, currentProduct});
+
+  } catch (error) {
+    
+  }
+}
+
 
 module.exports = {
   userPage,
@@ -251,5 +268,6 @@ module.exports = {
   otpPage,
   sucessOTP,
   forgotPasswordPage,
-  forgotUserDetailsInModel,sendForgotOTP,forgotPasswordPage3,forgotPasswordReset
+  forgotUserDetailsInModel,sendForgotOTP,forgotPasswordPage3,forgotPasswordReset,productDetils
+
 };

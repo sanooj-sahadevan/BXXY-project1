@@ -8,21 +8,18 @@ const userCollection = require("../models/userModels.js");
 
 const adminLogin = async (req, res) => {
   console.log("Admin1");
-  req.session.admin = true;
-  res.render("adminViews/login.ejs");
+  res.render("adminViews/login.ejs", { admin: req.session.admin });
 };
+
 
 const validateAdmin = async (req, res) => {
   console.log("1");
   const existingAdmin = await adminCollection.findOne({
     email: req.body.email,
+    password: req.body.password,
   });
 
-  if (
-    existingAdmin &&
-    existingAdmin.email === req.body.email &&
-    existingAdmin.password === req.body.password
-  ) {
+  if (existingAdmin) {
     console.log("2");
 
     req.session.admin = true;
@@ -33,9 +30,9 @@ const validateAdmin = async (req, res) => {
   }
 };
 
+
 const adminHome = async (req, res) => {
-  if (req.session.admin === true) {
-    console.log("222");
+  if (req.session.admin) {
     res.render("adminViews/dashboard.ejs");
   } else {
     console.log("session not work");
@@ -44,9 +41,15 @@ const adminHome = async (req, res) => {
 };
 
 const adminLogout = async (req, res) => {
-  req.session.destroy();
-  res.redirect("/");
+  try {
+    req.session.destroy();
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error during logout:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
 
 const userManagement = async (req, res) => {
   try {
@@ -86,6 +89,11 @@ const unBlockUser = async (req, res) => {
   }
 };
 
+
+
+
+
+
 module.exports = {
   adminHome,
   adminLogin,
@@ -93,5 +101,5 @@ module.exports = {
   adminLogout,
   userManagement,
   blockUser,
-  unBlockUser,
+  unBlockUser,adminLogout
 };
