@@ -68,7 +68,7 @@ const blockUser = async (req, res) => {
       { $set: { block: true } }
     );
     res.redirect("/userManagement");
-    // res.render('adminViews/userMangement.ejs',{ userData })
+   
 
    
   } catch (error) {

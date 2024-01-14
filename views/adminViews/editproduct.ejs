@@ -107,30 +107,34 @@
 
 
                         <div class="input-group mb-3">
-                            <img src="/upload/<%= productData.productImage1 %>" alt=""
+                            <img src="/upload/<%= productData.productImage1 %>" alt="" id="preview1"
                                 style="width: 100px; height: 100px">
                             <div class="input-group mb-3">
-                                <input name="productImage1" type="file" class="form-control"   onchange="displayImage1()" >
+                                <input name="productImage1" id="productImage1" type="file" class="form-control"
+                                    placeholder="Product Image1" onchange="displayImage1()" required>
                             </div>
                         </div>
+
                         <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage2 %>" alt=""
                                 style="width: 100px; height: 100px">
                             <div class="input-group mb-3">
-                                <input name="productImage2" type="file"   class="form-control"    onchange="displayImage2()" >
+                                <input name="productImage2" id="productImage2" type="file" class="form-control"
+                                    placeholder="Product Image2" onchange="displayImage2()" required>
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage3 %>" alt=""
-                                style="width: 100px; height: 100px">
+                                style="width: 100px; height: 100px" id="preview1">
                             <div class="input-group mb-3">
-                                <input name="productImage3" type="file" class="form-control"   onchange="displayImage3()" >
+                                <input name="productImage3" type="file" class="form-control" onchange="displayImage3()">
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <input name="productPrice" type="text" class="form-control"
                                 value="<%= productData.productPrice %>">
                         </div>
+
                         <div class="input-group mb-3">
                             <input name="productStock" type="text" class="form-control"
                                 value="<%= productData.productStock %>">
@@ -140,22 +144,23 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                              <label for="Category">Category</label>
+                                <label for="Category">Category</label>
 
-                              <select class="form-control p_input" name="category" placeholder="category" required>
-                                <% categories.forEach((value)=>{ %>
-                                  <option value="<%=value.categoryName  %>">
-                                    <%= value.category %>
-                                  </option>
-                                  <% }) %>
+                                <select class="form-control p_input" name="category" placeholder="category" required>
+                                    <% categories.forEach((value)=>{ %>
+                                        <option value="<%=value.categoryName  %>">
+                                            <%= value.categoryName %>
+                                        </option>
+                                        <% }) %>
 
+                                    </select>
 
+                                            <!-- <div class="form-group">
 
-                        <div class="form-group">
-                            
-                            <input type="file" class="form-control-file" id="productImage" name="productImage">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                <input type="file" class="form-control-file" id="productImage"
+                                                    name="productImage">
+                                            </div> -->
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>
 

@@ -2,6 +2,9 @@ const adminCollection = require("../models/Model");
 const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
 
+
+
+
 const editProduct = async (req, res) => {
   console.log("edit");
   try {
@@ -14,7 +17,7 @@ const editProduct = async (req, res) => {
       const updateFields = {
         $set: {
           productName: req.body.productName,
-          // parentCategory: req.body.parentCategory,
+          parentCategory: req.body.parentCategory,
           productPrice: req.body.productPrice,
           productStock: req.body.productStock,
         },
@@ -99,7 +102,7 @@ const deleteProduct = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  console.log("kk");
+
   console.log(productCollection);
   try {
     let existingProduct = await productCollection.findOne({

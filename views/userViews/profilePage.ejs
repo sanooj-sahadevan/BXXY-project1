@@ -1,0 +1,344 @@
+
+<%- include('../partials/header') %>
+
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Profile<span>BXXY</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+
+
+
+    <!-- ======================================================================================================== -->
+
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    <aside class="col-md-4 col-lg-3">
+                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                            <li class="nav-item">
+                                <br><br>
+                                <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
+                                    href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
+                                    aria-selected="true">User Detils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/order_list" role="tab"><%= user.firstName %></a>
+                            </li>
+                            
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
+                                    role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Addresse 1</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Addresse 2</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Addresse 3</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/wallet" role="tab">Wallet</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/wallet" role="tab">Password</a>
+                            </li>
+
+                            <br>
+
+
+                            <!-- <a class="nav-link" href="/logout">Add Another Account</a> -->
+                            </li>
+
+                            <!-- <li class="nav-item">
+                                <button type="button" class="btn btn-dark">Add Another Account</button>
+                            </li> -->
+
+                        </ul>
+                    </aside><!-- End .col-lg-3 -->
+
+                    <aside class="col-md-4 col-lg-3">
+                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                            <li class="nav-item">
+                                <br><br>
+                                <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
+                                    href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                    aria-selected="true">detils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/order_list" role="tab">Sanooj</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
+                                    role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
+                                    Gandhipuram Coimbatore
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
+                                    Gandhipuram Coimbatore
+
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
+                                    Gandhipuram Coimbatore
+
+                                </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/wallet" role="tab">$200</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/wallet" role="tab">XXXXXXXXXXXXX <a
+                                        href="edit adress.html"></a> </a>
+                            </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </aside><!-- End .col-lg-3 -->
+                </div>
+
+
+                <style>
+                    /* Add your custom styles here */
+                    .orders-list {
+                        list-style: none;
+                        padding: 0;
+                    }
+
+                    .orders-list li {
+                        margin-bottom: 10px;
+                        border: 1px solid #ccc;
+                        padding: 10px;
+                    }
+                </style>
+                </head>
+
+                <body>
+
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- Add new product buttons -->
+                                <div class="d-flex flex-wrap align-items-center">
+                                    <a href="/manageAdrressPage" class="btn btn-success btn-sm rounded mr-2 mb-2">Manage Address</a>
+                                    <a href="/changePassword" class="btn btn-success btn-sm rounded mr-2 mb-2">Change Password</a>
+                                    <a href="/editProfile" class="btn btn-success btn-sm rounded mb-2">Edit your Detils</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+            </div>
+        </div><!-- End .col-lg-9 -->
+    </div><!-- End .row -->
+
+
+
+
+
+
+
+
+
+
+    <!-- ======================================================================================================= -->
+
+
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <h3>Pervious orders</h3>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="product-col">
+                                        <div class="product">
+                                            <figure class="product-media">
+                                                <a href="#">
+                                                    <img src="assets/images/product_images_2/thumb_image4.jpg"
+                                                        alt="Product image">
+                                                </a>
+                                            </figure>
+
+                                            <h3 class="product-title">
+                                                <a href="#">Beige knitted elastic runner shoes</a>
+                                            </h3><!-- End .product-title -->
+                                        </div><!-- End .product -->
+                                    </td>
+                                    <td class="price-col">$84.00</td>
+                                    <td class="quantity-col">
+                                        <div class="cart-product-quantity">
+                                            <input class="form-control" value="1" min="1" max="10" step="1"
+                                                data-decimals="0" required>
+
+                                            <!-- <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required> -->
+                                        </div><!-- End .cart-product-quantity -->
+                                    </td>
+                                    <td class="total-col">$84.00</td>
+                                    <td class="remove-col"><button class="btn-remove"><i
+                                                class="icon-close"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="product-col">
+                                        <div class="product">
+                                            <figure class="product-media">
+                                                <a href="#">
+                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
+                                                        alt="Product image">
+                                                </a>
+                                            </figure>
+
+                                            <h3 class="product-title">
+                                                <a href="#">Blue utility pinafore denim dress</a>
+                                            </h3><!-- End .product-title -->
+                                        </div><!-- End .product -->
+                                    </td>
+                                    <td class="price-col">$76.00</td>
+                                    <td class="quantity-col">
+                                        <div class="cart-product-quantity">
+                                            <input class="form-control" value="1" min="1" max="10" step="1"
+                                                data-decimals="0" required>
+                                        </div><!-- End .cart-product-quantity -->
+                                    </td>
+                                    <td class="total-col">$76.00</td>
+                                    <td class="remove-col"><button class="btn-remove"><i
+                                                class="icon-close"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="product-col">
+                                        <div class="product">
+                                            <figure class="product-media">
+                                                <a href="#">
+                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
+                                                        alt="Product image">
+                                                </a>
+                                            </figure>
+
+                                            <h3 class="product-title">
+                                                <a href="#">Blue utility pinafore denim dress</a>
+                                            </h3><!-- End .product-title -->
+                                        </div><!-- End .product -->
+                                    </td>
+                                    <td class="price-col">$76.00</td>
+                                    <td class="quantity-col">
+                                        <div class="cart-product-quantity">
+                                            <input class="form-control" value="1" min="1" max="10" step="1"
+                                                data-decimals="0" required>
+                                        </div><!-- End .cart-product-quantity -->
+                                    </td>
+                                    <td class="total-col">$76.00</td>
+                                    <td class="remove-col"><button class="btn-remove"><i
+                                                class="icon-close"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td class="product-col">
+                                        <div class="product">
+                                            <figure class="product-media">
+                                                <a href="#">
+                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
+                                                        alt="Product image">
+                                                </a>
+                                            </figure>
+
+                                            <h3 class="product-title">
+                                                <a href="#">Blue utility pinafore denim dress</a>
+                                            </h3><!-- End .product-title -->
+                                        </div><!-- End .product -->
+                                    </td>
+                                    <td class="price-col">$76.00</td>
+                                    <td class="quantity-col">
+                                        <div class="cart-product-quantity">
+                                            <input class="form-control" value="1" min="1" max="10" step="1"
+                                                data-decimals="0" required>
+                                        </div><!-- End .cart-product-quantity -->
+                                    </td>
+                                    <td class="total-col">$76.00</td>
+                                    <td class="remove-col"><button class="btn-remove"><i
+                                                class="icon-close"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+
+                    </div><!-- End .cart-bottom -->
+                </div><!-- End .col-lg-9 -->
+
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->
+</div><!-- End .page-content -->
+</main><!-- End .main -->
+
+
+<%- include('../partials/footer') %>

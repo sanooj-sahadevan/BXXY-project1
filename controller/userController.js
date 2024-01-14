@@ -162,10 +162,10 @@ const otpPage = async (req, res) => {
   }
 };
 
-const sucessOTP = (req, res) => {
-  res.render("userViews/signupLoginPage", { user: req.session.user });
+const successOTP = (req, res) => {
+  const successfulMessage = "Registration successful"; 
+  res.render("userViews/signupLoginPage", { user: req.session.user, message: successfulMessage });
 };
-
 
 
 
@@ -266,7 +266,7 @@ module.exports = {
   userDashboard,
   productspage,
   otpPage,
-  sucessOTP,
+  successOTP,
   forgotPasswordPage,
   forgotUserDetailsInModel,sendForgotOTP,forgotPasswordPage3,forgotPasswordReset,productDetils
 

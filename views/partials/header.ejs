@@ -2,6 +2,7 @@
 
 
 <!-- molla/index-10.html  22 Nov 2019 09:58:04 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,39 +70,45 @@
                                 <a href="#">Links</a>
                                 <ul>
                                     <!-- <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li> -->
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
+                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist
+                                            <span>(3)</span></a></li>
                                     <li><a href="about.html">About Us</a></li>
 
 
 
-                                  
-                                   
-                                        <!-- <li><a href="/loginpage">LOG IN</a></li> -->
 
-                                        <% if (user) { %>
-                                            <li><a href="/home">Log out</a></li>
-    
-                                            
-                                        <% } else { %>
-                                            <li><a href="/loginpage">LOG IN</a></li>
-    
-                                            
-                                        <% } %>
-    
-    
-    
-                                  
-                                        
-                                  
-                                
+
+                                    <!-- <li><a href="/loginpage">LOG IN</a></li> -->
+
+                                    <% if (user) { %>
+                                        <li><a href="/home">Log out</a></li>
+
                                         
                                        
-                                    
+                                            <li><a href="/profile/<%= user._id %>">Profile</a></li>
+                                      
                                         
-                                  
 
-                                    <!-- <li><a href="contact.html">Contact Us</a></li> -->
-                                    <!-- <li><a href="login.html" data-toggle="modal"><i class="icon-user"></i>Login</a></li> -->
+                                                <% } else { %>
+                                                    <li><a href="/loginpage">LOG IN</a></li>
+
+
+                                                    <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <!-- <li><a href="contact.html">Contact Us</a></li> -->
+                                                        <!-- <li><a href="login.html" data-toggle="modal"><i class="icon-user"></i>Login</a></li> -->
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->
@@ -119,31 +126,33 @@
 
                         <a href="index-10.html" class="sf-with-ul"></a>
                         <img src="/assets/R.jpeg" class="footer-logo" alt="BXXY Logo" width="155" height="35">
-                    </a>
+                        </a>
                     </div><!-- End .header-left -->
 
                     <div class="header-right">
-                        
 
 
 
-                        
 
 
-                     <!-- //------------------------------------------------------------------------------------------------------------------------------            -->
+
+
+                        <!-- //------------------------------------------------------------------------------------------------------------------------------            -->
 
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                             <form action="#" method="get">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                                        required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
 
                         <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="cart-count">2</span>
                             </a>
@@ -167,7 +176,8 @@
                                                 <img src="assets/images/products/cart/product-1.jpg" alt="product">
                                             </a>
                                         </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
                                     </div><!-- End .product -->
 
                                     <div class="product">
@@ -187,7 +197,8 @@
                                                 <img src="assets/images/products/cart/product-2.jpg" alt="product">
                                             </a>
                                         </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                        <a href="#" class="btn-remove" title="Remove Product"><i
+                                                class="icon-close"></i></a>
                                     </div><!-- End .product -->
                                 </div><!-- End .cart-product -->
 
@@ -199,7 +210,8 @@
 
                                 <div class="dropdown-cart-action">
                                     <a href="cart.html" class="btn btn-primary">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i
+                                            class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
