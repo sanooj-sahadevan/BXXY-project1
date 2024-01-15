@@ -34,6 +34,9 @@
     <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
     <link rel="stylesheet" href="/assets/css/skins/skin-demo-10.css">
     <link rel="stylesheet" href="/assets/css/demos/demo-10.css">
+
+    <script src="/assets/js/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -83,19 +86,17 @@
                                     <% if (user) { %>
                                         <li><a href="/home">Log out</a></li>
 
-                                        
-                                       
-                                            <li><a href="/profile/<%= user._id %>">Profile</a></li>
-                                      
-                                        
-
-                                                <% } else { %>
-                                                    <li><a href="/loginpage">LOG IN</a></li>
 
 
-                                                    <% } %>
+                                        <li><a href="/profile/<%= user._id %>">Profile</a></li>
 
 
+
+                                        <% } else { %>
+                                            <li><a href="/loginpage">LOG IN</a></li>
+
+
+                                            <% } %>
 
 
 
@@ -107,8 +108,10 @@
 
 
 
-                                                        <!-- <li><a href="contact.html">Contact Us</a></li> -->
-                                                        <!-- <li><a href="login.html" data-toggle="modal"><i class="icon-user"></i>Login</a></li> -->
+
+
+                                                <!-- <li><a href="contact.html">Contact Us</a></li> -->
+                                                <!-- <li><a href="login.html" data-toggle="modal"><i class="icon-user"></i>Login</a></li> -->
                                 </ul>
                             </li>
                         </ul><!-- End .top-menu -->

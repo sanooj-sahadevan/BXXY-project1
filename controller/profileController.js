@@ -44,19 +44,6 @@ const addAddressPost = async (req, res) => {
 
 
 
-
-const changePassword = async (req, res) => {
-    try {
-      res.render("userViews/changePassword", {
-        invalidCurrentPassword: req.session.invalidCurrentPassword,user: req.session.user 
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-
-
   const editProfile = async(req,res)=>{
 try {
     const existingAddress = await addressCollection.findOne({
@@ -73,11 +60,40 @@ try {
     console.error(error);
 }
   }
- 
 
+
+
+  const changePassword = async (req, res) => {
+    try {
+      res.render("userViews/changePassword", {
+        user: req.session.user 
+      });
+      console.log(req.session.user);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+ 
+  const changePasswordPatch =  async (req, res) => { console.log('1');
+    try {
+      // console.log(req.body, req.session.currentUser);
+      console.log(req.session.user );
+     
+        await userCollection.updateOne(
+          { _id: req.session.user },
+          { $set: { password: req.body.password } }
+        );
+        res.json({ success: true });
+       
+    } catch (error) {
+      console.error(error);
+    }
+  } 
 
 
 module.exports = {
 
-    profilePage, addAddress,addAddressPost,changePassword,editProfile
+    profilePage, addAddress,addAddressPost,changePassword,editProfile,
+    changePasswordPatch
 };

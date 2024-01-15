@@ -6,6 +6,7 @@ const blockedUserCheck = require('../middleware/blockUserCheck.js')
 const accountController =  require("../controller/profileController.js")
 
 
+
 const path = require('path');
 
 
@@ -30,14 +31,11 @@ userRoutes.get('/resendOTP', userController.otpPage)
 
 
 
-// userRoutes.get('/signup', userController.userSignup)
 userRoutes.get('/home',userController.userPage)  
 userRoutes.post('/login',userController.verifyLogin)
-// userRoutes.get('/logout',userController.logout)
 
 
 
-// userRoutes.get('/productlist',blockedUserCheck.blockuser,userController.productspage)
 userRoutes.get('/productList',   userController.productspage)
 userRoutes.get('/productDetails/:id',blockedUserCheck, userController.productDetils)
 
@@ -57,6 +55,10 @@ userRoutes.post('/manageAdrress', blockedUserCheck, accountController.addAddress
 
 
 userRoutes.get('/changePassword', blockedUserCheck, accountController.changePassword)
+// userRoutes.patch('/changePassword', blockedUserCheck, accountController.changePasswordPatch)
+
+userRoutes.patch('/changePassword', blockedUserCheck,accountController.changePasswordPatch)
+
 
 
 userRoutes.get('/editProfile', blockedUserCheck, accountController.editProfile)
