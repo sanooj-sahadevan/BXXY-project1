@@ -4,6 +4,9 @@ const userController = require("../controller/userController.js")
 const userAuth=require('../Authentication.js/userAuth.js')
 const blockedUserCheck = require('../middleware/blockUserCheck.js')
 const accountController =  require("../controller/profileController.js")
+const cartController =  require("../controller/cartController.js")
+const auth = require('../middleware/adminAuth.js')
+
 
 
 
@@ -63,10 +66,15 @@ userRoutes.patch('/changePassword', blockedUserCheck,accountController.changePas
 
 userRoutes.get('/editProfile', blockedUserCheck, accountController.editProfile)
 
+userRoutes.get('/cartPage', blockedUserCheck,      cartController.cart) // i dont know
+
+userRoutes.get('/cart/:id', blockedUserCheck,   cartController.addToCart) // i dont know
 
 
 
-
+userRoutes.delete('/cart/delete/:id', blockedUserCheck, cartController.deleteFromCart) 
+userRoutes.put('/cart/decQty/:id', blockedUserCheck,  cartController.decQty)
+userRoutes.put('/cart/incQty/:id', blockedUserCheck,  cartController.incQty)
 
 
 

@@ -6,6 +6,7 @@ const userCollection = require("../models/userModels.js");
 
 
 
+
 const adminLogin = async (req, res) => {
   console.log("Admin1");
   res.render("adminViews/login.ejs", { admin: req.session.admin });

@@ -1,0 +1,271 @@
+<%- include('../partials/header') %>
+
+  <main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+      <div class="container">
+        <h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+      </div><!-- End .container -->
+    </div><!-- End .page-header -->
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+        </ol>
+      </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+      <div class="cart">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-9">
+              <table class="table table-bordered table-cart table-mobile">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+            
+                <tbody>
+                  <% userCartData.forEach(function(item, index) { %>
+                    <tr class="CartProduct" id="cartProduct<%= index %>">
+                      <td class="product-col">
+                        <div class="product">
+                          <figure class="product-media">
+                            <a href="/productDetails/<%= item.productId._id %>">
+                              <img src="/upload/<%= item.productId.productImage1 %>"
+                                alt="<%= item.productId.productName %>" />
+                            </a>
+                          </figure>
+                          <h3 class="product-title">
+                            <a href="/productDetails/<%= item.productId._id %>">
+                              <%= item.productId.productName %>
+                            </a>
+                          </h3>
+                        </div>
+                      </td>
+                      <td id="productPrice<%= index %>" class="price-col">₹<%= item.productId.productPrice %></td>
+                      <td class="remove-col text-center">
+                        <button type="button" class="btn btn-danger btn-sm"
+                          onclick="cartDec('<%= item._id %>','<%= index %>')">-</button>
+                        <span id="productQuantity<%= index %>" class="d-inline-block">
+                          <%= item.productQuantity %>
+                        </span>
+                        <button type="button" class="btn btn-primary btn-sm"
+                          onclick="cartInc('<%= item._id %>','<%= index %>')">+</button>
+                      </td>
+                      <td class="quantity-col">
+                        <div class="cart-product-quantity">
+                          <div id="stockLimit<%= index %>" class="d-none">
+                            <%= item.productId.productStock %>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="total-col">₹<%= item.totalCostPerProduct %></td>
+                      <td class="text-center">
+                        <button class="btn-m"
+                          onclick="deleteCart('<%= item._id %>','<%= index %>')">
+                          <i class="fas fa-trash-alt">x</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+              </table>
+            </div><!-- End .col-lg-9 -->
+            
+            
+
+            <aside class="col-lg-3">
+              <div class="summary summary-cart">
+                <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+                <table class="table table-summary">
+                  <tbody>
+                    <tr class="summary-subtotal">
+                      <td>Subtotal:</td>
+                      <td>$160.00</td>
+                    </tr><!-- End .summary-subtotal -->
+                    <tr class="summary-shipping">
+                      <td>Shipping:</td>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr class="summary-shipping-row">
+                      <td>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                          <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                        </div><!-- End .custom-control -->
+                      </td>
+                      <td>$0.00</td>
+                    </tr><!-- End .summary-shipping-row -->
+
+                    <tr class="summary-shipping-row">
+                      <td>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
+                          <label class="custom-control-label" for="standart-shipping">Standart:</label>
+                        </div><!-- End .custom-control -->
+                      </td>
+                      <td>$10.00</td>
+                    </tr><!-- End .summary-shipping-row -->
+
+                    <tr class="summary-shipping-row">
+                      <td>
+                        <div class="custom-control custom-radio">
+                          <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
+                          <label class="custom-control-label" for="express-shipping">Express:</label>
+                        </div><!-- End .custom-control -->
+                      </td>
+                      <td>$20.00</td>
+                    </tr><!-- End .summary-shipping-row -->
+
+                    <tr class="summary-shipping-estimate">
+                      <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
+                      <td>&nbsp;</td>
+                    </tr><!-- End .summary-shipping-estimate -->
+
+                    <tr class="summary-total">
+                      <td>Total:</td>
+                      <td>$160.00</td>
+                    </tr><!-- End .summary-total -->
+                  </tbody>
+                </table><!-- End .table table-summary -->
+
+                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+              </div><!-- End .summary -->
+
+              <a href="/productList" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i
+                  class="icon-refresh"></i></a>
+            </aside><!-- End .col-lg-3 -->
+          </div><!-- End .row -->
+        </div><!-- End .container -->
+      </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+  </main><!-- End .main -->
+
+
+
+
+
+
+
+
+
+
+  </body>
+
+
+  <!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
+
+  </html>
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <script>
+    async function cartDec(id, index) {
+      try {
+        let stockLimitElement = document.getElementById('stockLimit' + index).innerText;
+        let productQuantityElement = document.getElementById('productQuantity' + index);
+        let totalCostPerProductElement = document.getElementById('totalCostPerProduct' + index);
+        let totalPriceElement = document.getElementById('totalPrice');
+        let grandTotalElement = document.getElementById('total-price');
+
+        if (Number(productQuantityElement.innerText) == 1)
+          return Swal.fire({
+            icon: "error",
+            title: "Minimum One Quantity",
+            text: "Please select atleast one quantity",
+          });
+
+        let response = await fetch('/cart/decQty/' + id, { method: 'PUT' })
+        let data = await response.json()
+
+        productQuantityElement.innerHTML = await data.cartProduct.productQuantity;
+        totalCostPerProductElement.innerHTML = '₹' + await data.cartProduct.totalCostPerProduct;
+        totalPriceElement.innerHTML = '₹' + await data.grandTotal
+        grandTotalElement.innerHTML = '₹' + await data.grandTotal
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  </script>
+  <!-- increase cart quantity  -->
+  <script>
+    async function cartInc(id, index) {
+      try {
+        let stockLimitElement = document.getElementById('stockLimit' + index).innerText;
+        let productQuantityElement = document.getElementById('productQuantity' + index);
+        let totalCostPerProductElement = document.getElementById('totalCostPerProduct' + index);
+        let totalPriceElement = document.getElementById('totalPrice');
+        let grandTotalElement = document.getElementById('total-price');
+
+        if (Number(productQuantityElement.innerText) >= Number(stockLimitElement))
+          return Swal.fire({
+            icon: "info",
+            title: "Maximum Quantity",
+            text: "Something went wrong!",
+          });
+
+        let response = await fetch('/cart/incQty/' + id, { method: 'PUT' })
+        let data = await response.json()
+
+        productQuantityElement.innerHTML = data.cartProduct.productQuantity;
+        totalCostPerProductElement.innerHTML = '₹' + data.cartProduct.totalCostPerProduct;
+        totalPriceElement.innerHTML = '₹' + data.grandTotal
+        grandTotalElement.innerHTML = '₹' + data.grandTotal
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  </script>
+  <!-- -- delete cart-- -->
+  <script>
+    async function deleteCart(id, index) {
+      try {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            let cartProductElement = document.getElementById('cartProduct' + index)
+            cartProductElement.style.display = "none"
+            fetch('/cart/delete/' + id, { method: 'DELETE' }).then(data => console.log(data))
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+          }
+        });
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  </script>
+
+
+
+
+
+
+  <%- include('../partials/footer') %>
