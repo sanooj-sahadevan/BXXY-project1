@@ -5,6 +5,7 @@ const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
 const userModels = require("../models/userModels");
+const cartCollection = require("../controller/cartController.js")
 
 const userPage = async (req, res) => {
   res.render("userViews/landingpage", { user: req.session.user });
@@ -259,6 +260,29 @@ const productspage = async (req, res) => {
   }
 };
 
+
+
+
+const orderSucess =  async (req, res) => {
+  let cartData = await cartCollection.find({ userId: req.session.currentUser._id })
+   
+
+  res.render("userViews/orderSucess", {
+    orderCartData: cartData,
+    orderData: req.session.currentOrder,
+  });
+
+  await cartCollection.deleteMany({ userId: req.session.currentUser._id });
+  console.log("deleted");
+}
+
+
+
+
+
+
+
+
 module.exports = {
   userPage,
   userLogin,
@@ -273,5 +297,5 @@ module.exports = {
   sendForgotOTP,
   forgotPasswordPage3,
   forgotPasswordReset,
-  productDetils,
+  productDetils
 };

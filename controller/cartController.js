@@ -2,10 +2,8 @@ const addressCollection = require("../controller/profileController.js");
 const cartCollection = require("../models/cartModel.js");
 const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
-
-
-
-
+const orderCollection = require("../models/orderModel.js")
+const profileCollection = require("../models/profileModel.js")
 
 async function grandTotal(req) {
   try {
@@ -41,9 +39,11 @@ const cart = async (req, res) => {
   try {
     let userCartData = await grandTotal(req);
     console.log(userCartData);
+    console.log(req.session.currentUser);
     res.render("userViews/cart", {
       user: req.body.user,
-      currentUser: req.session.currentUser,userCartData
+      currentUser: req.session.currentUser,
+      userCartData, grandTotal: req.session.grandTotal,
     });
     console.log(req.session.currentUser);
   } catch (error) {
@@ -70,7 +70,8 @@ const addToCart = async (req, res) => {
         userId: req.session.currentUser._id,
         productId: req.params.id,
         productQuantity: req.body.productQuantity || 1,
-        currentUser: req.session.currentUser,  user: req.body.user,
+        currentUser: req.session.currentUser,
+        user: req.body.user,
       });
     }
 
@@ -82,25 +83,14 @@ const addToCart = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-const deleteFromCart =  async (req, res) => {
+const deleteFromCart = async (req, res) => {
   try {
     await cartCollection.findOneAndDelete({ _id: req.params.id });
     res.send("hello ur cart is deleted");
   } catch (error) {
     console.error(error);
   }
-}
+};
 const decQty = async (req, res) => {
   try {
     let cartProduct = await cartCollection
@@ -111,13 +101,17 @@ const decQty = async (req, res) => {
     }
     cartProduct = await cartProduct.save();
     await grandTotal(req);
-    res.json({ cartProduct, grandTotal: req.session.grandTotal,currentUser: req.session.currentUser,  user: req.body.user,
+    res.json({
+      cartProduct,
+      grandTotal: req.session.grandTotal,
+      currentUser: req.session.currentUser,
+      user: req.body.user,
     });
   } catch (error) {
     console.error(error);
   }
-}
-const incQty =  async (req, res) => {
+};
+const incQty = async (req, res) => {
   try {
     let cartProduct = await cartCollection
       .findOne({ _id: req.params.id })
@@ -127,11 +121,84 @@ const incQty =  async (req, res) => {
     }
     cartProduct = await cartProduct.save();
     await grandTotal(req);
-    res.json({ cartProduct, grandTotal: req.session.grandTotal ,        currentUser: req.session.currentUser,  user: req.body.user,
+    res.json({
+      cartProduct,
+      grandTotal: req.session.grandTotal,
+      currentUser: req.session.currentUser,
+      user: req.body.user,
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const checkoutPage = async (req, res) => {
+  try {
+   
+    let cartData = await cartCollection.find({ userId: req.session.currentUser._id, productId: req.params.id, })
+      .populate("productId");
+      let addressData = await profileCollection.find({
+        userId: req.session.currentUser._id,
+      })
+      
+
+      req.session.currentOrder = await orderCollection.create({
+        userId: req.session.currentUser._id,
+        orderNumber: (await orderCollection.countDocuments()) + 1,
+        orderDate: new Date(),
+        addressChosen: "lalal", //default address
+        cartData: await grandTotal(req),
+        grandTotalCost: req.session.grandTotal,
+      });
+    
+
+
+    let userCartData = await grandTotal(req);
+
+
+
+    res.render("userViews/checkout.ejs", {
+      user: req.body.user,
+      currentUser: req.session.currentUser,
+      grandTotal: req.session.grandTotal, userCartData, cartData
+    })
   } catch (error) {
     console.error(error);
   }
 }
 
-module.exports = { cart, addToCart, grandTotal, deleteFromCart,decQty,incQty };
+
+
+const orderSucess = async (req, res) => {
+  // let cartData = await cartCollection.find({ userId: req.session.currentUser._id })
+
+  req.session.currentOrder = await orderCollection.create({
+    userId: req.session.currentUser._id,
+    orderNumber: (await orderCollection.countDocuments()) + 1,
+    orderDate: new Date(),
+    // addressChosen: JSON.parse(JSON.stringify(addressData[0])), //default address
+    cartData: await grandTotal(req),
+    grandTotalCost: req.session.grandTotal,
+  });
+  res.render("userViews/orderSucess", {
+    user: req.body.user,
+    // orderCartData: cartData,
+    // orderData: req.session.currentOrder,
+  });
+
+  // await cartCollection.deleteMany({ userId: req.session.currentUser._id });
+  // console.log("deleted");
+}
+
+
+
+
+module.exports = {
+  cart,
+  addToCart,
+  grandTotal,
+  deleteFromCart,
+  decQty,
+  incQty,
+  checkoutPage, orderSucess
+};

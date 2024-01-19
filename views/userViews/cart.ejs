@@ -91,7 +91,8 @@
                   <tbody>
                     <tr class="summary-subtotal">
                       <td>Subtotal:</td>
-                      <td>$160.00</td>
+                      <td class="price">₹<%= grandTotal %></td>
+                    
                     </tr><!-- End .summary-subtotal -->
                     <tr class="summary-shipping">
                       <td>Shipping:</td>
@@ -128,19 +129,19 @@
                       <td>$20.00</td>
                     </tr><!-- End .summary-shipping-row -->
 
-                    <tr class="summary-shipping-estimate">
+                    <!-- <tr class="summary-shipping-estimate">
                       <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
                       <td>&nbsp;</td>
-                    </tr><!-- End .summary-shipping-estimate -->
+                    </tr> -->
 
                     <tr class="summary-total">
                       <td>Total:</td>
-                      <td>$160.00</td>
+                      <td class="price">₹<%= grandTotal %></td>
                     </tr><!-- End .summary-total -->
                   </tbody>
                 </table><!-- End .table table-summary -->
 
-                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                <a href="/checkout" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
               </div><!-- End .summary -->
 
               <a href="/productList" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i

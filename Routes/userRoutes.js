@@ -78,6 +78,15 @@ userRoutes.put('/cart/incQty/:id', blockedUserCheck,  cartController.incQty)
 
 
 
+
+userRoutes.get('/checkout', blockedUserCheck, cartController.checkoutPage)
+// userRoutes.all('/checkout/orderSucess', blockedUserCheck, cartController.orderSucess)
+
+userRoutes.all('/orderSucess',blockedUserCheck, cartController.orderSucess)
+
+// userRoutes.get('/account/orderList/orderStatus/:id', blockedUserCheck, accountController.orderStatus)
+
+
 // userRoutes.post('/forgotOTP', userController.forgotUserDetailsInModel, userController.sendForgotOTP)
 
 
