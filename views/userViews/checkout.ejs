@@ -70,56 +70,58 @@
           </div>
           <!-- End .checkout -->
         </div>
-        <% userCartData.forEach(function(item, index) { %>
+       
 
           <aside class="col-lg-8">
             <div class="summary">
               <h3 class="summary-title">Your Order</h3>
 
+             <!-- Place the table outside of the loop -->
+<table class="table table-summary">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Total</th>
+    </tr>
+  </thead>
 
-              <table class="table table-summary">
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
+  <tbody>
+    <!-- Loop through userCartData to display each product -->
+    <% userCartData.forEach(function(item, index) { %>
+    <tr>
+      <td>
+        <a href="/productDetails/<%= item.productId._id %>">
+          <%= item.productId.productName %>
+        </a>
+      </td>
+      <td id="productPrice<%= index %>" class="price-col">₹<%= item.productId.productPrice %></td>
+    </tr>
+    <% }); %>
 
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href="/productDetails/<%= item.productId._id %>">
-                        <%= item.productId.productName %>
-                      </a>
-                    </td>
-                    <td id="productPrice<%= index %>" class="price-col">₹<%= item.productId.productPrice %>
-                    </td>
-                  </tr>
+    <!-- Display Subtotal -->
+    <tr class="summary-subtotal">
+      <td>Subtotal:</td>
+      <td>
+        <%= grandTotal %>
+      </td>
+    </tr>
 
-                  <!-- <tr>
-                    <td><a href="#">Blue utility pinafore denimdress</a></td>
-                    <td>$76,00</td>
-                  </tr> -->
-                  <tr class="summary-subtotal">
-                    <td>Subtotal:</td>
-                    <td>
-                      <%= grandTotal %>
-                    </td>
-                  </tr>
-                  <!-- End .summary-subtotal -->
-                  <tr>
-                    <td>Shipping:</td>
-                    <td>Free shipping</td>
-                  </tr>
-                  <tr class="summary-total">
-                    <td>Total:</td>
-                    <td>
-                      <%= grandTotal %>
-                    </td>
-                  </tr>
-                  <!-- End .summary-total -->
-                </tbody>
-              </table>
+    <!-- Display Shipping -->
+    <tr>
+      <td>Shipping:</td>
+      <td>Free shipping</td>
+    </tr>
+
+    <!-- Display Total -->
+    <tr class="summary-total">
+      <td>Total:</td>
+      <td>
+        <%= grandTotal %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
               <!-- End .table table-summary -->
 
               <div class="accordion-summary" id="accordion-payment">
@@ -243,7 +245,7 @@
             </div>
             <!-- End .summary -->
           </aside>
-          <% }); %>
+          
             <!-- End .col-lg-3 -->
       </div>
       <!-- End .row -->

@@ -1,117 +1,88 @@
 <%- include('../partials/header') %>
 
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title text-light">Thank You for Your Order<span class="text-primary">BXXY</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
 
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb bg-transparent">
+                <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" class="text-secondary">Shop</a></li>
+                <li class="breadcrumb-item active text-primary" aria-current="page">Success Page</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
 
-
-
-
-
-
-    <main class="main">
-        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-            <div class="container">
-                <h1 class="page-title">Your Order Sucess<span>BXXY</span></h1>
-            </div><!-- End .container -->
-        </div><!-- End .page-header -->
-        <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <div class="container">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sucess Page</li>
-                </ol>
-            </div><!-- End .container -->
-        </nav><!-- End .breadcrumb-nav -->
-
-
-
-
-
-
-
-
-
-
-
-        <style>
-            /* Add your custom styles here */
-            .product-img {
-                max-width: 150px;
-                height: auto;
-                border: 2px solid #ccc;
-                border-radius: 5px;
-            }
-
-            .order-details {
-                margin-top: 20px;
-                text-align: left;
-            }
-
-            .invoice-section {
-                margin-top: 50px;
-                text-align: center;
-            }
-        </style>
-        </head>
-
-        <body>
-
-            <div class="container mt-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Order Confirmed</h2>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div>
-                                <img src="assets/6.webp" alt="Product Image" class="product-img">
-                            </div>
-                            <div class="ml-4">
-                                <h4>Product Name</h4>
-                                <p>Puma Shoes</p>
-                                <p>Order ID: #123456</p>
-                            </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row userInfo">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="thanxContent text-center bg-light p-4 rounded">
+                            <h1 class="display-4 text-primary mb-3">
+                                Awesome!
+                                <a href="/account/orderList/orderStatus/<%= orderData._id %>"
+                                    class="text-secondary">#<%= orderData.orderNumber %></a>
+                            </h1>
+                            <h4 class="h5 text-secondary">Your order is confirmed. We'll notify you once it's shipped!
+                            </h4>
                         </div>
-                        <div class="order-details">
-                            <h5>Delivery Address:</h5>
-                            <p>Brototype ramNager Coimbaotpore</p>
-                            <button class="btn btn-primary">Continue to Shipping</button>
+
+                        <div class="cartContent table-responsive w-100 mt-4 mx-auto">
+                            <table class="table table-hover">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th colspan="2">
+                                            Items to be Shipped
+                                        </th>
+                                        <th style="width: 15%"></th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <% orderCartData.forEach(function(item) { %>
+                                        <tr>
+                                            <td class="text-center">
+                                                <div>
+                                                    <a href="product-details.html">
+                                                        <img alt="img" src="/upload/<%= item.productId.productImage1 %>"
+                                                            class="img-fluid rounded" style="max-width: 100px; max-height: 100px;" />
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="CartDescription">
+                                                    <h4 class="h6">
+                                                        <a href="product-details.html" class="text-dark"><%= item.productId.productName %></a>
+                                                    </h4>
+                                                    <p class="mb-0 text-secondary"><span>₹<%= item.productId.productPrice %> X
+                                                            <%= item.productQuantity %></span></p>
+                                                </div>
+                                            </td>
+                                            <td class="text-center text-dark">₹<%= item.totalCostPerProduct %></td>
+                                        </tr>
+                                    <% }); %>
+                                    
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="col-md-6 invoice-section">
-                        <h3>Invoice</h3>
-                        <p>Order Total: $100</p>
-                        <button class="btn btn-success">Download Invoice</button>
+                        
+                        <div class="col-lg-12 text-center mt-4">
+                            <a href="/productList" class="btn btn-outline-primary btn-lg mr-3">Continue Shopping</a>
+                            <a href="/invoice/download" class="btn btn-success btn-lg">Download Invoice</a>
+                        </div>
+                        <div class="col-lg-12 text-center mt-4">
+                           <br>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</main>
 
-
-
-
-
-
-
-
-
-    </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>

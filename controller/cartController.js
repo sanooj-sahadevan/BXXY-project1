@@ -56,7 +56,7 @@ const addToCart = async (req, res) => {
   console.log(req.session.currentUser);
   try {
     let existingProduct = await cartCollection.findOne({
-      userId: req.session.currentUser,
+      userId: req.session.currentUser._id,
       productId: req.params.id,
     });
 
@@ -69,7 +69,7 @@ const addToCart = async (req, res) => {
       await cartCollection.create({
         userId: req.session.currentUser._id,
         productId: req.params.id,
-        productQuantity: req.body.productQuantity || 1,
+        productQuantity: req.body.productQuantity,
         currentUser: req.session.currentUser,
         user: req.body.user,
       });
@@ -134,23 +134,23 @@ const incQty = async (req, res) => {
 
 const checkoutPage = async (req, res) => {
   try {
-   
+
     let cartData = await cartCollection.find({ userId: req.session.currentUser._id, productId: req.params.id, })
       .populate("productId");
-      let addressData = await profileCollection.find({
-        userId: req.session.currentUser._id,
-      })
-      
+    let addressData = await profileCollection.find({
+      userId: req.session.currentUser._id,
+    })
 
-      req.session.currentOrder = await orderCollection.create({
-        userId: req.session.currentUser._id,
-        orderNumber: (await orderCollection.countDocuments()) + 1,
-        orderDate: new Date(),
-        addressChosen: "lalal", //default address
-        cartData: await grandTotal(req),
-        grandTotalCost: req.session.grandTotal,
-      });
-    
+
+    req.session.currentOrder = await orderCollection.create({
+      userId: req.session.currentUser._id,
+      orderNumber: (await orderCollection.countDocuments()) + 1,
+      orderDate: new Date(),
+      addressChosen: "lalal", //default address
+      cartData: await grandTotal(req),
+      grandTotalCost: req.session.grandTotal,
+    });
+
 
 
     let userCartData = await grandTotal(req);
@@ -169,27 +169,44 @@ const checkoutPage = async (req, res) => {
 
 
 
-const orderSucess = async (req, res) => {
-  // let cartData = await cartCollection.find({ userId: req.session.currentUser._id })
+// const orderSucess = async (req, res) => {
+//   try {
 
-  req.session.currentOrder = await orderCollection.create({
-    userId: req.session.currentUser._id,
-    orderNumber: (await orderCollection.countDocuments()) + 1,
-    orderDate: new Date(),
-    // addressChosen: JSON.parse(JSON.stringify(addressData[0])), //default address
-    cartData: await grandTotal(req),
-    grandTotalCost: req.session.grandTotal,
-  });
+//     await orderCollection.updateOne(
+//       { _id: req.session.currentOrder._id },
+//       {
+//         $set: {
+//           paymentId: "generatedAtDelivery",
+//           paymentType: "COD",
+//         },
+//       }
+//     );
+//     // res.json({ success: true });
+
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+
+
+
+const postOrderSucess = async (req, res) => {
+  let cartData = await cartCollection
+    .find({ userId: req.session.currentUser._id })
+    .populate("productId");
+
+    
+  // console.log("rendering next");
   res.render("userViews/orderSucess", {
-    user: req.body.user,
-    // orderCartData: cartData,
-    // orderData: req.session.currentOrder,
+    orderCartData: cartData,
+    orderData: req.session.currentOrder,user: req.body.user,currentUser: req.session.currentUser,
   });
 
-  // await cartCollection.deleteMany({ userId: req.session.currentUser._id });
-  // console.log("deleted");
-}
-
+  //delete the cart- since the order is placed
+//   await cartCollection.deleteMany({ userId: req.session.currentUser, })
+//   console.log("deleting finished");
+ }
 
 
 
@@ -200,5 +217,5 @@ module.exports = {
   deleteFromCart,
   decQty,
   incQty,
-  checkoutPage, orderSucess
+  checkoutPage, postOrderSucess
 };
