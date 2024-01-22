@@ -1,8 +1,12 @@
 const isLogout = async (req, res, next) => {
   console.log('authin');
+  req.session.user= false,
+  req.session.currentuser = false
     req.session.destroy();
-    res.redirect("/");
+
+  
     console.log("logout");
+    next()
   };
   
   

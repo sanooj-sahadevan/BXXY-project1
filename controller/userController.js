@@ -8,6 +8,7 @@ const userModels = require("../models/userModels");
 const cartCollection = require("../controller/cartController.js")
 
 const userPage = async (req, res) => {
+  console.log();
   res.render("userViews/landingpage", { user: req.session.user });
 };
 
@@ -66,7 +67,6 @@ const verifyLogin = async (req, res) => {
 const userDashboard = async (req, res) => {
   res.clearCookie("userToken");
 
-  req.session.destroy();
   res.redirect("/");
   console.log("logout");
 };
@@ -263,18 +263,6 @@ const productspage = async (req, res) => {
 
 
 
-const orderSucess =  async (req, res) => {
-  let cartData = await cartCollection.find({ userId: req.session.currentUser._id })
-   
-
-  res.render("userViews/orderSucess", {
-    orderCartData: cartData,
-    orderData: req.session.currentOrder,
-  });
-
-  await cartCollection.deleteMany({ userId: req.session.currentUser._id });
-  console.log("deleted");
-}
 
 
 

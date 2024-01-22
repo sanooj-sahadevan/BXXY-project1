@@ -34,13 +34,14 @@ userRoutes.get('/resendOTP', userController.otpPage)
 
 
 
-userRoutes.get('/home',userController.userPage)  
+userRoutes.get('/homee',userController.userPage)  
 userRoutes.post('/login',userController.verifyLogin)
 
 
 
 userRoutes.get('/productList',   userController.productspage)
 userRoutes.get('/productDetails/:id',blockedUserCheck, userController.productDetils)
+
 
 
 userRoutes.get('/forgotPasswordPage',  userController.forgotPasswordPage)
@@ -52,9 +53,31 @@ userRoutes.post('/forgotPasswordReset', userController.forgotPasswordReset)
 
 
 userRoutes.get('/profile/:id', blockedUserCheck,  accountController.profilePage)
+userRoutes.get('/profile/orderStatus/:id', blockedUserCheck,  accountController.orderStatus)
+userRoutes.put('/profile/orderStatus/cancelOrder/:id', blockedUserCheck,  accountController.cancelOrder )
+
+
+
+// userRoutes.get('/myAddress', blockedUserCheck,  accountController.myAddress)
+
+
+
 userRoutes.get('/manageAdrressPage', blockedUserCheck, accountController.addAddress)
-userRoutes.post('/manageAdrress', blockedUserCheck, accountController.addAddressPost)
-userRoutes.post('/manageAdrress', blockedUserCheck, accountController.addAddressPost)
+userRoutes.post('/manageAddress', blockedUserCheck, accountController.addAddressPost)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 userRoutes.get('/changePassword', blockedUserCheck, accountController.changePassword)
@@ -87,6 +110,8 @@ userRoutes.get('/checkout', blockedUserCheck, cartController.checkoutPage)
 
 
 userRoutes.all('/orderSucess', blockedUserCheck, cartController.postOrderSucess)
+
+
 
 // userRoutes.get('/account/orderList/orderStatus/:id', blockedUserCheck, accountController.orderStatus)
 

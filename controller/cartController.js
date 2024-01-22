@@ -35,6 +35,8 @@ async function grandTotal(req) {
   }
 }
 
+
+
 const cart = async (req, res) => {
   try {
     let userCartData = await grandTotal(req);
@@ -203,9 +205,9 @@ const postOrderSucess = async (req, res) => {
     orderData: req.session.currentOrder,user: req.body.user,currentUser: req.session.currentUser,
   });
 
-  //delete the cart- since the order is placed
-//   await cartCollection.deleteMany({ userId: req.session.currentUser, })
-//   console.log("deleting finished");
+  // delete the cart- since the order is placed
+  await cartCollection.deleteMany({ userId: req.session.currentUser, })
+  console.log("deleting finished");
  }
 
 

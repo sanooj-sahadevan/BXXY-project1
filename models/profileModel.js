@@ -8,7 +8,8 @@ const addressSchema = new mongoose.Schema(
     lastName: { type: String, required: true },
     addressLine1: { type: String, required: true },
     addressLine2: { type: String, required: true },
-    phone: { type: Number, required: true },
+    postcode: { type: Number, required: true },
+    phone :  { type: Number, required: true },
   },
   { strictPopulate: false }
 );

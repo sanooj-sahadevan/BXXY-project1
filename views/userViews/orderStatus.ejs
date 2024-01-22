@@ -1,0 +1,157 @@
+<%- include('../partials/header') %>
+
+    <main class="main">
+        <div class="page-content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9 col-md-9 col-sm-7">
+                        <div class="row userInfo">
+                            <div class="col-lg-12">
+                                <h2 class="block-title-2">Your Order Status</h2>
+                            </div>
+                    
+                            <div class="statusContent">
+                                <div class="col-sm-12">
+                                    <div class="statusTop">
+                                        <p><strong>Status:</strong></p>
+                                        <p><%= orderData.orderStatus %></p>
+                                        <p><strong>Order Date:</strong> <%= orderData.orderDate %></p>
+                                        <p><strong>Order Number:</strong> #<%= orderData.orderNumber %></p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="order-box">
+                                            <div class="order-box-header">Address</div>
+                                            <!-- Your address content goes here -->
+                                        </div>
+                                    </div>
+                    
+                                    <div class="col-sm-6">
+                                        <div class="order-box">
+                                            <div class="order-box-header">Payment Method</div>
+                                            <div class="order-box-content">
+                                                <p><strong><%= orderData.paymentType %></strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-sm-12">
+                                    <div class="order-box">
+                                        <div id="cancelledBtn" style="display: none;" class="alert alert-danger mt-3">This order has been cancelled</div>
+                                        <% if (orderData.isCancelled) { %>
+                                            <button class="btn btn-danger btn-sm btn-block mt-3" disabled>This order has been cancelled</button>
+                                        <% } else { %>
+                                            <button id="cancelBtn" class="btn btn-danger btn-sm btn-block mt-3" onclick="cancelOrder('<%= orderData._id %>')">Cancel this order</button>
+                                        <% } %>
+                                    </div>
+                    
+                                    <div class="gap mt-4"></div>
+                    
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-sm-12 clearfix">
+                        <div class="order-box">
+                            <div class="order-box-header text-center" style="font-size: 20px; font-weight: bold;">Order Items</div>
+                            <div class="order-box-content">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered order-details-cart">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 15%;">Product Image</th>
+                                                <th scope="col" style="width: 35%;">Product Name</th>
+                                                <th scope="col" style="width: 15%;">Quantity</th>
+                                                <th scope="col" style="width: 20%;">Total Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% orderData.cartData.forEach(cartItem=> { %>
+                                                <tr class="cartProduct">
+                                                    <td class="cartProductThumb">
+                                                        <div style="max-width: 100px;">
+                                                            <a href="/productDetails/<%= cartItem.productId._id %>">
+                                                                <img alt="Product Image"
+                                                                    src="/upload/<%= cartItem.productId.productImage1 %>"
+                                                                    style="max-width: 100%; height: auto;" />
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="miniCartDescription text-center" style="font-size: 10px;">
+                                                            <h4>
+                                                                <a href="/productDetails/<%= cartItem.productId._id %>">
+                                                                    <%= cartItem.productId.productName %>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                    </td>
+                                                    <td><a style="font-size: 14px; text-align: center;">X<%= cartItem.productQuantity %></a></td>
+                                                    <td><span style="font-size: 14px; text-align: center;">₹<%= cartItem.totalCostPerProduct %></span></td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+        </div>
+        </div>
+        </div>
+    </main><!-- End .main -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        async function cancelOrder(orderId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, cancel it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/profile/orderStatus/cancelOrder/' + orderId, { method: 'PUT' }).then(d => console.log(d));
+                    let cancelBtnElement = document.getElementById('cancelBtn');
+                    let cancelledBtnElement = document.getElementById('cancelledBtn');
+
+                    Swal.fire({
+                        title: "Cancelled!",
+                        text: "Your order has been cancelled.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
+    </script>
+
+    <%- include('../partials/footer') %>

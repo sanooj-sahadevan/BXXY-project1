@@ -9,8 +9,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="path/to/bootstrap.min.css"> -->
-       
-        <!-- <title>Your Form</title>
+
+    <!-- <title>Your Form</title>
     </head>
 
     <body>
@@ -97,76 +97,189 @@
         <!-- ======================================================================================================== -->
 
 
-       
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-7">
+                <h1 class="section-title-inner">
+                    <span><i class="fa fa-map-marker"></i> Add Your addresses </span>
+                </h1>
 
+                <div class="row userInfo">
+                    <div class="col-lg-12 col-xs-12">
+                        <h2 class="block-title-2">
+                            To add a new address, please fill out the form below.
+                        </h2>
+
+                        <p class="required"><sup>*</sup> Required field</p>
+                    </div>
+
+                    <form action="/account/addAddress" method="POST">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group required">
+                                <label for="InputName">First Name <sup>*</sup> </label>
+                                <input required name="firstName" type="text" class="form-control" id="InputName"
+                                    placeholder="First Name" />
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="InputLastName">Last Name <sup>*</sup> </label>
+                                <input required name="lastName" type="text" class="form-control" id="InputLastName"
+                                    placeholder="Last Name" />
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="InputAddress">Address- Line 1 <sup>*</sup> </label>
+                                <input required name="addressLine1" type="text" class="form-control" id="InputAddress"
+                                    placeholder="Address" />
+                            </div>
+                            <div class="form-group">
+                                <label for="InputAddress2">Address- Line 2 <sup>*</sup> </label>
+                                <input required name="addressLine2" type="text" class="form-control" id="InputAddress2"
+                                    placeholder="Address" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number<sup>*</sup> </label>
+                                <input required name="phone" type="text" class="form-control" id="phone"
+                                    placeholder="Phone Number" />
+                            </div>
+                            <div class="form-group required">
+                                <label for="addressAlias">Please assign an address title for future reference.
+                                    <sup>*</sup></label>
+                                <input required type="text" value="My address" name="addressTitle" class="form-control"
+                                    id="addressAlias" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-xs-12 clearfix">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-map-marker"></i> Save Address
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="col-lg-12 col-xs-12 clearfix">
+                        <ul class="pager">
+                            <li class="previous pull-right">
+                                <a href="index.html">
+                                    <i class="fa fa-home"></i> Go to Shop
+                                </a>
+                            </li>
+                            <li class="next pull-left">
+                                <a href="my-address.html">&larr; Back to My Address</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/row end-->
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-5"></div>
+        </div>
+        <!--/row-->
+
+
+
+
+
+
+
+
+
+
+        <!-- ======================================================================================================= -->
+
+        <div class="page-content">
+            <div class="checkout">
+                <div class="container">
+                    <div class="checkout-discount">
+
+                    </div><!-- End .checkout-discount -->
+                    <form action="/manageAddress" method="POST">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <h2 class="checkout-title">Add Adreess</h2><!-- End .checkout-title -->
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>First Name *</label>
+                                        <input type="text" class="form-control" required id="InputName"
+                                            placeholder="First Name" name="firstName">
+                                    </div><!-- End .col-sm-6 -->
+
+
+
+                                    <div class="col-sm-6">
+                                        <label>Last Name *</label>
+                                        <input type="text" class="form-control" name="lastName" id="InputName"
+                                            placeholder="Last Name" required>
+                                    </div><!-- End .col-sm-6 -->
+                                </div><!-- End .row -->
+
+
+
+                                <label>Street address *</label>
+                                <!-- <input type="text" class="form-control" placeholder="House number and Street name"
+                                    required> -->
+                                <input type="text" name="addressLine1" id="InputAddress" class="form-control"
+                                    placeholder="Appartments, suite, unit etc ..." required>
+
+                                <label>State / County *</label>
+                                <!-- <input type="text" class="form-control" placeholder="House number and Street name"
+                                    required> -->
+                                <input type="text" name="addressLine2" id="InputAddress" class="form-control"
+                                    placeholder="district, state, unit etc ." required>
+
+
+
+
+
+
+
+                                <div class="row">
+                                    <label for="addressAlias">Please assign an address title for future reference.
+                                        <sup>*</sup></label>
+                                    <input required type="text" value="My address" name="addressTitle"
+                                        class="form-control" id="addressAlias" />
+                                </div>
+                            </div><!-- End .row -->
+
+
+
+
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Postcode / ZIP *</label>
+                                    <input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postcode" required>
+                                </div><!-- End .col-sm-6 -->
+
+                                <div class="col-sm-6">
+                                    <label>Phone *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number"
+                                        required>
+                                </div><!-- End .col-sm-6 -->
+
+
+
+
+
+
+
+
+
+                                <a href="/manageAddress">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </a>
+                                </div><!-- End .col-lg-9 -->
                                 
-                      
 
+                        </div><!-- End .row -->
+                    </form>
 
-        
-
-
-
-<!-- ======================================================================================================= -->
-
-<div class="page-content">
-<div class="checkout">
-    <div class="container">      
-<div class="checkout-discount">
-
-</div><!-- End .checkout-discount -->
-<form action="/manageAddress" method="POST"><div class="row">
-    <div class="col-lg-9">
-        <h2 class="checkout-title">Add Adress</h2><!-- End .checkout-title -->
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>First Name *</label>
-                    <input type="text" class="form-control" required>
-                </div><!-- End .col-sm-6 -->
-
-                <div class="col-sm-6">
-                    <label>Last Name *</label>
-                    <input type="text" class="form-control" required>
-                </div><!-- End .col-sm-6 -->
-            </div><!-- End .row -->
-
-            <!-- <label>Company Name (Optional)</label> -->
-            <!-- <input type="text" class="form-control"> -->
-
-            <label>Country *</label>
-            <input type="text" class="form-control" required>
-
-            <label>Street address *</label>
-            <input type="text" class="form-control" placeholder="House number and Street name" required>
-            <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
-
-            
-
-                <div class="col-sm-6">
-                    <label>State / County *</label>
-                    <input type="text" class="form-control" required>
-                </div><!-- End .col-sm-6 -->
-            </div><!-- End .row -->
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Postcode / ZIP *</label>
-                    <input type="text" class="form-control" required>
-                </div><!-- End .col-sm-6 -->
-
-                <div class="col-sm-6">
-                    <label>Phone *</label>
-                    <input type="tel" class="form-control" required>
-                </div><!-- End .col-sm-6 -->   
-                <button type="submit" class="btn btn-primary">Sumbit</button>
-
-
-    </div><!-- End .col-lg-9 -->
-    
-    
-</div><!-- End .row -->
-</form>
-<!-- <aside>
+                    <div class="col-lg-12 clearfix">
+                        <ul class="pager">
+                            <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+                            <!-- <li class="next pull-left"><a href="/account">&larr; Back to My Account</a></li> -->
+                        </ul>
+                    </div>
+                    <!-- <aside>
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
@@ -182,11 +295,11 @@
 
 
 
-</div><!-- End .container -->
-</div><!-- End .checkout -->
-</div><!-- End .page-content -->
-</main><!-- End .main -->
-                            
+                </div><!-- End .container -->
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
 
 
 

@@ -1,196 +1,126 @@
-
 <%- include('../partials/header') %>
 
-<main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Profile<span>BXXY</span></h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-
-
-
-
-    <!-- ======================================================================================================== -->
-
-
-    <div class="page-content">
-        <div class="dashboard">
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg');">
             <div class="container">
-                <div class="row">
-                    <aside class="col-md-4 col-lg-3">
-                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                            <li class="nav-item">
-                                <br><br>
-                                <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
-                                    href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
-                                    aria-selected="true">User Detils</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/order_list" role="tab"></a>
-                            </li>
-                            
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
-                                    role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
-                            </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Addresse 1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Addresse 2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Addresse 3</a>
-                            </li>
+                <h1 class="page-title">Profile<span>BXXY</span></h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="/wallet" role="tab">Wallet</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/wallet" role="tab">Password</a>
-                            </li>
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
 
-                            <br>
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
 
 
-                            <!-- <a class="nav-link" href="/logout">Add Another Account</a> -->
-                            </li>
+                        <!DOCTYPE html>
+                        <html lang="en">
 
-                            <!-- <li class="nav-item">
-                                <button type="button" class="btn btn-dark">Add Another Account</button>
-                            </li> -->
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                            <link rel="stylesheet"
+                                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                            <title>Your Page Title</title>
+                        </head>
 
-                        </ul>
-                    </aside><!-- End .col-lg-3 -->
+                        <body>
 
-                    <aside class="col-md-4 col-lg-3">
-                        <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                            <li class="nav-item">
-                                <br><br>
-                                <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
-                                    href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                    aria-selected="true">detils</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/order_list" role="tab">Sanooj</a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
-                                    role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
-                            </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
-                                    Gandhipuram Coimbatore
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#addressModal">
+                                Open Address Box
+                            </button>
 
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
-                                    Gandhipuram Coimbatore
-
-                                </a>
-                            </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="/address_profile" role="tab">Brototype ramnagar
-                                    Gandhipuram Coimbatore
-
-                                </a>
-                            </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/wallet" role="tab">$200</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/wallet" role="tab">XXXXXXXXXXXXX <a
-                                        href="edit adress.html"></a> </a>
-                            </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </aside><!-- End .col-lg-3 -->
-                </div>
-
-
-                <style>
-                    /* Add your custom styles here */
-                    .orders-list {
-                        list-style: none;
-                        padding: 0;
-                    }
-
-                    .orders-list li {
-                        margin-bottom: 10px;
-                        border: 1px solid #ccc;
-                        padding: 10px;
-                    }
-                </style>
-                </head>
-
-                <body>
-
-                    <div class="container mt-4">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <!-- Add new product buttons -->
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <a href="/manageAdrressPage" class="btn btn-success btn-sm rounded mr-2 mb-2">Manage Address</a>
-                                    <a href="/changePassword" class="btn btn-success btn-sm rounded mr-2 mb-2">Change Password</a>
-                                    <a href="/editProfile" class="btn btn-success btn-sm rounded mb-2">Edit your Detils</a>
+                            <!-- Address Modal -->
+                            <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addressModalLabel">Address Box</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="w100 clearfix">
+                                                <% addressData.forEach(function(address) { %>
+                                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title"><strong><%= address.addressTitle %></strong></h3>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <ul>
+                                                                    <li><span class="address-name"> <strong><%= address.firstName %> <%= address.lastName %></strong></span></li>
+                                                                    <li><span class="address-line1"><%= address.addressLine1 %></span></li>
+                                                                    <li><span class="address-line2"><%= address.addressLine2 %></span></li>
+                                                                    <li><span> <strong>Mobile</strong> : <%= address.phone %></span></li>
+                                                                </ul>
+                                                            </div>
+                                                            <!-- New Panel Footer Section -->
+                                                            <div class="panel-footer panel-footer-address">
+                                                                <a href="/account/editAddress/<%= address._id %>" class="btn btn-sm btn-success">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                                <a class="btn btn-sm btn-danger" onclick="return confirm('Do you want to delete?')" href="/account/deleteAddress/<%= address._id %>">
+                                                                    <i class="fa fa-minus-circle"></i> Delete
+                                                                </a>
+                                                            </div>
+                                                            <!-- End New Panel Footer Section -->
+                                                        </div>
+                                                    </div>
+                                                <% }); %>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <!-- Add additional buttons if needed -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            
+
+                            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                            <script
+                                src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+                            <script
+                                src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                        </body>
+
+                        </html>
+
+                        <!--/.w100-->
+<aside>
+                        <div class="col-lg-12 clearfix">
+                            <a class="btn btn-primary" href="/manageAdrressPage">
+                                <i class="fa fa-plus-circle"></i> Add New Address
+                            </a>
+                        </div>
+                    </aside>
+
+                        <div class="col-lg-12 clearfix">
+                            <ul class="pager">
+                                <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a>
+                                </li>
+                                <!-- <li class="next pull-left"><a href="/account">&larr; Back to My Account</a></li> -->
+                            </ul>
                         </div>
                     </div>
-                    
+                    <!-- change into ejs div -->
+                </div>
             </div>
-        </div><!-- End .col-lg-9 -->
-    </div><!-- End .row -->
 
 
 
@@ -201,144 +131,115 @@
 
 
 
-    <!-- ======================================================================================================= -->
 
 
 
-    <div class="page-content">
-        <div class="cart">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <table class="table table-cart table-mobile">
-                            <thead>
-                                <tr>
-                                    <h3>Pervious orders</h3>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover custom-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>No. of Items</th>
+                            <th>Invoice</th>
+                            <th>Payment Method</th>
+                            <th>Price</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orderData.forEach((order, index)=> { %>
+                            <tr class="<%= index % 2 === 0 ? 'even' : 'odd' %>">
+                                <td>#<%= order.orderNumber %>
+                                </td>
+                                <td>
+                                    <%= order.cartData.length %> <small>items</small>
+                                </td>
+                                <td><a target="_blank">-</a></td>
+                                <td>
+                                    <%= order.paymentType %> COD
+                                </td>
+                                <td>$<%= order.grandTotalCost %>
+                                </td>
+                                <!-- <td>
+                                            <% order.cartData.forEach(cartItem => { %>
+                                                <div>
+                                                    <img src="/upload/<%= cartItem.productId.productImage1 %>" alt="Product Image"
+                                                        style="max-width: 50px; max-height: 50px;">
+                                                    <%= cartItem.productId.productName %>
+                                                </div>
+                                            <% }); %>
+                                        </td> -->
+                                <td>
+                                    <ul>
+                                        <% order.cartData.forEach(cartItem=> { %>
+                                            <li>
+                                                <%= cartItem.productId.productName %>
+                                            </li>
+                                            <% }); %>
+                                    </ul>
+                                </td>
+                                <td><span class="label label-primary">
+                                        <%= order.orderStatus %>
+                                    </span></td>
+                                <td>
+                                    <a href="/profile/orderStatus/<%= order._id %>" class="btn btn-primary btn-sm">View
+                                        Status</a>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
 
-                            <tbody>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/product_images_2/thumb_image4.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
-
-                                            <h3 class="product-title">
-                                                <a href="#">Beige knitted elastic runner shoes</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$84.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input class="form-control" value="1" min="1" max="10" step="1"
-                                                data-decimals="0" required>
-
-                                            <!-- <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required> -->
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$84.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i
-                                                class="icon-close"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
-
-                                            <h3 class="product-title">
-                                                <a href="#">Blue utility pinafore denim dress</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$76.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input class="form-control" value="1" min="1" max="10" step="1"
-                                                data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$76.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i
-                                                class="icon-close"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
-
-                                            <h3 class="product-title">
-                                                <a href="#">Blue utility pinafore denim dress</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$76.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input class="form-control" value="1" min="1" max="10" step="1"
-                                                data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$76.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i
-                                                class="icon-close"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/product_images_2/thumb_image3.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
-
-                                            <h3 class="product-title">
-                                                <a href="#">Blue utility pinafore denim dress</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$76.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input class="form-control" value="1" min="1" max="10" step="1"
-                                                data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$76.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i
-                                                class="icon-close"></i></button></td>
-                                </tr>
-                            </tbody>
-                        </table><!-- End .table table-wishlist -->
-
-                    </div><!-- End .cart-bottom -->
-                </div><!-- End .col-lg-9 -->
-
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div><!-- End .cart -->
-</div><!-- End .page-content -->
-</main><!-- End .main -->
+        </div>
+        </div>
+        </div>
+    </main>
 
 
-<%- include('../partials/footer') %>
+
+    <style>
+        .custom-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            border: 1px solid #ddd;
+            /* Default border color for cells */
+            padding: 8px;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background-color: #343a40;
+            /* Dark background color for header cells */
+            color: white;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+            /* Background color for even rows */
+        }
+
+        .custom-table tr:hover {
+            background-color: #ddd;
+            /* Hover background color */
+        }
+
+        .custom-table td {
+            border-bottom: 2px solid #ddd;
+            /* Separate horizontal lines color */
+        }
+
+        .custom-table th:not(:last-child),
+        .custom-table td:not(:last-child) {
+            border-right: 2px solid #ddd;
+            /* Separate vertical lines color */
+        }
+    </style>
+
+    <%- include('../partials/footer') %>
