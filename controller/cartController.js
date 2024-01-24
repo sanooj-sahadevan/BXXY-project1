@@ -2,8 +2,8 @@ const addressCollection = require("../controller/profileController.js");
 const cartCollection = require("../models/cartModel.js");
 const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
-const orderCollection = require("../models/orderModel.js")
-const profileCollection = require("../models/profileModel.js")
+const orderCollection = require("../models/orderModel.js");
+const profileCollection = require("../models/profileModel.js");
 
 async function grandTotal(req) {
   try {
@@ -24,6 +24,7 @@ async function grandTotal(req) {
         }
       );
     }
+
     userCartData = await cartCollection
       .find({ userId: req.session.currentUser._id })
       .populate("productId");
@@ -35,17 +36,24 @@ async function grandTotal(req) {
   }
 }
 
-
-
 const cart = async (req, res) => {
   try {
+
+
+    let addressData = await profileCollection.find({
+      userId: req.session.currentUser._id,
+    });
+
     let userCartData = await grandTotal(req);
     console.log(userCartData);
     console.log(req.session.currentUser);
     res.render("userViews/cart", {
       user: req.body.user,
+      addressData: req.session.addressData,
+      addressData,
       currentUser: req.session.currentUser,
-      userCartData, grandTotal: req.session.grandTotal,
+      userCartData,
+      grandTotal: req.session.grandTotal,
     });
     console.log(req.session.currentUser);
   } catch (error) {
@@ -136,81 +144,60 @@ const incQty = async (req, res) => {
 
 const checkoutPage = async (req, res) => {
   try {
-
-    let cartData = await cartCollection.find({ userId: req.session.currentUser._id, productId: req.params.id, })
+    let cartData = await cartCollection
+      .find({ userId: req.session.currentUser._id, productId: req.params.id })
       .populate("productId");
+
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
-    })
-
+    });
 
     req.session.currentOrder = await orderCollection.create({
       userId: req.session.currentUser._id,
       orderNumber: (await orderCollection.countDocuments()) + 1,
       orderDate: new Date(),
-      addressChosen: "lalal", //default address
-      cartData: await grandTotal(req),
+      addressChosen: JSON.parse(JSON.stringify(addressData[0])), //default address      cartData: await grandTotal(req),
       grandTotalCost: req.session.grandTotal,
     });
 
-
-
     let userCartData = await grandTotal(req);
 
-
-
+console.log(addressData);
     res.render("userViews/checkout.ejs", {
       user: req.body.user,
       currentUser: req.session.currentUser,
-      grandTotal: req.session.grandTotal, userCartData, cartData
-    })
+      grandTotal: req.session.grandTotal,
+      userCartData,
+      cartData,
+      addressData: req.session.addressData,
+      addressData,
+    });
   } catch (error) {
     console.error(error);
   }
-}
-
-
-
-// const orderSucess = async (req, res) => {
-//   try {
-
-//     await orderCollection.updateOne(
-//       { _id: req.session.currentOrder._id },
-//       {
-//         $set: {
-//           paymentId: "generatedAtDelivery",
-//           paymentType: "COD",
-//         },
-//       }
-//     );
-//     // res.json({ success: true });
-
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-
+};
 
 
 const postOrderSucess = async (req, res) => {
   let cartData = await cartCollection
     .find({ userId: req.session.currentUser._id })
     .populate("productId");
-
-    
   // console.log("rendering next");
   res.render("userViews/orderSucess", {
     orderCartData: cartData,
-    orderData: req.session.currentOrder,user: req.body.user,currentUser: req.session.currentUser,
+    orderData: req.session.currentOrder,
+    user: req.body.user,
+    currentUser: req.session.currentUser,
+    addressData: req.session.addressData,
+      
   });
+ 
+
 
   // delete the cart- since the order is placed
-  await cartCollection.deleteMany({ userId: req.session.currentUser, })
+  await cartCollection.deleteMany({ userId: req.session.currentUser });
   console.log("deleting finished");
- }
-
-
+};
 
 module.exports = {
   cart,
@@ -219,5 +206,6 @@ module.exports = {
   deleteFromCart,
   decQty,
   incQty,
-  checkoutPage, postOrderSucess
+  checkoutPage,
+  postOrderSucess,
 };

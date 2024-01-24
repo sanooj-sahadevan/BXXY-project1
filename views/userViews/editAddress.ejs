@@ -1,0 +1,161 @@
+<%- include('../partials/header') %>
+
+
+    <main class="main">
+        <div class="page-content">
+            <div class="checkout">
+                <div class="container">
+
+
+
+
+                    <div class="row">
+                        <div class="col-lg-9">
+
+                            <h2 class="checkout-title">Edit Your addresses</h2><!-- End .checkout-title -->
+
+
+
+
+
+                            <div class="row">
+                                <form action="/editAddress/<%= existingAddress._id %>" method="POST">
+
+                                    <div class="col-lg-9">
+                                        <h2 class="checkout-title">Add Adreess</h2><!-- End .checkout-title -->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>First Name *</label>
+                                                <input type="text" class="form-control" required id="InputName"
+                                                    placeholder="First Name" name="firstName"
+                                                    value="<%= existingAddress.firstName %>">
+                                            </div><!-- End .col-sm-6 -->
+
+
+
+                                            <div class="col-sm-6">
+                                                <label>Last Name *</label>
+                                                <input type="text" class="form-control" name="lastName" id="InputName"
+                                                    placeholder="Last Name" value="<%= existingAddress.lastName %>"
+                                                    required>
+                                            </div><!-- End .col-sm-6 -->
+                                        </div><!-- End .row -->
+
+
+
+                                        <label>Street address *</label>
+                                        <!-- <input type="text" class="form-control" placeholder="House number and Street name"
+                                                    required> -->
+                                        <input type="text" name="addressLine1" id="InputAddress" class="form-control"
+                                            placeholder="Appartments, suite, unit etc ..."
+                                            value="<%= existingAddress.addressLine1 %>" required>
+
+                                        <label>State / County *</label>
+                                        <!-- <input type="text" class="form-control" placeholder="House number and Street name"
+                                                    required> -->
+                                        <input type="text" name="addressLine2" id="InputAddress" class="form-control"
+                                            placeholder="district, state, unit etc ."
+                                            value="<%= existingAddress.addressLine2 %>" required>
+
+
+
+
+
+
+
+                                        <div class="row">
+                                            <label for="addressAlias">Please assign an address title for future
+                                                reference.
+                                                <sup>*</sup></label>
+                                            <input required type="text" value="My address" name="addressTitle"
+                                                class="form-control" id="addressAlias"
+                                                value="<%= existingAddress.addressTitle %>" />
+                                        </div>
+                                    </div><!-- End .row -->
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Postcode / ZIP *</label>
+                                            <input type="text" class="form-control" id="postcode" name="postcode"
+                                                placeholder="Postcode" value="<%= existingAddress.postcode %>" required>
+                                        </div><!-- End .col-sm-6 -->
+
+                                        <div class="col-sm-6">
+                                            <label>Phone *</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone"
+                                                placeholder="Phone Number" value="<%= existingAddress.phone %>"
+                                                required>
+                                        </div><!-- End .col-sm-6 -->
+
+
+
+
+                                        <div class="col-lg-12 col-xs-12 clearfix">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-map-marker"></i> Save Address
+                                            </button>
+                                        </div>
+
+
+
+
+
+
+                                    </div><!-- End .col-lg-9 -->
+
+                                </form>
+                            </div><!-- End .row -->
+
+                            <div class="col-lg-12 col-xs-12 clearfix">
+                                <ul class="pager">
+                                    <li class="previous pull-right">
+                                        <a href="index.html">
+                                            <i class="fa fa-home"></i> Go to Shop
+                                        </a>
+                                    </li>
+                                    <li class="next pull-left">
+                                        <a href="my-address.html">&larr; Back to My Address</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!--/row end-->
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+                    </div>
+                    <!--/row-->
+
+
+
+
+
+
+
+
+
+
+
+                </div><!-- End .container -->
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <%- include('../partials/footer') %>

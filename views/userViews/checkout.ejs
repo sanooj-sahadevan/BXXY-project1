@@ -16,6 +16,27 @@
       </nav>
       <!-- End .breadcrumb-nav -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div class="row">
         <div class="col-lg-9">
           <div class="checkout">
@@ -28,105 +49,148 @@
             </div>
             <!-- End .checkout-discount -->
 
-            <form action="#">
-              <h2 class="checkout-title">Select address</h2>
-              <div class="accordion-summary" id="accordion">
-                <!-- Address 1 -->
-                <div class="card">
-                  <div class="card-header" id="heading-1">
-                    <h2 class="card-title">
-                      <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true"
-                        aria-controls="collapse-1">
-                        Address 1
-                      </a>
-                    </h2>
-                  </div>
-                  <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion">
-                    <div class="card-body">
-                      lalalalal
+            <body>
+  
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-9 col-md-9 col-sm-12">
+                    <div class="row userInfo">
+                      <div class="col-xs-12 col-sm-12">
+            
+                        <div class="w100 clearfix">
+                          <div class="row userInfo">
+            
+                            <div style="clear: both"></div>
+            
+                            <div class="onepage-checkout col-lg-12">
+                              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#BillingInformation"
+                                        aria-expanded="true" aria-controls="BillingInformation">
+                                        Billing and Shipping information
+                                      </a>
+                                    </h4>
+                                  </div>
+                                  <div id="BillingInformation" class="panel-collapse collapse in" role="tabpanel"
+                                    aria-labelledby="BillingInformation">
+                                    <div class="panel-body">
+            
+                                      <div style="clear: both"></div>
+            
+                                      <!-- Address Choosing Section -->
+                                      <div class="form-group required maxwidth300">
+                                        <label for="SelectAddress">Select Address <sup>*</sup></label>
+                                        <select class="form-control" required aria-required="true" id="SelectAddress"
+                                          name="chosenAddress">
+                                          <!-- Loop through your address data to populate the options -->
+                                          <% addressData.forEach(function(address) { %>
+                                            <option value="<%= address._id %>"><%= address.addressTitle %></option>
+                                          <% }); %>
+                                        </select>
+                                        <br>
+                                      </div>
+                                      <!-- End of Address Choosing Section -->
+            
+                                      <!-- Other Checkout Sections -->
+                                      <!-- Add your other checkout sections here -->
+            
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!--onepage-checkout-->
+                            </div>
+                          </div>
+                          <!--/row end-->
+                        </div>
+            
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- Address 2 -->
-                <div class="card">
-                  <div class="card-header" id="heading-2">
-                    <h2 class="card-title">
-                      <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false"
-                        aria-controls="collapse-2">
-                        Address 2
-                      </a>
-                    </h2>
-                  </div>
-                  <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion">
-                    <div class="card-body">
-                      lalalala
-                    </div>
+                    <!--/row end-->
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            
+              <!-- Include your other HTML, CSS, and JS code here -->
+            
+            </body>
+            
           </div>
           <!-- End .checkout -->
         </div>
-       
 
-          <aside class="col-lg-8">
-            <div class="summary">
-              <h3 class="summary-title">Your Order</h3>
+        <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-             <!-- Place the table outside of the loop -->
-<table class="table table-summary">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Total</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <!-- Loop through userCartData to display each product -->
-    <% userCartData.forEach(function(item, index) { %>
-    <tr>
-      <td>
-        <a href="/productDetails/<%= item.productId._id %>">
-          <%= item.productId.productName %>
-        </a>
-      </td>
-      <td id="productPrice<%= index %>" class="price-col">₹<%= item.productId.productPrice %></td>
-    </tr>
-    <% }); %>
 
-    <!-- Display Subtotal -->
-    <tr class="summary-subtotal">
-      <td>Subtotal:</td>
-      <td>
-        <%= grandTotal %>
-      </td>
-    </tr>
 
-    <!-- Display Shipping -->
-    <tr>
-      <td>Shipping:</td>
-      <td>Free shipping</td>
-    </tr>
 
-    <!-- Display Total -->
-    <tr class="summary-total">
-      <td>Total:</td>
-      <td>
-        <%= grandTotal %>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
-              <!-- End .table table-summary -->
 
-              <div class="accordion-summary" id="accordion-payment">
-                <div class="card">
-                  <!-- <div class="card-header" id="heading-1">
+
+        <!-- --------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+
+        <aside class="col-lg-8">
+          <div class="summary">
+            <h3 class="summary-title">Your Order</h3>
+
+            <!-- Place the table outside of the loop -->
+            <table class="table table-summary">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <!-- Loop through userCartData to display each product -->
+                <% userCartData.forEach(function(item, index) { %>
+                  <tr>
+                    <td>
+                      <a href="/productDetails/<%= item.productId._id %>">
+                        <%= item.productId.productName %>
+                      </a>
+                    </td>
+                    <td id="productPrice<%= index %>" class="price-col">₹<%= item.productId.productPrice %>
+                    </td>
+                  </tr>
+                  <% }); %>
+
+                    <!-- Display Subtotal -->
+                    <tr class="summary-subtotal">
+                      <td>Subtotal:</td>
+                      <td>
+                        <%= grandTotal %>
+                      </td>
+                    </tr>
+
+                    <!-- Display Shipping -->
+                    <tr>
+                      <td>Shipping:</td>
+                      <td>Free shipping</td>
+                    </tr>
+
+                    <!-- Display Total -->
+                    <tr class="summary-total">
+                      <td>Total:</td>
+                      <td>
+                        <%= grandTotal %>
+                      </td>
+                    </tr>
+              </tbody>
+            </table>
+
+            <!-- End .table table-summary -->
+
+            <div class="accordion-summary" id="accordion-payment">
+              <div class="card">
+                <!-- <div class="card-header" id="heading-1">
                     <h2 class="card-title">
                       <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true"
                         aria-controls="collapse-1">
@@ -134,8 +198,8 @@
                       </a>
                     </h2>
                   </div> -->
-                  <!-- End .card-header -->
-                  <!-- <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
+                <!-- End .card-header -->
+                <!-- <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
                     data-parent="#accordion-payment">
                     <div class="card-body">
                       Make your payment directly into our bank account. Please
@@ -145,11 +209,11 @@
                     </div>
                    
                   </div> -->
-                  <!-- End .collapse -->
-                </div>
-                <!-- End .card -->
+                <!-- End .collapse -->
+              </div>
+              <!-- End .card -->
 
-                <!-- <div class="card">
+              <!-- <div class="card">
                   <div class="card-header" id="heading-2">
                     <h2 class="card-title">
                       <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false"
@@ -158,8 +222,8 @@
                       </a>
                     </h2>
                   </div> -->
-                  <!-- End .card-header -->
-                  <!-- <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
+              <!-- End .card-header -->
+              <!-- <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
                     <div class="card-body">
                       Ipsum dolor sit amet, consectetuer adipiscing elit.
                       Donec odio. Quisque volutpat mattis eros. Nullam
@@ -167,33 +231,33 @@
                     </div>
                   
                   </div> -->
-                  <!-- End .collapse -->
-                <!-- </div> -->
-                <!-- End .card -->
+              <!-- End .collapse -->
+              <!-- </div> -->
+              <!-- End .card -->
 
-                <div class="card">
-                  <div class="card-header" id="heading-3">
-                    <h2 class="card-title">
-                      <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false"
-                        aria-controls="collapse-3">
-                        Cash on delivery
-                      </a>
-                    </h2>
-                  </div>
-                  <!-- End .card-header -->
-                  <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-                    <div class="card-body">
-                      Quisque volutpat mattis eros. Lorem ipsum dolor sit
-                      amet, consectetuer adipiscing elit. Donec odio. Quisque
-                      volutpat mattis eros.
-                    </div> 
-                    
-                  </div> 
-                  <!-- End .collapse -->
+              <div class="card">
+                <div class="card-header" id="heading-3">
+                  <h2 class="card-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false"
+                      aria-controls="collapse-3">
+                      Cash on delivery
+                    </a>
+                  </h2>
                 </div>
-                <!-- End .card -->
+                <!-- End .card-header -->
+                <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                  <div class="card-body">
+                    Quisque volutpat mattis eros. Lorem ipsum dolor sit
+                    amet, consectetuer adipiscing elit. Donec odio. Quisque
+                    volutpat mattis eros.
+                  </div>
 
-                <!-- <div class="card">
+                </div>
+                <!-- End .collapse -->
+              </div>
+              <!-- End .card -->
+
+              <!-- <div class="card">
                   <div class="card-header" id="heading-4">
                     <h2 class="card-title">
                       <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
@@ -214,7 +278,7 @@
                   </div>
                 </div> -->
 
-                <!-- <div class="card">
+              <!-- <div class="card">
                   <div class="card-header" id="heading-5">
                     <h2 class="card-title">
                       <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false"
@@ -234,24 +298,78 @@
                    
                   </div>
                 </div> -->
-              </div>
-
-              <a href="/orderSucess">
-                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                  <span class="btn-text">Place Order</span>
-                  <span class="btn-hover-text">Proceed to Checkout</span>
-                </button>
-              </a>
             </div>
-            <!-- End .summary -->
-          </aside>
-          
-            <!-- End .col-lg-3 -->
+
+            <a href="/orderSucess">
+              <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                <span class="btn-text">Place Order</span>
+                <span class="btn-hover-text">Proceed to Checkout</span>
+              </button>
+            </a>
+          </div>
+          <!-- End .summary -->
+        </aside>
+
+        <!-- End .col-lg-3 -->
       </div>
       <!-- End .row -->
     </div>
     <!-- End .container -->
   </main>
   <!-- End .main -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   <%- include('../partials/footer') %>

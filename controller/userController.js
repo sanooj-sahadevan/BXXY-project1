@@ -9,8 +9,13 @@ const cartCollection = require("../controller/cartController.js")
 
 const userPage = async (req, res) => {
   console.log();
+  if (req.session.admin) {
+    res.redirect("/adminHome")
+
+  } else {
   res.render("userViews/landingpage", { user: req.session.user });
-};
+}
+}
 
 const userLogin = async (req, res) => {
   console.log("1");

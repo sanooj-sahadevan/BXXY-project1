@@ -9,12 +9,15 @@ const userCollection = require("../models/userModels.js");
 
 const adminLogin = async (req, res) => {
   console.log("Admin1");
-  res.render("adminViews/login.ejs", { admin: req.session.admin });
+  if (req.session.admin) {
+    res.redirect('/')
+} else {
+  res.render("adminViews/login", { admin: req.session.admin });
 };
+}
 
 
 const validateAdmin = async (req, res) => {
-  console.log("1");
   const existingAdmin = await adminCollection.findOne({
     email: req.body.email,
     password: req.body.password,
@@ -23,7 +26,7 @@ const validateAdmin = async (req, res) => {
   if (existingAdmin) {
     console.log("2");
 
-    req.session.admin = true;
+     req.session.admin =  existingAdmin 
     res.redirect("/adminHome");
   } else {
     req.session.adminInvalidCredentials = true;
@@ -34,7 +37,7 @@ const validateAdmin = async (req, res) => {
 
 const adminHome = async (req, res) => {
   if (req.session.admin) {
-    res.render("adminViews/dashboard.ejs");
+    res.render("adminViews/dashboard");
   } else {
     console.log("session not work");
     res.redirect("/admin");

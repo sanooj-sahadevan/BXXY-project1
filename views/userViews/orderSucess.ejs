@@ -1,88 +1,108 @@
 <%- include('../partials/header') %>
 
-<main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+
+
+
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title text-light">Thank You for Your Order<span class="text-primary">BXXY</span></h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb bg-transparent">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="text-secondary">Shop</a></li>
+                    <li class="breadcrumb-item active text-primary" aria-current="page">Success Page</li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
         <div class="container">
-            <h1 class="page-title text-light">Thank You for Your Order<span class="text-primary">BXXY</span></h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row userInfo">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="thanxContent text-center bg-light p-4 rounded">
+                                <h1 class="display-4 text-primary mb-3">
+                                    Awesome!
+                                    <a href="/account/orderList/orderStatus/<%= orderData._id %>"
+                                        class="text-secondary">#<%= orderData.orderNumber %></a>
+                                </h1>
+                                <h4 class="h5 text-secondary">Your order is confirmed. We'll notify you once it's
+                                    shipped!
+                                </h4>
+                            </div>
 
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb bg-transparent">
-                <li class="breadcrumb-item"><a href="index.html" class="text-secondary">Home</a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-secondary">Shop</a></li>
-                <li class="breadcrumb-item active text-primary" aria-current="page">Success Page</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row userInfo">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="thanxContent text-center bg-light p-4 rounded">
-                            <h1 class="display-4 text-primary mb-3">
-                                Awesome!
-                                <a href="/account/orderList/orderStatus/<%= orderData._id %>"
-                                    class="text-secondary">#<%= orderData.orderNumber %></a>
-                            </h1>
-                            <h4 class="h5 text-secondary">Your order is confirmed. We'll notify you once it's shipped!
-                            </h4>
-                        </div>
-
-                        <div class="cartContent table-responsive w-100 mt-4 mx-auto">
-                            <table class="table table-hover">
-                                <thead class="thead-dark text-center">
-                                    <tr>
-                                        <th colspan="2">
-                                            Items to be Shipped
-                                        </th>
-                                        <th style="width: 15%"></th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    <% orderCartData.forEach(function(item) { %>
+                            <div class="cartContent table-responsive w-100 mt-4 mx-auto">
+                                <table class="table table-hover">
+                                    <thead class="thead-dark text-center">
                                         <tr>
-                                            <td class="text-center">
-                                                <div>
-                                                    <a href="product-details.html">
-                                                        <img alt="img" src="/upload/<%= item.productId.productImage1 %>"
-                                                            class="img-fluid rounded" style="max-width: 100px; max-height: 100px;" />
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="CartDescription">
-                                                    <h4 class="h6">
-                                                        <a href="product-details.html" class="text-dark"><%= item.productId.productName %></a>
-                                                    </h4>
-                                                    <p class="mb-0 text-secondary"><span>₹<%= item.productId.productPrice %> X
-                                                            <%= item.productQuantity %></span></p>
-                                                </div>
-                                            </td>
-                                            <td class="text-center text-dark">₹<%= item.totalCostPerProduct %></td>
+                                            <th colspan="2">
+                                                Items to be Shipped
+                                            </th>
+                                            <th style="width: 15%"></th>
                                         </tr>
-                                    <% }); %>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="col-lg-12 text-center mt-4">
-                            <a href="/productList" class="btn btn-outline-primary btn-lg mr-3">Continue Shopping</a>
-                            <a href="/invoice/download" class="btn btn-success btn-lg">Download Invoice</a>
-                        </div>
-                        <div class="col-lg-12 text-center mt-4">
-                           <br>
+                                    </thead>
+
+                                    <tbody>
+                                        <% orderCartData.forEach(function(item) { %>
+
+
+                                            <td>
+                                                <div>
+                                                    <p>
+                                                        <%=  item.productId.orderNumber %>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <div>
+                                                        <a href="product-details.html">
+                                                            <img alt="img"
+                                                                src="/upload/<%= item.productId.productImage1 %>"
+                                                                class="img-fluid rounded"
+                                                                style="max-width: 100px; max-height: 100px;" />
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                               
+                                                <td>
+                                                    <div class="CartDescription">
+                                                        <h4 class="h6">
+                                                            <a href="product-details.html" class="text-dark">
+                                                                <%= item.productId.productName %>
+                                                            </a>
+                                                        </h4>
+                                                        <p class="mb-0 text-secondary"><span>₹<%=
+                                                                    item.productId.productPrice %> X
+                                                                    <%= item.productQuantity %></span></p>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center text-dark">₹<%= item.totalCostPerProduct %>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-lg-12 text-center mt-4">
+                                <a href="/productList" class="btn btn-outline-primary btn-lg mr-3">Continue Shopping</a>
+                                <a href="/invoice/download" class="btn btn-success btn-lg">Download Invoice</a>
+                            </div>
+                            <div class="col-lg-12 text-center mt-4">
+                                <br>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<%- include('../partials/footer') %>
+    <%- include('../partials/footer') %>

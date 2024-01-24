@@ -64,17 +64,9 @@ userRoutes.put('/profile/orderStatus/cancelOrder/:id', blockedUserCheck,  accoun
 
 userRoutes.get('/manageAdrressPage', blockedUserCheck, accountController.addAddress)
 userRoutes.post('/manageAddress', blockedUserCheck, accountController.addAddressPost)
-
-
-
-
-
-
-
-
-
-
-
+userRoutes.get('/deleteAddress/:id', blockedUserCheck, accountController.deleteAddress)
+userRoutes.get('/editAddress/:id', blockedUserCheck,  accountController.editAddress)
+userRoutes.post('/editAddress/:id', blockedUserCheck,  accountController.editAddressPost)
 
 
 
