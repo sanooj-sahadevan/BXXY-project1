@@ -17,185 +17,176 @@
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="card custom-box">
+                        <div class="card-header ">
+                            Personal Information
+                        </div>
+                        <div class="card-body">
+        
+                            <!-- Displaying personal information dynamically -->
+                            <div class="card">
+                                <div class="card-body">
+        
+                                    <!-- Check if req.session.currentUser exists -->
+                                    <% if (currentUser) { %>
+                                        <p> <strong>Name:</strong>  <%= currentUser.username %>    </p>
+                                        <p> <strong>Email:</strong> <%= currentUser.email %>       </p>
+                                        <p> <strong>Phone:</strong> <%= currentUser.phonenumber %> </p>
+                                        <!-- Add more information as needed -->
+        
+                                        <!-- Example button to trigger some action -->
+                                        <button class="btn btn-primary">Edit Information</button>
+                                    <% } else { %>
+                                        <p>No user data available.</p>
+                                    <% } %>
+        
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        
+<div>
+    <!-- <hr><hr><hr><hr> -->
+     <br><br><br><br>
+</div>
+
+
+
+
+
+
         <div class="page-content">
             <div class="dashboard">
                 <div class="container">
                     <div class="row">
-
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                            <link rel="stylesheet"
-                                href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-                            <title>Your Page Title</title>
-                        </head>
-
-                        <body>
-
-                            <!-- Button trigger modal -->
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
-                                            Open Address Box
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <a class="btn btn-primary" href="/manageAdrressPage">
-                                            <i class="fa fa-plus-circle"></i> Add New Address
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <a class="btn btn-primary" href="/changePassword">
-                                            <i class="fa fa-plus-circle"></i>  Change password
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Address Modal -->
-                            <div class="modal fade" id="addressModal" tabindex="-1" role="dialog"
-                                aria-labelledby="addressModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="addressModalLabel">Address Box</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="w100 clearfix">
-                                                <% addressData.forEach(function(address) { %>
-                                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <h3 class="panel-title"><strong>
-                                                                        <%= address.addressTitle %>
-                                                                    </strong></h3>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <ul>
-                                                                    <li><span class="address-name"> <strong>
-                                                                                <%= address.firstName %>
-                                                                                    <%= address.lastName %>
-                                                                            </strong></span></li>
-                                                                    <li><span class="address-line1">
-                                                                            <%= address.addressLine1 %>
-                                                                        </span></li>
-                                                                    <li><span class="address-line2">
-                                                                            <%= address.addressLine2 %>
-                                                                        </span></li>
-                                                                    <li><span> <strong>Mobile</strong> : <%=
-                                                                                address.phone %></span></li>
-                                                                </ul>
-                                                            </div>
-                                                            
-                                                            <div class="panel-footer panel-footer-address">
-                                                                <a href="/editAddress/<%= address._id %>"
-                                                                    class="btn btn-sm btn-success">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                                <a class="btn btn-sm btn-danger"
-                                                                    onclick="return confirm('Do you want to delete?')"
-                                                                    href="/deleteAddress/<%= address._id %>">
-                                                                    <i class="fa fa-minus-circle"></i> Delete
-                                                                </a>
-                                                            </div>
-                                                           
-                                                        </div>
-                                                    </div>
-                                                    <% }); %>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <!-- Add additional buttons if needed -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                            <script
-                                src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-                            <script
-                                src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                        </body>
-
-                        </html>
-
-                        <!--/.w100-->
-                        <!-- <aside>
-                            <div class="col-lg-12 clearfix">
-                                <a class="btn btn-primary" href="/manageAdrressPage">
-                                    <i class="fa fa-plus-circle"></i> Add New Address
-                                </a>
-                            </div>
-
-
-
-                        </aside> -->
-
-                        <div class="col-lg-12 clearfix">
-                            <ul class="pager">
-                                <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a>
-                                </li>
-                                <!-- <li class="next pull-left"><a href="/account">&larr; Back to My Account</a></li> -->
-                            </ul>
+                        <!-- Buttons -->
+                        <div class="col-lg-4">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#addressModal">
+                                Open Address Box
+                            </button>
+                        </div>
+                        <div class="col-lg-4">
+                            <a class="btn btn-primary" href="/manageAdrressPage">
+                                <i class="fa fa-plus-circle"></i> Add New Address
+                            </a>
+                        </div>
+                        <div class="col-lg-4">
+                            <a class="btn btn-primary" href="/changePassword">
+                                <i class="fa fa-plus-circle"></i> Change password
+                            </a>
                         </div>
                     </div>
-                    <!-- change into ejs div -->
-                </div>
-            </div>
 
+                    <!-- Address Modal -->
+                    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog"
+                        aria-labelledby="addressModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addressModalLabel">Address Box</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="w100 clearfix">
+                                        <% addressData.forEach(function(address) { %>
+                                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title"><strong>
+                                                                <%= address.addressTitle %>
+                                                            </strong></h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <li><span class="address-name"> <strong>
+                                                                        <%= address.firstName %>
+                                                                            <%= address.lastName %>
+                                                                    </strong></span></li>
+                                                            <li><span class="address-line1">
+                                                                    <%= address.addressLine1 %>
+                                                                </span></li>
+                                                            <li><span class="address-line2">
+                                                                    <%= address.addressLine2 %>
+                                                                </span></li>
+                                                            <li><span> <strong>Mobile</strong> : <%= address.phone %>
+                                                                        </span></li>
+                                                        </ul>
+                                                    </div>
 
+                                                    <div class="panel-footer panel-footer-address">
+                                                        <a href="/editAddress/<%= address._id %>"
+                                                            class="btn btn-sm btn-success">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </a>
+                                                        <a class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Do you want to delete?')"
+                                                            href="/deleteAddress/<%= address._id %>">
+                                                            <i class="fa fa-minus-circle"></i> Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <!-- Add additional buttons if needed -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div>
+                        <hr>
+                        <hr>
+                    </div>
+                    <!-- Table Section -->
 
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover custom-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>No. of Items</th>
 
+                                    <th>Payment Method</th>
+                                    <th>Price</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% orderData.forEach((order, index)=> { %>
+                                    <tr>
+                                        <td>#<%= order.orderNumber %>
+                                        </td>
+                                        <td>
+                                            <%= order.cartData.length %> <small>items</small>
+                                        </td>
 
-
-
-
-
-
-
-
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover custom-table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Order ID</th>
-                            <th>No. of Items</th>
-                            <th>Invoice</th>
-                            <th>Payment Method</th>
-                            <th>Price</th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% orderData.forEach((order, index)=> { %>
-                            <tr class="<%= index % 2 === 0 ? 'even' : 'odd' %>">
-                                <td>#<%= order.orderNumber %>
-                                </td>
-                                <td>
-                                    <%= order.cartData.length %> <small>items</small>
-                                </td>
-                                <td><a target="_blank">-</a></td>
-                                <td>
-                                    <%= order.paymentType %> COD
-                                </td>
-                                <td>$<%= order.grandTotalCost %>
-                                </td>
-                                <!-- <td>
+                                        <td>
+                                            <%= order.paymentType %>
+                                        </td>
+                                        <td>$<%= order.grandTotalCost %>
+                                        </td>
+                                        <!-- <td>
                                             <% order.cartData.forEach(cartItem => { %>
                                                 <div>
                                                     <img src="/upload/<%= cartItem.productId.productImage1 %>" alt="Product Image"
@@ -204,136 +195,60 @@
                                                 </div>
                                             <% }); %>
                                         </td> -->
-                                <td>
-                                    <ul>
-                                        <% order.cartData.forEach(cartItem=> { %>
-                                            <li>
-                                                <%= cartItem.productId.productName %>
-                                            </li>
-                                            <% }); %>
-                                    </ul>
-                                </td>
-                                <td><span class="label label-primary">
-                                        <%= order.orderStatus %>
-                                    </span></td>
-                                <td>
-                                    <a href="/profile/orderStatus/<%= order._id %>" class="btn btn-primary btn-sm">View
-                                        Status</a>
-                                </td>
-                            </tr>
-                            <% }); %>
-                    </tbody>
-                </table>
-            </div>
+                                        <td>
+                                            <ul>
 
-        </div>
-        </div>
-        </div>
+
+
+                                            </ul>
+                                        </td>
+
+
+
+
+                                        <td><span class="label label-primary">
+                                                <%= order.orderStatus %>
+                                            </span></td>
+                                        <td>
+                                            <a href="/profile/orderStatus/<%= order._id %>"
+                                                class="btn btn-primary btn-sm">View
+                                                Status</a>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                    <div class="col-lg-12 clearfix mt-4">
+                        <ul class="pager">
+                            <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+                        </ul>
+                    </div>
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
     </main>
 
+    <!-- ... (previous HTML content) ... -->
 
-
-    <style>
-        .custom-table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .custom-table th,
-        .custom-table td {
-            border: 1px solid #ddd;
-            /* Default border color for cells */
-            padding: 8px;
-            text-align: left;
-        }
-
-        .custom-table th {
-            background-color: #343a40;
-            /* Dark background color for header cells */
-            color: white;
-        }
-
-        .custom-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-            /* Background color for even rows */
-        }
-
-        .custom-table tr:hover {
-            background-color: #ddd;
-            /* Hover background color */
-        }
-
-        .custom-table td {
-            border-bottom: 2px solid #ddd;
-            /* Separate horizontal lines color */
-        }
-
-        .custom-table th:not(:last-child),
-        .custom-table td:not(:last-child) {
-            border-right: 2px solid #ddd;
-            /* Separate vertical lines color */
-        }
-    </style>
-
-
-<!-- editAddressPage.ejs -->
+    <!-- Address Modal -->
 
 
 
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Modal content goes here -->
+            </div>
+        </div>
+    </div>
 
+    <!-- ... (remaining HTML content) ... -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    //     {
-            
-    //         Swal.fire({
-    //             title: "Are you sure?",
-    //             text: "You won't be able to revert this!",
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#3085d6",
-    //             cancelButtonColor: "#d33",
-    //             confirmButtonText: "Yes, delete it!"
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 fetch("/deleteAddress/" + id, {
-    //                     method: "get",
-    //                     headers: { "Content-type": "application/json; charset=UTF-8" }
-    //                 });
-    //                 Swal.fire({
-    //                     title: "Deleted!",
-    //                     text: "Your file has been deleted.",
-    //                     icon: "success"
-    //                 });
-    //             }
-    //         });
-    //     }
-     </script>
 
     <%- include('../partials/footer') %>

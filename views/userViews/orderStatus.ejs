@@ -5,58 +5,103 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-9 col-md-9 col-sm-7">
-                        <div class="row userInfo">
-                            <div class="col-lg-12">
-                                <h2 class="block-title-2">Your Order Status</h2>
+
+                        <div class="statusContent">
+                            <div class="col-sm-12">
+                                <div class="statusTop">
+                                    <p><strong>Status:</strong></p>
+                                    <p>
+                                        <%= orderData.orderStatus %>
+                                    </p>
+
+                                    <p><strong>Order Date:</strong>
+                                        <%= orderData.orderDate %>
+                                    </p>
+
+                                    <p><strong>Order Number:</strong> #<%= orderData.orderNumber %>
+                                    </p>
+                                </div>
                             </div>
-                    
-                            <div class="statusContent">
-                                <div class="col-sm-12">
-                                    <div class="statusTop">
-                                        <p><strong>Status:</strong></p>
-                                        <p><%= orderData.orderStatus %></p>
-                                        <p><strong>Order Date:</strong> <%= orderData.orderDate %></p>
-                                        <p><strong>Order Number:</strong> #<%= orderData.orderNumber %></p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="order-box">
-                                            <div class="order-box-header">Address</div>
-                                            <!-- Your address content goes here -->
+                            <div class="col-sm-12">
+                                <div id="cancelledBtn" style="display: none;" class="text-bg-danger p-3">This order has
+                                    been cancelled
+                                </div>
+                            </div>
+
+                            <div class="gap"></div>
+
+                            <% if (isCancelled) { %>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-danger btn-lg btn-block">This order has been
+                                        cancelled</button>
+                                </div>
+                                <% } else { %>
+                                    <div class="col-sm-12 mt-3">
+                                        <div id="cancelBtn" class="btn btn-danger"
+                                            onclick="cancelOrder('<%= orderData._id %>')">Cancel
+                                            this order
                                         </div>
                                     </div>
-                    
-                                    <div class="col-sm-6">
-                                        <div class="order-box">
-                                            <div class="order-box-header">Payment Method</div>
-                                            <div class="order-box-content">
-                                                <p><strong><%= orderData.paymentType %></strong></p>
+                                    <% } %>
+
+                                        <div class="gap"></div>
+                                        <div class="col-sm-6">
+                                            <div class="order-box">
+                                                <div class="order-box-header">Address</div>
+
+                                                <div class="order-box-content">
+                                                    <div class="address">
+                                                        <p><strong>
+                                                                <%= orderData.addressChosen.addressTitle %>
+                                                            </strong></p>
+
+                                                        <p><strong>
+                                                                <%= orderData.addressChosen.firstName %>&nbsp;<%=
+                                                                        orderData.addressChosen.lastName %>
+                                                            </strong></p>
+
+                                                        <div class="adr">
+                                                            <%= orderData.addressChosen.addressLine1 %> <br />
+                                                                <%= orderData.addressChosen.addressLine2 %> <br />
+                                                                    Phone: <%= orderData.addressChosen.phone %>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="col-sm-6">
+                                                <div class="order-box">
+                                                    <div class="order-box-header">Payment Method</div>
+                                            
+                                                    <div class="order-box-content">
+                                                        <div class="address">
+                                                            <p>
+                                                                <%= orderData.paymentType %>
+                                                                <% /* <span style="color: green" class="green">
+                                                                    <strong>(Paid)</strong>
+                                                                </span> */ %>
+                                                            </p>
+                                                            <% /* 
+                                                            <p><strong>Name Of card: </strong> Ruth F. Burns</p>
+                                            
+                                                            <p><strong>Card Number: </strong> 00335 251 124</p>
+                                                            */ %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
-                                    </div>
-                                </div>
-                    
-                                <div class="col-sm-12">
-                                    <div class="order-box">
-                                        <div id="cancelledBtn" style="display: none;" class="alert alert-danger mt-3">This order has been cancelled</div>
-                                        <% if (orderData.isCancelled) { %>
-                                            <button class="btn btn-danger btn-sm btn-block mt-3" disabled>This order has been cancelled</button>
-                                        <% } else { %>
-                                            <button id="cancelBtn" class="btn btn-danger btn-sm btn-block mt-3" onclick="cancelOrder('<%= orderData._id %>')">Cancel this order</button>
-                                        <% } %>
-                                    </div>
-                    
-                                    <div class="gap mt-4"></div>
-                    
-                                   
-                                </div>
-                            </div>
+
+                                        <div style="clear: both"></div>
                         </div>
+
                     </div>
-                    
+
 
                     <div class="col-sm-12 clearfix">
                         <div class="order-box">
-                            <div class="order-box-header text-center" style="font-size: 20px; font-weight: bold;">Order Items</div>
+                            <div class="order-box-header text-center" style="font-size: 20px; font-weight: bold;">Order
+                                Items</div>
                             <div class="order-box-content">
                                 <div class="table-responsive">
                                     <table class="table table-bordered order-details-cart">
@@ -69,7 +114,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% orderData.cartData.forEach(cartItem=> { %>
+                                            <% orderData.cartData.forEach(cartItem => { %>
                                                 <tr class="cartProduct">
                                                     <td class="cartProductThumb">
                                                         <div style="max-width: 100px;">
@@ -81,10 +126,10 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="miniCartDescription text-center" style="font-size: 10px;">
+                                                        <div class="miniCartDescription text-center" style="font-size: 5px;">
                                                             <h4>
                                                                 <a href="/productDetails/<%= cartItem.productId._id %>">
-                                                                    <%= cartItem.productId.productName %>
+                                                                    <%= cartItem.productId.productName.substring(0, 20) %> <!-- Adjust the number of characters -->
                                                                 </a>
                                                             </h4>
                                                         </div>
@@ -93,23 +138,103 @@
                                                     <td><span style="font-size: 14px; text-align: center;">₹<%= cartItem.totalCostPerProduct %></span></td>
                                                 </tr>
                                             <% }); %>
+                                            <tr class="cartTotalTr blank">
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        
+                                            <tr class="cartTotalTr">
+                                                <td colspan="2">Total </td>
+                                                <td colspan="2"><span>₹<%= orderData.grandTotalCost %></span></td>
+                                            </tr>
+                                            <tr class="cartTotalTr">
+                                                <td colspan="2">Shipping</td>
+                                                <td colspan="2"><span>Free</span></td>
+                                            </tr>
+                                            <tr class="cartTotalTr">
+                                                <td colspan="2">GrandTotal</td>
+                                                <td colspan="2"><span class="price">₹<%= orderData.grandTotalCost %></span></td>
+                                            </tr>
                                         </tbody>
+                                        
                                     </table>
+
+
+
+
+
+
+                                    <!-- <div class="table-responsive">
+                                        <table class="order-details-cart">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20%">Product</th>
+                                                    <th style="width: 40%">Description</th>
+                                                    <th style="width: 10%">Quantity</th>
+                                                    <th style="width: 15%">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% orderData.cartData.forEach(cartItem=> { %>
+                                                    <tr class="cartProduct">
+                                                        <td class="cartProductThumb">
+                                                            <div>
+                                                                <a href="/productDetails/<%= cartItem.productId._id %>">
+                                                                    <img alt="img"
+                                                                        src="/upload/<%= cartItem.productId.productImage1 %>" />
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="miniCartDescription">
+                                                                <h4>
+                                                                    <a href="product-details.html">
+                                                                        <%= cartItem.productId.productName %>
+                                                                    </a>
+                                                                </h4>
+                                                                <div class="price"><span>
+                                                                        <%= cartItem.productId.productName %>
+                                                                    </span></div>
+                                                            </div>
+                                                        </td>
+                                                        <td><a>X<%= cartItem.productQuantity %></a></td>
+                                                        <td><span>₹<%= cartItem.totalCostPerProduct %></span></td>
+                                                    </tr>
+                                                    <% }); %>
+
+                                                        <tr class="cartTotalTr blank">
+                                                            <td colspan="4"></td>
+                                                        </tr>
+
+                                                        <tr class="cartTotalTr">
+                                                            <td colspan="2">Total </td>
+                                                            <td colspan="2"><span>₹<%= orderData.grandTotalCost %>
+                                                                </span></td>
+                                                        </tr>
+                                                        <tr class="cartTotalTr">
+                                                            <td colspan="2">Shipping</td>
+                                                            <td colspan="2"><span>Free</span></td>
+                                                        </tr>
+                                                        <tr class="cartTotalTr">
+                                                            <td colspan="2">GrandTotal</td>
+                                                            <td colspan="2"><span class="price">₹<%=
+                                                                        orderData.grandTotalCost %></span></td>
+                                                        </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+ -->
+
+
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -118,7 +243,11 @@
             </div>
         </div>
         </div>
-
+        <div class="col-lg-12 clearfix mt-4">
+            <ul class="pager">
+                <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+            </ul>
+        </div>
 
 
         </div>

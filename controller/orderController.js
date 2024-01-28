@@ -3,12 +3,23 @@ const userCollection = require("../models/userModels.js");
 
 const orderManagement = async (req, res) => {
   try {
-    let orderData= await orderCollection.find()           
-    res.render("adminViews/orderManagement", { orderData });
+
+    let page = Number(req.query.page) || 1;
+    let limit = 6;
+    let skip = (page - 1) * limit;
+
+    let   count = await orderCollection.find().estimatedDocumentCount();
+
+    let orderData= await orderCollection.find().skip(skip).limit(limit);        
+    res.render("adminViews/orderManagement", { orderData,count,
+      limit, });
   } catch (error) {
     console.error(error);
   }
 };
+
+
+
 
 const changeStatusPending = async (req, res) => {
   try {

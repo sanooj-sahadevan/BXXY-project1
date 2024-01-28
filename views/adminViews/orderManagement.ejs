@@ -103,10 +103,10 @@
                             <!--
                             <td></td>
                             -->
-                            <td>₹<%= order.grandTotalCost %>
+                            <td>₹<%= order.grandTotalCost%>
                             </td>
                             <td>
-                                <%= order.paymentType %>
+                               COD
                             </td>
                             <td>
                                 <%= order.orderStatus %>
@@ -157,6 +157,19 @@
                         <% }); %>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center py-3">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                   
+                    <% for( let i = 0; i < count/limit; i++ ) { %>
+                    <li class="page-item">
+                      <a class="page-link" href="/products/?page=<%=i+1 %>"><%= i+1 %></a>
+                    </li>
+                    <% } %>
+                   
+                  </ul>
+                
+              </div>
         </div>
 
         <footer class="main-footer font-xs">

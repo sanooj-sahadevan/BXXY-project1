@@ -4,6 +4,8 @@ const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
 const orderCollection = require("../models/orderModel.js");
 const profileCollection = require("../models/profileModel.js");
+const razorpay = require("../service/razorpay.js");
+
 
 async function grandTotal(req) {
   try {
@@ -156,14 +158,15 @@ const checkoutPage = async (req, res) => {
       userId: req.session.currentUser._id,
       orderNumber: (await orderCollection.countDocuments()) + 1,
       orderDate: new Date(),
-      addressChosen: JSON.parse(JSON.stringify(addressData[0])), //default address      cartData: await grandTotal(req),
+      addressChosen: JSON.parse(JSON.stringify(addressData[0])), 
+       cartData: await grandTotal(req),
       grandTotalCost: req.session.grandTotal,
     });
 
     let userCartData = await grandTotal(req);
 
 console.log(addressData);
-    res.render("userViews/checkout.ejs", {
+    res.render("userViews/checkout", {
       user: req.body.user,
       currentUser: req.session.currentUser,
       grandTotal: req.session.grandTotal,
@@ -199,6 +202,41 @@ const postOrderSucess = async (req, res) => {
   console.log("deleting finished");
 };
 
+
+
+
+const razorpayCreateOrderId = async (req, res) => {
+  var options = {
+    amount: req.session.grandTotal + "00", // amount in the smallest currency unit
+    currency: "INR",
+  };
+
+  razorpay.instance.orders.create(options, function (err, order) {
+    res.json(order);
+    console.log(order);
+  });
+}
+
+
+const orderPlacedEnd =  async (req, res) => {
+  let cartData = await cartCollection
+    .find({ userId: req.session.currentUser._id })
+    .populate("productId");
+
+  console.log("rendering next");
+  res.render("userViews/orderSucess.ejs", {
+    orderCartData: cartData,
+    orderData: req.session.currentOrder,
+  });
+
+  //delete the cart- since the order is placed
+  await cartCollection.deleteMany({ userId: req.session.currentUser._id });
+  console.log("deleting finished");
+}
+
+
+
+
 module.exports = {
   cart,
   addToCart,
@@ -208,4 +246,5 @@ module.exports = {
   incQty,
   checkoutPage,
   postOrderSucess,
+  razorpayCreateOrderId,orderPlacedEnd 
 };

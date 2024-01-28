@@ -58,9 +58,18 @@ const adminLogout = async (req, res) => {
 const userManagement = async (req, res) => {
   try {
 
-    let userData = await userCollection.find();
+    let page = Number(req.query.page) || 1;
+    let limit = 6;
+    let skip = (page - 1) * limit;
+
+    let   count = await userCollection.find().estimatedDocumentCount();
+
+
+    let userData = await userCollection.find().skip(skip).limit(limit);;
    
-    res.render("adminViews/userMangement", { userData });
+    res.render("adminViews/userMangement", { userData,
+      count,
+      limit, });
   } catch (error) {
     console.log(error);
   }
@@ -79,6 +88,7 @@ const blockUser = async (req, res) => {
     console.log(error);
   }
 }
+
 
 
 const unBlockUser = async (req, res) => {

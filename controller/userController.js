@@ -244,29 +244,44 @@ const productDetils = async (req, res) => {
     console.log(currentProduct);
   } catch (error) {}
 };
+
+
 const productspage = async (req, res) => {
   try {
-    let categoryData = await categoryCollection.find({ isListed: true });
-    let productData = await productCollection.find({ isListed: true });
+      let page = Number(req.query.page) || 1;
+      let limit = 4;
+      let skip = (page - 1) * limit;
 
-    res.render("userViews/productlist", {
-      categoryData,
-      productData,
-      currentUser: req.session.currentUser,
-      user: req.session.user,
-      // userDetails: { checking }, // Including checking in userDetails object
-    });
-    console.log(req.session.currentUser);
-    // console.log(userData);
-    // req.session.shopProductData = null;
+      let categoryData = await categoryCollection.find({ isListed: true });
+      let productData = await productCollection
+          .find({ isListed: true })
+          .skip(skip)
+          .limit(limit)
+          
+
+      let count = await productCollection.countDocuments({ isListed: true });
+
+      let totalPages = Math.ceil(count / limit);
+      let totalPagesArray = new Array(totalPages).fill(null);
+
+      res.render("userViews/productlist", {
+          categoryData,
+          productData,
+          currentUser: req.session.currentUser,
+          user: req.session.user,
+          count,
+          limit,
+          totalPagesArray,
+          currentPage: page,
+          selectedFilter: req.session.selectedFilter,
+      });
+
+      console.log(req.session.currentUser);
   } catch (error) {
-    console.error("Error fetching product data:", error);
-    res.status(500).send("Internal Server Error");
+      console.error("Error fetching product data:", error);
+      res.status(500).send("Internal Server Error");
   }
 };
-
-
-
 
 
 

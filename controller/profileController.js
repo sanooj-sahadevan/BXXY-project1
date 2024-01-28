@@ -22,7 +22,6 @@ const profilePage = async (req, res) => {
     console.log(req.session.user);
     res.render("userViews/profilePage", {
       user: req.session.user,
-      orderData: req.session.currentOrder,
       orderData,
       currentUser: req.session.currentUser,
       addressData,
@@ -37,8 +36,9 @@ const profilePage = async (req, res) => {
 
 const orderStatus = async (req, res) => {
   try {
-    let orderData = await orderCollection.findOne({ _id: req.params.id });
-    // .populate("addressChosen");
+    let orderData = await orderCollection
+      .findOne({ _id: req.params.id })
+      .populate("addressChosen"); 
     let isCancelled = orderData.orderStatus == "Cancelled";
 
     res.render("userViews/orderStatus", {
@@ -74,18 +74,24 @@ const cancelOrder = async (req, res) => {
 
 const addAddress = async (req, res) => {
   try {
-    console.log(req.body);
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
     });
-    await userCollection.find(req.body);
+    console.log('address Data:');
+    console.log(addressData);
+    let orderData = await orderCollection.find({
+      userId: req.session.currentUser._id,
+    });
+    console.log('req.session.currentUser:');
     console.log(req.session.currentUser);
+    console.log('order Data:');
+    console.log(orderData);
 
     res.render("userViews/manageAddrress", {
       user: req.session.user,
       currentUser: req.session.currentUser,
-      addressData: req.session.addressData,
       addressData,
+      orderData
     });
   } catch (error) {
     console.error(error);
@@ -94,9 +100,6 @@ const addAddress = async (req, res) => {
 
 const addAddressPost = async (req, res) => {
   try {
-    let addressData = await addressCollection.find({
-      userId: req.session.currentUser._id,
-    });
     console.log(req.session.currentUser);
     const address = {
       userId: req.session.currentUser._id,
@@ -111,11 +114,17 @@ const addAddressPost = async (req, res) => {
     console.log("7777");
     await addressCollection.insertMany([address]);
     // res.redirect("/profile/:id");
+    let addressData = await addressCollection.find({
+      userId: req.session.currentUser._id,
+    });
+    let orderData = await orderCollection.find({
+      userId: req.session.currentUser._id,
+    });
     res.render("userViews/profilePage", {
       addressData,
       currentUser: req.session.currentUser,
       user: req.session.user,
-      addressData: req.session.addressData,
+      orderData,
     });
   } catch (error) {
     console.error(error);

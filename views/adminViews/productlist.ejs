@@ -179,9 +179,9 @@
                                     <td>
                                         <%= product.parentCategory %>
                                     </td>
-                                    <td><img src="upload/<%= product.productImage1 %>" alt=""
+                                    <td><img src="/upload/<%= product.productImage1 %>" alt=""
                                             style="width: 100px; height: 100px"></td>
-                                    <td><img src="upload/<%= product.productImage2 %>" alt=""
+                                    <td><img src="/upload/<%= product.productImage2 %>" alt=""
                                             style="width: 100px; height: 100px"></td>
                                     <td><img src="/upload/<%= product.productImage3 %>" alt=""
                                             style="width: 100px; height: 100px"></td>
@@ -283,7 +283,7 @@
 
 
             </div> <!-- card end// -->
-            <div class="pagination-area mt-30 mb-50">
+            <!-- <div class="pagination-area mt-30 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">
                         <li class="page-item active"><a class="page-link" href="#">01</a></li>
@@ -295,8 +295,27 @@
                                     class="material-icons md-chevron_right"></i></a></li>
                     </ul>
                 </nav>
-            </div>
+            </div> -->
+            <div class="d-flex justify-content-center py-3">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                   
+                    <% for( let i = 0; i < count/limit; i++ ) { %>
+                    <li class="page-item">
+                      <a class="page-link" href="/products/?page=<%=i+1 %>"><%= i+1 %></a>
+                    </li>
+                    <% } %>
+                   
+                  </ul>
+                
+              </div>
+            
+           
         </section> <!-- content-main end// -->
+
+
+        
+        
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
                 <div class="col-sm-6">

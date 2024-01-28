@@ -154,7 +154,14 @@ const addProductPage = async (req, res) => {
 
 const productlist = async (req, res) => {
   try {
-    let productData = await productCollection.find();
+
+    let page = Number(req.query.page) || 1;
+    let limit = 4;
+    let skip = (page - 1) * limit;
+
+    let   count = await productCollection.find().estimatedDocumentCount();
+
+    let productData = await productCollection.find().skip(skip).limit(limit);
     let categoryList = await categoryCollection.find(
       {},
       { categoryName: true }
@@ -162,8 +169,8 @@ const productlist = async (req, res) => {
 
     res.render("adminViews/productlist.ejs", {
       productData,
-      categoryList,
-
+      categoryList,count,
+      limit,
       productExist: req.session.productAlreadyExists,
     });
     req.session.productAlreadyExists = null;
@@ -171,6 +178,7 @@ const productlist = async (req, res) => {
     console.error(error);
   }
 };
+
 
 module.exports = {
   productlist,

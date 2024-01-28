@@ -1,7 +1,5 @@
 <%- include('../partials/header') %>
 
-
-
     <!-- <!DOCTYPE html>
     <html lang="en">
 
@@ -73,14 +71,14 @@
 
     </html> -->
 
-
-
     <main class="main">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
                 <h1 class="page-title">Add New Adress<span>BXXY</span></h1>
-            </div><!-- End .container -->
-        </div><!-- End .page-header -->
+            </div>
+            <!-- End .container -->
+        </div>
+        <!-- End .page-header -->
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
@@ -88,71 +86,53 @@
                     <li class="breadcrumb-item"><a href="#">Shop</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Profile</li>
                 </ol>
-            </div><!-- End .container -->
-        </nav><!-- End .breadcrumb-nav -->
-
-
-
+            </div>
+            <!-- End .container -->
+        </nav>
+        <!-- End .breadcrumb-nav -->
 
         <!-- ======================================================================================================== -->
-
-
-
-
-
-
-
-
-
-
 
         <!-- ======================================================================================================= -->
 
         <div class="page-content">
             <div class="checkout">
                 <div class="container">
-                    <div class="checkout-discount">
-
-                    </div><!-- End .checkout-discount -->
+                    <div class="checkout-discount"></div>
+                    <!-- End .checkout-discount -->
                     <form action="/manageAddress" method="POST">
                         <div class="row">
                             <div class="col-lg-9">
-                                <h2 class="checkout-title">Add Adreess</h2><!-- End .checkout-title -->
+                                <h2 class="checkout-title">Add Adreess</h2>
+                                <!-- End .checkout-title -->
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>First Name *</label>
                                         <input type="text" class="form-control" required id="InputName"
-                                            placeholder="First Name" name="firstName">
-                                    </div><!-- End .col-sm-6 -->
-
-
+                                            placeholder="First Name" name="firstName" />
+                                    </div>
+                                    <!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>Last Name *</label>
                                         <input type="text" class="form-control" name="lastName" id="InputName"
-                                            placeholder="Last Name" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-
-
+                                            placeholder="Last Name" required />
+                                    </div>
+                                    <!-- End .col-sm-6 -->
+                                </div>
+                                <!-- End .row -->
 
                                 <label>Street address *</label>
                                 <!-- <input type="text" class="form-control" placeholder="House number and Street name"
                                     required> -->
                                 <input type="text" name="addressLine1" id="InputAddress" class="form-control"
-                                    placeholder="Appartments, suite, unit etc ..." required>
+                                    placeholder="Appartments, suite, unit etc ..." required />
 
                                 <label>State / County *</label>
                                 <!-- <input type="text" class="form-control" placeholder="House number and Street name"
                                     required> -->
                                 <input type="text" name="addressLine2" id="InputAddress" class="form-control"
-                                    placeholder="district, state, unit etc ." required>
-
-
-
-
-
-
+                                    placeholder="district, state, unit etc ." required />
 
                                 <div class="row">
                                     <label for="addressAlias">Please assign an address title for future reference.
@@ -160,44 +140,37 @@
                                     <input required type="text" value="My address" name="addressTitle"
                                         class="form-control" id="addressAlias" />
                                 </div>
-                            </div><!-- End .row -->
-
-
-
-
+                            </div>
+                            <!-- End .row -->
 
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Postcode / ZIP *</label>
-                                    <input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postcode" required>
-                                </div><!-- End .col-sm-6 -->
+                                    <input type="text" class="form-control" id="postcode" name="postcode"
+                                        placeholder="Postcode" required />
+                                </div>
+                                <!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
                                     <label>Phone *</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number"
-                                        required>
-                                </div><!-- End .col-sm-6 -->
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        placeholder="Phone Number" required />
+                                </div>
+                                <!-- End .col-sm-6 -->
 
-
-
-
-
-
-
-
-
-                                <a href="/manageAddress">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </a>
-                                </div><!-- End .col-lg-9 -->
                                 
-
-                        </div><!-- End .row -->
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                            <!-- End .col-lg-9 -->
+                        </div>
+                        <!-- End .row -->
                     </form>
 
                     <div class="col-lg-12 clearfix">
                         <ul class="pager">
-                            <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+                            <li class="previous pull-right">
+                                <a href="/"> <i class="fa fa-home"></i> Go to Shop </a>
+                            </li>
                             <!-- <li class="next pull-left"><a href="/account">&larr; Back to My Account</a></li> -->
                         </ul>
                     </div>
@@ -212,28 +185,18 @@
             </div>
         </div>
     </div>
-</aside> -->
-
-
-
-
-                </div><!-- End .container -->
-            </div><!-- End .checkout -->
-        </div><!-- End .page-content -->
-    </main><!-- End .main -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</aside> -->    <div class="col-lg-12 clearfix mt-4">
+    <ul class="pager">
+        <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+    </ul>
+</div>
+                </div>
+                <!-- End .container -->
+            </div>
+            <!-- End .checkout -->
+        </div>
+        <!-- End .page-content -->
+    </main>
+    <!-- End .main -->
 
     <%- include('../partials/footer') %>
