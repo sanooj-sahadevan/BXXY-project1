@@ -66,7 +66,7 @@
                             <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
                                 center</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/adminLogout"><i
+                            <a class="dropdown-item text-danger" href="/adminlogout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
@@ -92,11 +92,11 @@
                 <tbody>
                     <% orderData.forEach(order=> { %>
                         <tr>
-                            <td>
-                                <a href="/orderManagement/orderStatus/<%= order._id %>">
-                                    <%= order.orderNumber %>
-                                </a>
-                            </td>
+                            <td><button disabled="disabled">
+                                    <a href="/orderManagement/orderStatus/<%= order._id %>">
+                                        <%= order.orderNumber %>
+                                    </a>
+                                </button> </td>
                             <td>
                                 <%= order.userId %>
                             </td>
@@ -106,13 +106,13 @@
                             <td>₹<%= order.grandTotalCost%>
                             </td>
                             <td>
-                               COD
+                                COD
                             </td>
                             <td>
                                 <%= order.orderStatus %>
                             </td>
                             <td>
-                                <% if (order.orderStatus !== 'Cancelled') { %>
+                                <% if (order.orderStatus !=='Cancelled' ) { %>
                                     <div class="btn-group">
                                         <button class="btn btn-secondary btn-lg dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false"></button>
@@ -150,9 +150,9 @@
                                             </li>
                                         </ul>
                                     </div>
-                                <% } %>
+                                    <% } %>
                             </td>
-                            
+
                         </tr>
                         <% }); %>
                 </tbody>
@@ -160,17 +160,36 @@
             <div class="d-flex justify-content-center py-3">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
-                   
-                    <% for( let i = 0; i < count/limit; i++ ) { %>
-                    <li class="page-item">
-                      <a class="page-link" href="/products/?page=<%=i+1 %>"><%= i+1 %></a>
-                    </li>
+                    <% for (let i = 0; i < Math.ceil(count / limit); i++) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/orderManagement/?page=<%= i + 1 %>">
+                          <%= i + 1 %>
+                        </a>
+                      </li>
                     <% } %>
-                   
                   </ul>
-                
+                </nav>
               </div>
+              
+
+
+
+
         </div>
+        <div class="d-flex justify-content-center py-3">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <% for (let i = 0; i < Math.ceil(count / limit); i++) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="/orderManagement/?page=<%= i + 1 %>">
+                      <%= i + 1 %>
+                    </a>
+                  </li>
+                <% } %>
+              </ul>
+            </nav>
+          </div>
+        
 
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">

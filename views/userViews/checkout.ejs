@@ -200,7 +200,7 @@
 
               <!-- End .table table-summary -->
 
-              <div class="accordion-summary" id="accordion-payment">
+              <!-- <div class="accordion-summary" id="accordion-payment">
                 <div class="card">
                   <div class="card-header" id="heading-1">
                     <h2 class="card-title">
@@ -210,7 +210,7 @@
                       </a>
                     </h2>
                   </div>
-                  <!-- End .card-header -->
+                 
                   <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
                     data-parent="#accordion-payment">
                     <div class="card-body">
@@ -221,10 +221,9 @@
                     </div>
 
                   </div>
-                  <!-- End .collapse -->
+                 
                 </div>
-                <!-- End .card -->
-
+              
                 <div class="card">
                   <div class="card-header" id="heading-2">
                     <h2 class="card-title">
@@ -234,7 +233,7 @@
                       </a>
                     </h2>
                   </div>
-                  <!-- End .card-header -->
+                 
                   <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
                     <div class="card-body">
                       Ipsum dolor sit amet, consectetuer adipiscing elit.
@@ -243,10 +242,9 @@
                     </div>
 
                   </div>
-                  <!-- End .collapse -->
+                 
                 </div>
-                <!-- End .card -->
-
+                
                 <div class="card-paynemt-box payment-method">
                   <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
                     <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
@@ -273,7 +271,7 @@
                     </div>
                 </div>
                 
-                <!-- End .card -->
+                
 
                 <div class="card">
                   <div class="card-header" id="heading-4">
@@ -281,7 +279,7 @@
                       <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
                         aria-controls="collapse-4">
                         PayPal
-                        <!-- <small class="float-right paypal-link">What is PayPal?</small> -->
+                        <small class="float-right paypal-link">What is PayPal?</small>
                       </a>
                     </h2>
                   </div>
@@ -316,56 +314,58 @@
 
                   </div>
                 </div>
-              </div>
+              </div> -->
+              
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="panel-heading-id">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#Paymentmethod"
+          aria-expanded="false" aria-controls="Paymentmethod">
+          Payment method
+        </a>
+      </h4>
+    </div>
 
-              <a href="/orderSucess">
-                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+    <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
+      <div class="panel-body">
+        <div class="onepage-payment">
+          <div style="clear:both;"></div>
+
+          <div class="card-paynemt-box payment-method">
+            <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+              <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+            </label>
+          </div>
+
+          <div class="card-paynemt-box payment-method">
+            <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
+              <input name="radios" id="wallet" value="wallet" type="radio">Wallet
+            </label>
+          </div>
+
+          <div class="card-paynemt-box payment-method">
+            <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
+              <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
+            </label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+             
+                <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
                   <span class="btn-text">Place Order</span>
                   <span class="btn-hover-text">Proceed to Checkout</span>
                 </button>
-              </a>
             </div>
             <!-- End .summary -->
 
           </aside>
 
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="panel-heading-id">
-              <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#Paymentmethod"
-                  aria-expanded="false" aria-controls="Paymentmethod">
-                  Payment method
-                </a>
-              </h4>
-            </div>
-
-            <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
-              <div class="panel-body">
-                <div class="onepage-payment">
-                  <div style="clear:both;"></div>
-
-                  <div class="card-paynemt-box payment-method">
-                    <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                      <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
-                    </label>
-                  </div>
-
-                  <div class="card-paynemt-box payment-method">
-                    <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
-                      <input name="radios" id="wallet" value="wallet" type="radio">Wallet
-                    </label>
-                  </div>
-
-                  <div class="card-paynemt-box payment-method">
-                    <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
-                      <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
-                    </label>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
           <!-- End .col-lg-3 -->
         </div>
@@ -408,43 +408,6 @@
 
 
 
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="panel-heading-id">
-      <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#Paymentmethod"
-          aria-expanded="false" aria-controls="Paymentmethod">
-          Payment method
-        </a>
-      </h4>
-    </div>
-
-    <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-        <div class="onepage-payment">
-          <div style="clear:both;"></div>
-
-          <div class="card-paynemt-box payment-method">
-            <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-              <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
-            </label>
-          </div>
-
-          <div class="card-paynemt-box payment-method">
-            <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
-              <input name="radios" id="wallet" value="wallet" type="radio">Wallet
-            </label>
-          </div>
-
-          <div class="card-paynemt-box payment-method">
-            <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
-              <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
-            </label>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -452,13 +415,13 @@
 
 
 
-
-
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
     const orderBtnElement = document.getElementById('orderBtn');
     const CODElement = document.getElementById('COD');
     const razorpayElement = document.getElementById('razorpay');
+    console.log(CODElement);
     // const walletElement = document.getElementById('wallet');
 
     orderBtnElement.addEventListener('click', orderBtnClickFunction);
@@ -471,7 +434,7 @@
         } else if (razorpayElement.checked) {
           const orderResponse = await fetch('/checkout/razorpay/create/orderId', { method: 'POST' });
           const order = await orderResponse.json();
-          console.log(order);
+          console.log(order.amount);
           await openRazorpay(order.amount, order.id);
         }
       } catch (error) {
@@ -481,19 +444,21 @@
 
     async function openRazorpay(amount, orderId) {
       try {
+        console.log('kiska');
         var options = {
-          "key": 'rzp_test_gBci89XBeQRRe9',
+          "key": 'rzp_test_b1uFDoE5gFqlrp',
           "amount": '' + amount,
           "currency": "INR",
-          "name": "Acme Corp",
+          "name": "BXXY",
           "description": "Test Transaction",
-          "callback_url": "/checkout/orderPlaced",
+          "callback_url": "/orderSucess",
           "image": "https://example.com/your_logo",
           "order_id": orderId,
           "theme": {
             "color": "#3399cc"
           }
         };
+        console.log();
         var razorpay = new Razorpay(options);
         razorpay.open();
       } catch (error) {

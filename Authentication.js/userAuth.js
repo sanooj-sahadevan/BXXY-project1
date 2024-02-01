@@ -1,17 +1,15 @@
 const isLogout = async (req, res, next) => {
-  console.log('authin');
-  req.session.user= false,
-  req.session.currentuser = false
-    req.session.destroy();
-
-  
+  console.log('logout');
+  req.session.user= null,
+  req.session.currentuser = null
+    
     console.log("logout");
     next()
   };
   
   
   const isLogin = async (req, res, next) => {
-    console.log('authout');
+    console.log('auth in');
     try {
       if (req.session.user) {
         res.redirect("userViews/landingpage");

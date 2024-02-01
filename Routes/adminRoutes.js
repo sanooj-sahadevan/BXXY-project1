@@ -3,6 +3,7 @@ const adminRoutes = express()
 const multer = require('multer')
 const path = require('path')
 const adminController = require('../controller/adminController')
+const salesReportController = require('../controller/salesReportController')
 const orderController = require('../controller/orderController.js')
 const productController = require('../controller/productController.js')
 const categoryController = require('../controller/categoryController.js')
@@ -23,6 +24,7 @@ adminRoutes.get('/admin', adminController.adminLogin)
 adminRoutes.post('/adminLogin', adminController.validateAdmin)
 adminRoutes.get('/adminHome', adminController.adminHome)
 adminRoutes.post('/adminlogout', adminController.adminLogout)
+
 
 // -------------------------------------------------------PRODUCT------------------------------------------------------------------------------
 
@@ -76,11 +78,6 @@ adminRoutes.post('/userManagement/unBlock/:id', adminController.unBlockUser)
 
 
 
-adminRoutes.get('/adminLogout', adminController.adminLogout)
-
-
-
-
 adminRoutes.get('/orderManagement', orderController.orderManagement)
 adminRoutes.get('/orderManagement/pending/:id', orderController.changeStatusPending)
 adminRoutes.get('/orderManagement/shipped/:id', orderController.changeStatusShipped)
@@ -89,6 +86,8 @@ adminRoutes.get('/orderManagement/return/:id', orderController.changeStatusRetur
 adminRoutes.get('/orderManagement/cancelled/:id', orderController.changeStatusCancelled)
 adminRoutes.get('/orderManagement/cancelled/:id', orderController.changeStatusCancelled)
 adminRoutes.get('/orderManagement/orderStatus/:id', orderController.orderStatusPage)
+
+adminRoutes.get('/salesReport',  salesReportController.salesReport)
 
 
 

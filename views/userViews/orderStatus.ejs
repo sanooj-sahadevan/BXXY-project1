@@ -23,26 +23,30 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div id="cancelledBtn" style="display: none;" class="text-bg-danger p-3">This order has
-                                    been cancelled
-                                </div>
+                                <div id="cancelledBtn" style="display: none;" class="text-bg-danger p-3">This order has been cancelled</div>
                             </div>
-
+                            
                             <div class="gap"></div>
-
+                            
                             <% if (isCancelled) { %>
                                 <div class="col-sm-6">
-                                    <button class="btn btn-danger btn-lg btn-block">This order has been
-                                        cancelled</button>
+                                    <button class="btn btn-danger btn-lg btn-block">This order has been cancelled</button>
                                 </div>
-                                <% } else { %>
-                                    <div class="col-sm-12 mt-3">
-                                        <div id="cancelBtn" class="btn btn-danger"
-                                            onclick="cancelOrder('<%= orderData._id %>')">Cancel
-                                            this order
-                                        </div>
-                                    </div>
-                                    <% } %>
+                            <% } else if (isDelivered) { %>
+                                <div class="col-sm-6">
+                                    <button id="returnBtn" class="btn btn-primary btn-lg btn-block" onclick="cancelOrder('<%= orderData._id %>')">Return this order</button>
+                                </div>
+                            <% } else { %>
+                                <div class="col-sm-12 mt-3">
+                                    <div id="cancelBtn" class="btn btn-danger" onclick="cancelOrder('<%= orderData._id %>')">Cancel this order</div>
+                                </div>
+                            <% } %>
+                            
+
+
+
+
+
 
                                         <div class="gap"></div>
                                         <div class="col-sm-6">

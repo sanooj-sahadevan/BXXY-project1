@@ -6,10 +6,6 @@ const blockedUserCheck = require('../middleware/blockUserCheck.js')
 const accountController =  require("../controller/profileController.js")
 const cartController =  require("../controller/cartController.js")
 const auth = require('../middleware/adminAuth.js')
-
-
-
-
 const path = require('path');
 
 
@@ -20,22 +16,18 @@ const path = require('path');
 
 
 userRoutes.get('/',userController.userPage)
-userRoutes.get('/loginpage',userAuth.isLogin,userController.userLogin) 
-userRoutes.post('/login',userController.verifyLogin)
+userRoutes.get('/loginpage',userController.userLogin) 
+userRoutes.post('/login',userAuth.isLogin,userController.verifyLogin)
 
 
-userRoutes.get('/home',userAuth.isLogout,userController.userDashboard) 
+
+userRoutes.get('/logout',userAuth.isLogout,userController.userLogout) 
 userRoutes.post('/signup',userController.checkUser);
 userRoutes.get('/otpPage',userController.otpPage);
-
-
 userRoutes.post('/otp', userController. successOTP)
-userRoutes.get('/resendOTP', userController.otpPage)
-
-
-
-userRoutes.get('/homee',userController.userPage)  
-userRoutes.post('/login',userController.verifyLogin)
+userRoutes.get('/resendOTP', userController.resendOtpPage)      // its not working i think
+userRoutes.get('/home',userController.userPage)  
+// userRoutes.post('/login',userController.verifyLogin)
 
 
 
@@ -95,8 +87,9 @@ userRoutes.put('/cart/incQty/:id', blockedUserCheck,  cartController.incQty)
 
 
 userRoutes.get('/checkout', blockedUserCheck, cartController.checkoutPage)
-userRoutes.all('/orderSucess', blockedUserCheck, cartController.postOrderSucess)
+userRoutes.all('/orderSucess', blockedUserCheck, cartController.orderPlaced)
 userRoutes.all('/checkout/orderPlacedEnd', blockedUserCheck,  cartController.orderPlacedEnd)
+
 
 
 userRoutes.post('/checkout/razorpay/create/orderId', blockedUserCheck, cartController.razorpayCreateOrderId)

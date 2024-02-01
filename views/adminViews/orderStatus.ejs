@@ -39,13 +39,13 @@
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
                             aria-expanded="false"><i class="material-icons md-public"></i></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
+                            <a class="dropdown-item text-brand" href="#"><img src="/assets/imgs/theme/flag-us.png"
                                     alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
+                            <a class="dropdown-item" href="#"><img src="/index.js"
                                     alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
+                            <a class="dropdown-item" href="#"><img src="/assets/imgs/theme/flag-jp.png"
                                     alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
+                            <a class="dropdown-item" href="#"><img src="/assets/imgs/theme/flag-cn.png"
                                     alt="Français">中国人</a>
                         </div>
                     </li>
@@ -64,101 +64,109 @@
                             <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
                                 center</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/adminLogout"><i
+                            <a class="dropdown-item text-danger" href="/adminlogout"><i
                                     class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
                 </ul>
             </div>
         </header>
-        <section>
-
-
+        <section class="order-section">
 
             <div class="container p-3">
-                <h1><strong>ORDER STATUS</strong></h1>
-                <div class="col-sm-12">
+                <div class="order-details">
                     <div class="row">
-                        <div class="col-6">
-                            <p><strong>Order Number:</strong> #<%= orderData.orderNumber %>
-                            </p>
-                            <div class="card text-dark bg-info  mb-3" style="max-width: 18rem;">
+                        <div class="col-6 text-center"> <!-- Add text-center class to center the content -->
+                            <p class="order-number"><strong>Order Number:</strong> #<%= orderData.orderNumber %></p>
+                            <div class="card text-white bg-lightgreen mb-3"> <!-- Change bg-success to your desired light green color -->
                                 <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= orderData.orderStatus %>
-                                    </h5>
+                                    <h5 class="card-title"><%= orderData.orderStatus %></h5>
                                 </div>
                             </div>
-                            <span>
-                                <p><strong>Status:</strong></p>
-                                <h5>
-                                    <%= orderData.orderStatus %>
-                                </h5>
-                            </span>
-                            <p><strong>Order Date:</strong>
-                                <%= orderData.orderDate %>
-                            </p>
+                            <div class="order-info">
+                                <p class="order-status"><strong>Status:</strong> <%= orderData.orderStatus %></p>
+                                <p class="order-date"><strong>Order Date:</strong> <%= orderData.orderDate %></p>
+                            </div>
                         </div>
-                        <div class="col-6 ">
-                            <div class="card bg-light mb-3" style="max-width: 18rem;">
+                        <style>
+                            .bg-lightgreen {
+                                background-color: #90ee90; /* Your desired light green color */
+                            }
+                        </style>
+                        
+                        
+                        
+                        <div class="col-6">
+                            <div class="card bg-light address-card">
                                 <div class="card-header">Address</div>
                                 <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= orderData.addressChosen.addressTitle %>
-                                    </h5>
+                                    <h5 class="card-title"><%= orderData.addressChosen.addressTitle %></h5>
                                     <p class="card-text">
                                         <%= orderData.addressChosen.addressLine1 %> <br />
-                                            <%= orderData.addressChosen.addressLine2 %> <br />
-                                                Phone: <%= orderData.addressChosen.phone %>
+                                        <%= orderData.addressChosen.addressLine2 %> <br />
+                                        Phone: <%= orderData.addressChosen.phone %>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row p-3">
-                        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Payment</div>
-                            <div class="card-body">
-                                <h5 class="card-title">₹<%= orderData.grandTotalCost %>
-                                </h5>
-                                <p class="card-text">
-                                    <%= orderData.paymentType %>
-                                </p>
+                        <div class="col-6">
+                            <!-- Previous content here -->
+                    
+                            <!-- Payment card in a light green box -->
+                            <div class="payment-box bg-lightgreen p-3">
+                                <div class="payment-card card text-white bg-secondary">
+                                    <div class="card-header">Payment</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">₹<%= orderData.grandTotalCost %></h5>
+                                        <p class="card-text"><%= orderData.paymentType %></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <h5>Product details:</h5>
+
+                    <style>
+                        .bg-lightgreen {
+                            background-color: #90ee90; /* Your desired light green color */
+                        }
+                    
+                        .payment-box {
+                            border: 1px solid #ccc; /* Add a border for the box */
+                            border-radius: 8px; /* Add border radius for rounded corners */
+                        }
+                    </style>
+                    
+                    
+                    <h5 class="product-details-heading">Product details:</h5>
                     <div class="row p-3">
                         <table id="orderStatus" class="table">
                             <thead>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Total Cost</th>
                             </thead>
                             <tbody>
                                 <% orderData.cartData.forEach(cartItem=> { %>
                                     <tr>
                                         <td>
-                                            <div><a href=""><img style="height: 100px; width: 100px;"
-                                                        src="/images/productImages/<%= cartItem.productId.productImage1 %>"
-                                                        alt=""></a>
+                                            <div class="product-image"><a href=""><img
+                                                        src="/upload/<%= cartItem.productId.productImage1 %>" alt=""></a>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>
-                                                <h4>
-                                                    <%= cartItem.productId.productName %>
-                                                </h4>
-                                                <div><span>₹<%= cartItem.productId.productPrice %></span></div>
+                                            <div class="product-info">
+                                                <h4><%= cartItem.productId.productName %></h4>
+                                                <div class="product-price"><span>₹<%= cartItem.productId.productPrice %></span>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td> X &nbsp; <%= cartItem.productQuantity %>
+                                        <td><%= cartItem.productQuantity %></td>
+                                        <td>
+                                            <div class="total-cost"><span>₹<%= cartItem.totalCostPerProduct %></span></div>
                                         </td>
-                                        <td> <span>
-                                                <h4>₹<%= cartItem.totalCostPerProduct %>
-                                                </h4>
-                                            </span></td>
                                     </tr>
                                     <% }); %>
                             </tbody>
@@ -166,41 +174,9 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         </section>
-
+        
 
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
@@ -217,21 +193,66 @@
             </div>
         </footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </main>
+
+
+
+    <style>
+
+/* Additional styles for the modified HTML structure */
+
+.order-section {
+    background-color: #f8f9fa; /* Background color for the entire section */
+    padding: 20px;
+}
+
+.order-details {
+    background-color: #fff; /* Background color for the order details */
+    border: 1px solid #ddd; /* Border around the order details */
+    padding: 20px;
+}
+
+.order-number {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.order-status-card {
+    max-width: 18rem;
+}
+
+.order-info {
+    margin-top: 15px;
+}
+
+.address-card,
+.payment-card {
+    max-width: 18rem;
+}
+
+.product-details-heading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.product-image img {
+    max-width: 100px;
+    height: auto;
+}
+
+.product-info h4 {
+    margin-bottom: 5px;
+}
+
+.product-price span {
+    font-weight: bold;
+}
+
+.total-cost span {
+    font-weight: bold;
+}
+
+
+    </style>
 
     <%- include('../adminPartials/footer') %>

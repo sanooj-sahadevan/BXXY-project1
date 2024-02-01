@@ -158,14 +158,14 @@ const checkoutPage = async (req, res) => {
       userId: req.session.currentUser._id,
       orderNumber: (await orderCollection.countDocuments()) + 1,
       orderDate: new Date(),
-      addressChosen: JSON.parse(JSON.stringify(addressData[0])), 
-       cartData: await grandTotal(req),
+      addressChosen: JSON.parse(JSON.stringify(addressData[0])),
+      cartData: await grandTotal(req),
       grandTotalCost: req.session.grandTotal,
     });
 
     let userCartData = await grandTotal(req);
 
-console.log(addressData);
+    console.log(addressData);
     res.render("userViews/checkout", {
       user: req.body.user,
       currentUser: req.session.currentUser,
@@ -181,26 +181,41 @@ console.log(addressData);
 };
 
 
-const postOrderSucess = async (req, res) => {
-  let cartData = await cartCollection
-    .find({ userId: req.session.currentUser._id })
-    .populate("productId");
-  // console.log("rendering next");
-  res.render("userViews/orderSucess", {
-    orderCartData: cartData,
-    orderData: req.session.currentOrder,
-    user: req.body.user,
-    currentUser: req.session.currentUser,
-    addressData: req.session.addressData,
-      
-  });
- 
-
-
-  // delete the cart- since the order is placed
-  await cartCollection.deleteMany({ userId: req.session.currentUser });
-  console.log("deleting finished");
-};
+const orderPlaced = async (req, res) => {
+  try {
+    console.log(req.session.grandTotal);
+    if (req.body.razorpay_payment_id) {
+      //razorpay payment
+      await orderCollection.updateOne(
+        { _id: req.session.currentOrder._id },
+        {
+          $set: {
+            paymentId: req.body.razorpay_payment_id,
+            paymentType: "Razorpay",
+          },
+        }
+      );
+      res.redirect("/checkout/orderPlacedEnd");
+   
+    } else {
+      //incase of COD
+      await orderCollection.updateOne(
+        
+        { _id: req.session.currentOrder._id },
+        {
+          $set: {
+            paymentId: "generatedAtDelivery",
+            paymentType: "COD",
+          },
+        }
+      );
+      console.log('ed');
+      res.json({ success: true });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 
 
@@ -209,7 +224,8 @@ const razorpayCreateOrderId = async (req, res) => {
   var options = {
     amount: req.session.grandTotal + "00", // amount in the smallest currency unit
     currency: "INR",
-  };
+  };    console.log('poind'),
+
 
   razorpay.instance.orders.create(options, function (err, order) {
     res.json(order);
@@ -218,13 +234,14 @@ const razorpayCreateOrderId = async (req, res) => {
 }
 
 
-const orderPlacedEnd =  async (req, res) => {
+const orderPlacedEnd = async (req, res) => {
   let cartData = await cartCollection
     .find({ userId: req.session.currentUser._id })
     .populate("productId");
 
   console.log("rendering next");
-  res.render("userViews/orderSucess.ejs", {
+  res.render("userViews/orderSucess", {
+    user:req.session.user,
     orderCartData: cartData,
     orderData: req.session.currentOrder,
   });
@@ -245,6 +262,6 @@ module.exports = {
   decQty,
   incQty,
   checkoutPage,
-  postOrderSucess,
-  razorpayCreateOrderId,orderPlacedEnd 
+  orderPlaced,
+  razorpayCreateOrderId, orderPlacedEnd
 };

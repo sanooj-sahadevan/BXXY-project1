@@ -44,6 +44,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(userRoutes);
 app.use(adminRoutes);
 
+app.use("/*", (req, res) => {
+  res.render("userViews/errorPage", { signIn: req.session.signIn,user:req.session.user });
+});
+
+
 app.listen(port, () => {
   console.log("listening to server on http://localhost:3000");
 });

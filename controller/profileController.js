@@ -38,18 +38,32 @@ const orderStatus = async (req, res) => {
   try {
     let orderData = await orderCollection
       .findOne({ _id: req.params.id })
-      .populate("addressChosen"); 
-    let isCancelled = orderData.orderStatus == "Cancelled";
+      .populate("addressChosen");
+
+    let isCancelled = orderData.orderStatus === "Cancelled";
+    let isReturn = orderData.orderStatus === "Return";
+    let isDelivered = orderData.orderStatus === "Delivered";
+
+    let orderStatus = {
+      Cancelled: isCancelled,
+      Return: isReturn,
+      Delivered: isDelivered
+    };
 
     res.render("userViews/orderStatus", {
       orderData,
       isCancelled,
+      isReturn,
+      isDelivered,
+      orderStatus,
       user: req.session.user,
+      currentUser:req.session.currentUser
     });
   } catch (error) {
     console.error(error);
   }
 };
+
 
 const cancelOrder = async (req, res) => {
   try {
@@ -177,7 +191,6 @@ const changePassword = async (req, res) => {
 };
 
 const changePasswordPatch = async (req, res) => {
-  console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee2222222222222222222222222222');
 
   try {
     // console.log(req.body, req.session.currentUser);

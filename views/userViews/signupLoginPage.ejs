@@ -30,7 +30,7 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
-                <form class="regForm" action="/signup" method="POST">
+                <form class="regForm" action="/signup"  id="formData"  method="POST">
                   <div class="form-group">
                     <label for="singin-email-2">Email address *</label>
                     <input type="text" class="form-control" id="singin-email-2" name="email"
@@ -173,18 +173,44 @@
   <!-- End .main -->
 
   <!-- include validate.js // jquery plugin   -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.0/jquery.validate.min.js"
-    integrity="sha512-lFfy7KUtk18eFTGEIOZFNVWVWqYiQfihvAZ0xc53FFv+PkUlmldLvpjoU8RorEork4ygFkdBEOtDGn/l2wW+WQ=="
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    $().ready(function () {
-      $("#regForm").validate();
 
-      $(".regForm").validate({
-        errorLabelContainer: $(".regForm div.error"),
-      });
+
+    $("#formData").validate({
+      rules: {
+        username: {
+          required: true,
+          minlength: 4,
+          maxlength: 12,
+        },
+        email: {
+          required: true,
+          email: true,
+        },
+        phonenumber: {
+          required: true,
+          minlength: 10,
+          maxlength: 10,
+        },
+        password: {
+          required: true,
+          minlength: 6,
+          maxlength: 100,
+        },
+      },
+
+
     });
+
+
   </script>
 
   <%- include('../partials/footer') %>

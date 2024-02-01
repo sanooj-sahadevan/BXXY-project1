@@ -41,71 +41,32 @@
                     <p>Please enter the OTP sent to your mobile number.</p>
                     <form action="/otp" method="POST" id="otpForm">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="otpInput" name="" placeholder="Enter OTP" required>
+                        <input type="text" class="form-control" id="otpInput" name="otp" placeholder="Enter OTP"
+                          required>
                       </div>
                       <button type="submit" class="btn btn-primary">Verify OTP</button>
-                <a href="/resendOTP">     <p class="mt-3">Didn't receive OTP? <span id="resendOTP" class="resend-link">Resend</span></p></a> 
 
-                <div class="form-group">
-                  <label>Time Left: </label>
-                  <span>
-                    <h4 id="timer"></h4>
-                  </span>
-                </div>
-                     
 
-                      <!-- <div class="form-group">
+                   
+                        <a href="/resendOTP">
+                          <p class="mt-3">Didn't receive OTP? <span id="ResendOTP" class="resend-link">Resend</span></p>
+                        </a>
+                  
+                    
+                      
+                      <div class="form-group">
                         <label>Time Left: </label>
                         <span>
                           <h4 id="timer"></h4>
                         </span>
-                      </div> -->
-                      
+                      </div>
+
+
+
 
 
                     </form>
-                    
-                    <!-- <form  action="/resendOTP" method="POST">
-                      <button id="ResendOTP" type="submit" class="btn btn-danger" style="display: none;"> Resend OTP</button>
-                    </form> -->
 
-
-                    <!-- <form action="/otp" method="POST" role="form" class="regForm">
-                                <div class="form-group">
-                                  <label>Username</label>
-                                  <input name="username" title="Please enter your username (at least 3 characters)" type="text"
-                                    class="form-control" placeholder="Enter name" required minlength="3">
-                                </div>
-                                <div class="form-group">
-                                  <label>Email address</label>
-                                  <input name="email" title=" Please enter valid email" type="email" class="form-control"
-                                    placeholder="Enter email" required>
-                                </div>
-                                <div class="form-group">
-                                  <label>Phone Number</label>
-                                  <input name="phonenumber" minlength="10" maxlength="10" title=" Enter 10 numbers" type="tel"
-                                    class="form-control" placeholder="Enter phone number" required>
-                                </div>
-                                <div class="form-group">
-                                  <label>Password</label>
-                                  <input name="password" required id="password" minlength="5" maxlength="12"
-                                    title="Please enter your password, between 5 and 12 characters" type="password" class="form-control"
-                                    placeholder="Password">
-                                </div>
-                                <div class="form-group">
-                                  <label>Confirm Password</label>
-                                  <input required minlength="5" title="Paswords doesn't match" id="confirmPass" type="password"
-                                    class="form-control" placeholder="Confirm Password" data-rule-equalTo="#password">
-                                </div>
-                                <div class="error">
-                                </div>
-                                {{#if emailPhoneExists}}
-                                <div class="form-group">
-                                  <label style="color: red;">Email/Phone Number already exists!</label>
-                                </div>
-                                {{/if}}
-                                <button type="submit" class="btn   btn-primary"><i class="fa fa-user"></i> Create an account </button>
-                              </form> -->
 
 
 
@@ -129,20 +90,53 @@
 
 
   <script>
-    let a = 60
-    h = document.getElementById('timer')
-    let otpTimer = setInterval(() => {
-      h.innerText = a--
-      if (a === -1) {
-        clearInterval(otpTimer);
-        verifyOTP.style.display='none'
-        ResendOTP.style.display='block'
-      }
-    }, 1000)
+    document.addEventListener("DOMContentLoaded", function() {
+      let a = 30;
+      let timerElement = document.getElementById('timer');
+      let verifyOTPButton = document.querySelector('#otpForm button[type="submit"]');
+      let resendOTPLink = document.getElementById('ResendOTP');
+  
+      let otpTimer = setInterval(() => {
+        timerElement.innerText = a--;
+  
+        if (a === -1) {
+          clearInterval(otpTimer);
+          verifyOTPButton.style.display = 'none';
+          resendOTPLink.style.display = 'block';
+        }
+      }, 1000);
+    });
   </script>
+  
 
 
 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+
+
+    $("#otpForm").validate({
+      rules: {
+        otp: {
+          required: true,
+          minlength: 1,
+          maxlength: 14,
+        },
+       
+      }
+
+
+    });
+
+
+  </script>
 
 
 

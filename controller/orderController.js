@@ -3,21 +3,18 @@ const userCollection = require("../models/userModels.js");
 
 const orderManagement = async (req, res) => {
   try {
-
     let page = Number(req.query.page) || 1;
     let limit = 6;
     let skip = (page - 1) * limit;
 
-    let   count = await orderCollection.find().estimatedDocumentCount();
+    let count = await orderCollection.find().estimatedDocumentCount();
+    let orderData = await orderCollection.find().skip(skip).limit(limit);
 
-    let orderData= await orderCollection.find().skip(skip).limit(limit);        
-    res.render("adminViews/orderManagement", { orderData,count,
-      limit, });
+    res.render("adminViews/orderManagement", { orderData, count, limit, page });
   } catch (error) {
     console.error(error);
   }
 };
-
 
 
 

@@ -19,7 +19,7 @@
 
 
                             <div class="row">
-                                <form action="/editAddress/<%= existingAddress._id %>" method="POST">
+                                <form action="/editAddress/<%= existingAddress._id %>" method="POST"  id="addAdrress" >
 
                                     <div class="col-lg-9">
                                         <h2 class="checkout-title">Add Adreess</h2><!-- End .checkout-title -->
@@ -154,6 +154,47 @@
 
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+
+
+    $("#addAdrress").validate({
+      rules: {
+        firstName: {
+          required: true,
+          minlength: 4,
+          maxlength: 12,
+        },
+        lastName: {
+            required: true,
+            minlength: 4,
+            maxlength: 12,
+        },
+        phone: {
+          required: true,
+          minlength: 10,
+          maxlength: 10,
+        },
+        postcode: {
+          required: true,
+          minlength: 5,
+          maxlength: 6,
+        },
+      },
+
+
+    });
+
+
+  </script>.
+
+    
 
 
 

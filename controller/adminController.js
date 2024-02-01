@@ -46,11 +46,10 @@ const adminHome = async (req, res) => {
 
 const adminLogout = async (req, res) => {
   try {
-    req.session.destroy();
+    req.session.admin = null;
     res.redirect("/");
   } catch (error) {
     console.error("Error during logout:", error);
-    res.status(500).send("Internal Server Error");
   }
 };
 
