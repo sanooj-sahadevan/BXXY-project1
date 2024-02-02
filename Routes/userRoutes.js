@@ -16,8 +16,8 @@ const path = require('path');
 
 
 userRoutes.get('/',userController.userPage)
-userRoutes.get('/loginpage',userController.userLogin) 
-userRoutes.post('/login',userAuth.isLogin,userController.verifyLogin)
+userRoutes.get('/loginpage',userAuth.isLogin,userController.userLogin) 
+userRoutes.post('/login',userController.verifyLogin)
 
 
 

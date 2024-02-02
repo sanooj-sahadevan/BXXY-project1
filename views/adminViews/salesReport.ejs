@@ -1,120 +1,56 @@
 <%- include('../adminPartials/header') %>
 
-<main class="main-wrap">
-    <header class="main-header navbar">
-        <div class="col-search">
-            <form class="searchform">
-                <div class="input-group">
-                    <input list="search_terms" type="text" class="form-control" placeholder="Search term" />
-                    <button class="btn btn-light bg" type="button">
-                        <i class="material-icons md-search"></i>
-                    </button>
-                </div>
-                <datalist id="search_terms">
-                    <option value="Categories"></option>
-                    <option value="New orders"></option>
-                    <option value="Apple iphone"></option>
-                    <option value="Ahmed Hassan"></option>
-                </datalist>
-            </form>
-        </div>
-        <div class="col-nav">
-            <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside">
-                <i class="material-icons md-apps"></i>
-            </button>
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link btn-icon" href="#">
-                        <i class="material-icons md-notifications animation-shake"></i>
-                        <span class="badge rounded-pill">3</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn-icon darkmode" href="#">
-                        <i class="material-icons md-nights_stay"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="requestfullscreen nav-link btn-icon"><i
-                            class="material-icons md-cast"></i></a>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
-                        aria-expanded="false"><i class="material-icons md-public"></i></a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                        <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png"
-                                alt="English" />English</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png"
-                                alt="Français" />Français</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png"
-                                alt="Français" />日本語</a>
-                        <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png"
-                                alt="Français" />中国人</a>
-                    </div>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
-                        aria-expanded="false">
-                        <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User" /></a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                        <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit
-                            Profile</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account
-                            Settings</a>
-                        <a class="dropdown-item" href="#"><i
-                                class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                        <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help
-                            center</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="/adminlogout"><i
-                                class="material-icons md-exit_to_app"></i>Logout</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </header>
+
+   
 
 
 
 
 
 
-<!-- 
 
 
 
 
 
-    <div class="container p-3">
+
+    <div class="container mt-3">
         <div class="row">
-            <div class="col-2">
-                <a href="/admin/salesReport/download/xlsx" class="btn btn-info">Download(xlsx)</a>
+            <div class="col-md-2">
+                <a href="/admin/salesReport/download/xlsx" class="btn btn-primary">Download</a>
             </div>
+    
             <% if (dateValues) { %>
-                <div class="col-2">
-                    <label for="startDate">From: </label>
-                    <input id="startDate" type="date" value="<%= dateValues.startDate %>">
-                </div>sers Date
-                <div class="col-2">
-                    <label for="endDate">To: </label>
-                    <input id="endDate" type="date" value="<%= dateValues.endDate %>">
+                <div class="col-md-2">
+                    <label for="startDate" class="form-label">From:</label>
+                    <input id="startDate" type="date" class="form-control" value="<%= dateValues.startDate %>">
                 </div>
-                <% } else { %>
-                    <div class="col-2">
-                        <label for="startDate">From: </label>
-                        <input id="startDate" type="date">
-                    </div>
-                    <div class="col-2">
-                        <label for="endDate">To: </label>
-                        <input id="endDate" type="date">
-                    </div>
-                    <% } %>
-                        <div class="col-2">
-                            <button id="filterBtn" class="btn btn-info p-1">Filter</button>
-                        </div>
+    
+                <div class="col-md-2">
+                    <label for="endDate" class="form-label">To:</label>
+                    <input id="endDate" type="date" class="form-control" value="<%= dateValues.endDate %>">
+                </div>
+    
+            <% } else { %>
+    
+                <div class="col-md-2">
+                    <label for="startDate" class="form-label">From:</label>
+                    <input id="startDate" type="date" class="form-control">
+                </div>
+    
+                <div class="col-md-2">
+                    <label for="endDate" class="form-label">To:</label>
+                    <input id="endDate" type="date" class="form-control">
+                </div>
+    
+            <% } %>
+    
+            <div class="col-md-2">
+                <button id="filterBtn" class="btn btn-success">Filter</button>
+            </div>
         </div>
-    </div> -->
+    </div>
+        
 
     <div class="container pt-3">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -198,19 +134,5 @@
     </div>
 
 
-    <footer class="main-footer font-xs">
-        <div class="row pb-30 pt-15">
-            <div class="col-sm-6">
-                <script data-cfasync="false"
-                    src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-                <!-- <script>
-                    document.write(new Date().getFullYear())
-                </script> ©, Evara - HTML Ecommerce Template . -->
-            </div>
-            <div class="col-sm-6">
-                <!-- <div class="text-sm-end">All rights reserved</div> -->
-            </div>
-        </div>
-    </footer>
-</main>
+  
     <%- include('../adminPartials/footer') %>

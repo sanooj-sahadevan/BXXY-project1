@@ -23,7 +23,8 @@ const upload = require('../service/multer.js')
 adminRoutes.get('/admin', adminController.adminLogin)
 adminRoutes.post('/adminLogin', adminController.validateAdmin)
 adminRoutes.get('/adminHome', adminController.adminHome)
-adminRoutes.post('/adminlogout', adminController.adminLogout)
+adminRoutes.get('/dashboardData', adminController.dashboardData )
+adminRoutes.get('/adminlogout', adminController.adminLogout)
 
 
 // -------------------------------------------------------PRODUCT------------------------------------------------------------------------------
@@ -88,6 +89,7 @@ adminRoutes.get('/orderManagement/cancelled/:id', orderController.changeStatusCa
 adminRoutes.get('/orderManagement/orderStatus/:id', orderController.orderStatusPage)
 
 adminRoutes.get('/salesReport',  salesReportController.salesReport)
+
 
 
 

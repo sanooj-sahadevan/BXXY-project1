@@ -42,19 +42,18 @@ const sendOTP = async (email, otp) => {
 // first landing page
 const userPage = async (req, res) => {
   console.log();
-  if (req.session.admin) {
-    res.redirect("/adminHome")
-
-  } else {
-    res.render("userViews/landingpage", { user: req.session.user });
-  }
+if(req.session.admin){
+  res.redirect("/adminHome");
+}else{
+    res.render("userViews/landingpage", { user: req.session?.user });
+}
 }
 
 
-const userLogin = async (req, res) => {
+const   userLogin = async (req, res) => {
   console.log("1");
   res.render("userViews/signupLoginPage", {
-    notice: "",
+   
     user: req.session.user,
   });
 };
@@ -72,13 +71,20 @@ const verifyLogin = async (req, res) => {
 
     if (checking) {
       if (checking.block === false) {
+        
         if (checking.password === req.body.password) {
+          if(checking.admin===1){
+            req.session.admin  = true
+            res.redirect("/adminHome");
+          }else{
+
+
           req.session.user = checking;
           req.session.currentUser = checking;
           res.render("userViews/landingpage", {
             user: req.session.user,
             currentUser: req.session.currentUser,
-          });
+          })};
           console.log("login Successfull");
           console.log(req.session.currentUser);
         } else {
@@ -106,7 +112,7 @@ console.log(error);
 
 //logout
 const userLogout = async (req, res) => {
-  res.clearCookie("userToken");
+  
   res.redirect("/");
 
 };

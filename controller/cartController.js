@@ -49,9 +49,11 @@ const cart = async (req, res) => {
     let userCartData = await grandTotal(req);
     console.log(userCartData);
     console.log(req.session.currentUser);
+    console.log(req.session.user);
+
     res.render("userViews/cart", {
       user: req.body.user,
-      addressData: req.session.addressData,
+      // addressData: req.session.addressData,
       addressData,
       currentUser: req.session.currentUser,
       userCartData,
@@ -59,8 +61,10 @@ const cart = async (req, res) => {
     });
     console.log(req.session.currentUser);
   } catch (error) {
-    console.error("Error in cart:", error);
-    res.status(500).send("Internal Server Error");
+    // console.error("Error in cart:", error);
+    // res.status(500).send("Internal Server Error");
+    res.redirect('/loginpage')
+
   }
 };
 
@@ -90,8 +94,11 @@ const addToCart = async (req, res) => {
     console.log(req.body);
     res.redirect("back");
   } catch (error) {
-    console.error("Error in addToCart:", error);
-    res.status(500).send("Internal Server Error");
+   
+    res.redirect('/loginpage')
+
+    // console.error("Error in addToCart:", error);
+    // res.status(500).send("Internal Server Error");
   }
 };
 
@@ -176,7 +183,8 @@ const checkoutPage = async (req, res) => {
       addressData,
     });
   } catch (error) {
-    console.error(error);
+    res.redirect('/loginpage')
+
   }
 };
 

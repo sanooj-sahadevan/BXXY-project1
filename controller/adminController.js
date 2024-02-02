@@ -1,6 +1,7 @@
 const adminCollection = require("../models/Model");
 const productCollection = require("../models/productModel.js");
 const userCollection = require("../models/userModels.js");
+const dashboard = require("../service/dashboardChart.js");
 
 
 
@@ -40,13 +41,13 @@ const adminHome = async (req, res) => {
     res.render("adminViews/dashboard");
   } else {
     console.log("session not work");
-    res.redirect("/admin");
+    res.redirect("/");
   }
 };
 
 const adminLogout = async (req, res) => {
   try {
-    req.session.admin = null;
+    req.session.admin = false;
     res.redirect("/");
   } catch (error) {
     console.error("Error during logout:", error);
@@ -102,7 +103,41 @@ const unBlockUser = async (req, res) => {
   }
 };
 
+const dashboardData =  async (req, res) => {
+  try {
+    const [
+      productsCount,
+      categoryCount,
+      pendingOrdersCount,
+      completedOrdersCount,
+      currentDayRevenue,
+      fourteenDaysRevenue,
+      categoryWiseRevenue,
+    ] = await Promise.all([
+      dashboard.productsCount(),
+      dashboard.categoryCount(),
+      dashboard.pendingOrdersCount(),
+      dashboard.completedOrdersCount(),
+      dashboard.currentDayRevenue(),
+      dashboard.fourteenDaysRevenue(),
+      dashboard.categoryWiseRevenue(),
+    ]);
 
+    const data = {
+      productsCount,
+      categoryCount,
+      pendingOrdersCount,
+      completedOrdersCount,
+      currentDayRevenue,
+      fourteenDaysRevenue,
+      categoryWiseRevenue,
+    };
+
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 
@@ -114,5 +149,5 @@ module.exports = {
   adminLogout,
   userManagement,
   blockUser,
-  unBlockUser,adminLogout
+  unBlockUser,adminLogout,dashboardData
 };
