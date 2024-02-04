@@ -200,11 +200,16 @@
 
         let response = await fetch('/cart/decQty/' + id, { method: 'PUT' })
         let data = await response.json()
+         
+        if (data.success) {
+                console.log('hello')
+                location.reload()
+            }
 
         productQuantityElement.innerHTML = await data.cartProduct.productQuantity;
-        totalCostPerProductElement.innerHTML = '₹' + await data.cartProduct.totalCostPerProduct;
-        totalPriceElement.innerHTML = '₹' + await data.grandTotal
-        grandTotalElement.innerHTML = '₹' + await data.grandTotal
+        // totalCostPerProductElement.innerHTML = '₹' + await data.cartProduct.totalCostPerProduct;
+        // totalPriceElement.innerHTML = '₹' + await data.grandTotal
+        // grandTotalElement.innerHTML = '₹' + await data.grandTotal
       } catch (error) {
         console.error(error)
       }
@@ -229,11 +234,17 @@
 
         let response = await fetch('/cart/incQty/' + id, { method: 'PUT' })
         let data = await response.json()
+        
+        if (data.success) {
+                console.log('hello')
+                location.reload()
+            }
 
         productQuantityElement.innerHTML = data.cartProduct.productQuantity;
-        totalCostPerProductElement.innerHTML = '₹' + data.cartProduct.totalCostPerProduct;
-        totalPriceElement.innerHTML = '₹' + data.grandTotal
-        grandTotalElement.innerHTML = '₹' + data.grandTotal
+        // totalCostPerProductElement.innerHTML = '₹' + data.cartProduct.totalCostPerProduct;
+        // totalPriceElement.innerHTML = '₹' + data.grandTotal
+        // grandTotalElement.innerHTML = '₹' + data.grandTotal
+
       } catch (error) {
         console.error(error)
       }

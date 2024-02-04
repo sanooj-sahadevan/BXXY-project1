@@ -128,9 +128,7 @@ const checkUser = async (req, res) => {
       return res.render("userViews/signupLoginPage", {
         notice: "Already registered",
       });
-    }
-
-   
+    }else{
     const newUser = new collection({
       username: req.body.username,
       email: req.body.email,
@@ -138,6 +136,7 @@ const checkUser = async (req, res) => {
       password: req.body.password,
       admin: 0,
     });
+      
 
     // await newUser.save();
     // req.session.user = await userModels.findOne({ email: req.body.email });
@@ -149,6 +148,7 @@ const checkUser = async (req, res) => {
     const otp = generateOTP();
     req.session.otp = otp
     res.redirect("/otpPage");
+  }
   } catch (error) {
     console.error(error);
   }
@@ -301,7 +301,7 @@ const forgotPasswordPage3 = async (req, res) => {
 
 const forgotPasswordReset = async (req, res) => {
   try {
-    let encryptedPassword = bcrypt.hashSync(req.body.newPassword, 10);
+    // let encryptedPassword = bcrypt.hashSync(req.body.newPassword, 10);
     await collection.findOneAndUpdate(
       { _id: req.session.forgotUserData._id },
       { $set: { password: encryptedPassword } }
@@ -335,7 +335,7 @@ const productDetils = async (req, res) => {
 const productspage = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
-    let limit = 4;
+    let limit = 8;
     let skip = (page - 1) * limit;
 
     let categoryData = await categoryCollection.find({ isListed: true });

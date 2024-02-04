@@ -137,15 +137,12 @@
                         aspectRatio: 5 / 4,
                         autoCrop: false,
                     });
-                    // document.getElementById("img-container").style.height = "200px"
 
                     document.getElementById("cropButton").addEventListener(
                         "click",
                         function () {
-                            // Get the cropped canvas data
                             const canvas = cropper.getCroppedCanvas();
 
-                            // Set the source of the cropped image
                             croppedImg.src = canvas.toDataURL("image/png");
 
                             canvas.toBlob(function (blob) {
@@ -162,12 +159,9 @@
                                 })
                                     .then((response) => response.json())
                                     .then((data) => {
-                                        // Check if the upload was successful
                                         if (data.success) {
-                                            // Optionally, you can handle success here
-                                            window.location.href = "/products"; // Change this URL
+                                            window.location.href = "/products"; 
                                         } else {
-                                            // Handle the case where upload was not successful
                                             console.error("Upload failed:", data.error);
                                         }
                                     })
@@ -177,7 +171,6 @@
                             });
 
                             cropper.destroy();
-                            // image.style.display = "none";
                         },
                         "image/png"
                     );
@@ -204,15 +197,12 @@
                         aspectRatio: 5 / 4,
                         autoCrop: false,
                     });
-                    // document.getElementById("img-container").style.height = "200px"
 
                     document.getElementById("cropButton").addEventListener(
                         "click",
                         function () {
-                            // Get the cropped canvas data
                             const canvas = cropper.getCroppedCanvas();
 
-                            // Set the source of the cropped image
                             croppedImg.src = canvas.toDataURL("image/png");
 
                             canvas.toBlob(function (blob) {
@@ -229,12 +219,9 @@
                                 })
                                     .then((response) => response.json())
                                     .then((data) => {
-                                        // Check if the upload was successful
                                         if (data.success) {
-                                            // Optionally, you can handle success here
                                             window.location.href = "/products"; // Change this URL
                                         } else {
-                                            // Handle the case where upload was not successful
                                             console.error("Upload failed:", data.error);
                                         }
                                     })
@@ -244,7 +231,6 @@
                             });
 
                             cropper.destroy();
-                            // image.style.display = "none";
                         },
                         "image/png"
                     );

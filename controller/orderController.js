@@ -1,6 +1,9 @@
 const orderCollection = require("../models/orderModel.js");
 const userCollection = require("../models/userModels.js");
 
+
+
+// order management page
 const orderManagement = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
@@ -9,7 +12,7 @@ const orderManagement = async (req, res) => {
 
     let count = await orderCollection.find().estimatedDocumentCount();
     let orderData = await orderCollection.find().skip(skip).limit(limit);
-
+    console.log(orderData[0]);
     res.render("adminViews/orderManagement", { orderData, count, limit, page });
   } catch (error) {
     console.error(error);
@@ -18,6 +21,7 @@ const orderManagement = async (req, res) => {
 
 
 
+// pending
 const changeStatusPending = async (req, res) => {
   try {
     await orderCollection.findOneAndUpdate(
@@ -29,6 +33,10 @@ const changeStatusPending = async (req, res) => {
     console.error(error);
   }
 };
+
+
+
+//shipped
 const changeStatusShipped = async (req, res) => {
   try {
     await orderCollection.findOneAndUpdate(
@@ -40,6 +48,10 @@ const changeStatusShipped = async (req, res) => {
     console.error(error);
   }
 };
+
+
+
+//deliverd
 const changeStatusDelivered = async (req, res) => {
   try {
     await orderCollection.findOneAndUpdate(
@@ -51,6 +63,11 @@ const changeStatusDelivered = async (req, res) => {
     console.error(error);
   }
 };
+
+
+
+
+//return
 const changeStatusReturn = async (req, res) => {
   try {
     await orderCollection.findOneAndUpdate(
@@ -62,6 +79,10 @@ const changeStatusReturn = async (req, res) => {
     console.error(error);
   }
 };
+
+
+
+//cancelled
 const changeStatusCancelled = async (req, res) => {
   try {
     let orderData = await orderCollection
@@ -78,6 +99,9 @@ const changeStatusCancelled = async (req, res) => {
     console.error(error);
   }
 };
+
+
+// orderStatus
 const orderStatusPage = async (req, res) => {
   try {
     let orderData = await orderCollection

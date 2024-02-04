@@ -1,6 +1,5 @@
 <%- include('../adminPartials/header') %>
 
-
     <!-- <div class="screen-overlay"></div> -->
     <!-- <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
@@ -131,72 +130,75 @@
 
  -->
 
-
     <section class="content-main">
-        <!-- <div class="content-header">
-                    <div>
-                        <h2 class="content-title card-title">Dashboard</h2>
-                        <p>Whole data about your business here</p>
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create
-                            report</a>
-                    </div>
-                </div> -->
-        <!-- <div class="row">
-                    <div class="col-lg-3">
-                        <div class="card card-body mb-4">
-                            <article class="icontext">
-                                <span class="icon icon-sm rounded-circle bg-primary-light"><i
-                                        class="text-primary material-icons md-monetization_on"></i></span>
-                                <div class="text">
-                                    <h6 class="mb-1 card-title">Revenue</h6>
-                                    <span>$13,456.5</span>
-                                    <span class="text-sm"> Shipping fees are not included </span>
-                                </div>
-                            </article>
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Dashboard</h2>
+                <p>Whole data about your business here</p>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create
+                    report</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-primary-light"><i
+                                class="text-primary material-icons md-monetization_on"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title"> Today's Revenue</h6>
+                            <!-- <span>$13,456.5</span> -->
+                            <h5 id="currentDayRevenue" class="card-title"></h5>
+
+                            <span class="text-sm"> Shipping fees are not included </span>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card card-body mb-4">
-                            <article class="icontext">
-                                <span class="icon icon-sm rounded-circle bg-success-light"><i
-                                        class="text-success material-icons md-local_shipping"></i></span>
-                                <div class="text">
-                                    <h6 class="mb-1 card-title">Orders</h6>
-                                    <span>53.668</span>
-                                    <span class="text-sm"> Excluding orders in transit </span>
-                                </div>
-                            </article>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-success-light"><i
+                                class="text-success material-icons md-local_shipping"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Orders</h6>
+                            <!-- <span>53.668</span> -->
+                            <h5 id="completedOrdersCount" class="card-title"></h5>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card card-body mb-4">
-                            <article class="icontext">
-                                <span class="icon icon-sm rounded-circle bg-warning-light"><i
-                                        class="text-warning material-icons md-qr_code"></i></span>
-                                <div class="text">
-                                    <h6 class="mb-1 card-title">Products</h6>
-                                    <span>9.856</span>
-                                    <span class="text-sm"> In 19 Categories </span>
-                                </div>
-                            </article>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-warning-light"><i
+                                class="text-warning material-icons md-qr_code"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Products</h6>
+                            <h5 id="productsCount" class="card-title"></h5>
+                            <h6 id="categoryCount" style="margin-left: 10px;"></h6>
+
+                            <!-- <span class="text-sm"> In 19 Categories </span> -->
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card card-body mb-4">
-                            <article class="icontext">
-                                <span class="icon icon-sm rounded-circle bg-info-light"><i
-                                        class="text-info material-icons md-shopping_basket"></i></span>
-                                <div class="text">
-                                    <h6 class="mb-1 card-title">Monthly Earning</h6>
-                                    <span>$6,982</span>
-                                    <span class="text-sm"> Based in your local time. </span>
-                                </div>
-                            </article>
+                    </article>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-body mb-4">
+                    <article class="icontext">
+                        <span class="icon icon-sm rounded-circle bg-info-light"><i
+                                class="text-info material-icons md-shopping_basket"></i></span>
+                        <div class="text">
+                            <h6 class="mb-1 card-title">Two Week Earning</h6>
+                            <h5 id="fourteenDaysRevenue" class="card-title"></h5>
+                            <span class="text-sm"> Based in your local time. </span>
                         </div>
-                    </div>
-                </div> -->
+                    </article>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <!-- <div class="col-xl-8 col-lg-12"> -->
             <!-- <div class="card mb-4">
@@ -205,7 +207,6 @@
                             <canvas id="myChart" height="120px"></canvas>
                         </article>
                     </div> -->
-
 
             <!-- --------------------------------------------NEW MWMBERS --------------------------------------------------------------------- -->
             <!-- <div class="row">
@@ -399,26 +400,64 @@
                     </div>
                 </div> -->
 
-
         <div class="row">
+            <div class="container text-center">
+                <h5>Two Weeks Sales Report</h5>
+            </div>
+            <br />
+            <br />
+            <hr />
+
             <div class="col-lg-6">
                 <canvas id="twoWeeksSalesChart"></canvas>
             </div>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="container text-center">
+                <h5>Categorywise Revenue Chart</h5>
+            </div>
+            <br />
+            <br />
+            <hr />
             <div class="col-lg-6">
                 <canvas id="categoryWiseRevenueChart"></canvas>
             </div>
-
         </div>
 
+        <div class="row">
+            <div class="container text-center">
+                <h5>Comparing pending and Deliverd</h5>
+            </div>
+            <br />
+            <br />
+            <hr />
+            <h5></h5>
+            <div class="col-lg-6">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
 
+        <style>
+            .row {
+                display: flex;
+                justify-content: center;
+            }
 
+            .col-lg-6 {
+                margin: 0 auto;
+            }
+        </style>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
+            console.log("11");
+
             const fetchData = (async () => {
                 try {
-                    const response = await fetch('/dashboardData', { method: 'GET' });
+                    const response = await fetch("/dashboardData", { method: "GET" });
                     const data = await response.json();
                     const {
                         productsCount,
@@ -427,56 +466,92 @@
                         completedOrdersCount,
                         currentDayRevenue,
                         fourteenDaysRevenue,
-                        categoryWiseRevenue
-                    } = data
+                        categoryWiseRevenue,
+                        shipping,
+                    } = data;
+                    console.log("11");
+                    document.getElementById('currentDayRevenue').innerText = '₹' + currentDayRevenue
+                    document.getElementById('completedOrdersCount').innerText = completedOrdersCount
+                    document.getElementById('productsCount').innerText = productsCount
+                    document.getElementById('categoryCount').innerText = 'in ' + categoryCount + ' categories'
+                    document.getElementById('fourteenDaysRevenue').innerText = '₹' + fourteenDaysRevenue.revenue
 
-                    // document.getElementById('productsCount').innerText = productsCount
-                    // document.getElementById('categoryCount').innerText = 'in ' + categoryCount + ' categories'
                     // document.getElementById('pendingOrdersCount').innerText = pendingOrdersCount
-                    // document.getElementById('completedOrdersCount').innerText = completedOrdersCount
-                    // document.getElementById('currentDayRevenue').innerText = '₹' + currentDayRevenue
 
                     console.log(fourteenDaysRevenue);
+                    console.log("1");
+                    console.log(shipping);
 
-                    const twoWeeksSalesChartElement = document.getElementById('twoWeeksSalesChart');
+                    const twoWeeksSalesChartElement =
+                        document.getElementById("twoWeeksSalesChart");
                     const twoWeeksSalesChartOptions = {
-                        type: 'line',
+                        type: "line",
                         data: {
                             labels: fourteenDaysRevenue.date,
-                            datasets: [{
-                                label: 'Last 2 weeks revenue per day',
-                                data: fourteenDaysRevenue.revenue,
-                                borderWidth: 1
-                            }]
+                            datasets: [
+                                {
+                                    label: "Last 2 weeks revenue per day",
+                                    data: fourteenDaysRevenue.revenue,
+                                    borderWidth: 1,
+                                },
+                            ],
                         },
                         options: {
-                            scales: { y: { beginAtZero: true } }
-                        }
-                    }
+                            scales: { y: { beginAtZero: true } },
+                        },
+                    };
+                    console.log("2");
 
-                    const categoryWiseRevenueChartElement = document.getElementById('categoryWiseRevenueChart');
+                    const categoryWiseRevenueChartElement = document.getElementById(
+                        "categoryWiseRevenueChart"
+                    );
                     const categoryWiseRevenueChartOptions = {
-                        type: 'polarArea',
+                        type: "polarArea",
                         data: {
                             labels: categoryWiseRevenue.categoryName,
-                            datasets: [{
-                                data: categoryWiseRevenue.revenuePerCategory,
-                                backgroundColor: [
-                                    'rgba(139, 0, 0, 0.7)',    // Dark red
-                                    'rgba(0, 100, 0, 0.7)',    // Dark green
-                                    'rgba(184, 134, 11, 0.7)', // Dark goldenrod
-                                    'rgba(47, 79, 79, 0.7)',   // Dark slate gray
-                                    'rgba(0, 0, 139, 0.7)'     // Dark blue
-                                ]
-                            }]
-                        }
+                            datasets: [
+                                {
+                                    data: categoryWiseRevenue.revenuePerCategory,
+                                    backgroundColor: [
+                                        "rgba(139, 0, 0, 0.7)", // Dark red
+                                        "rgba(0, 100, 0, 0.7)", // Dark green
+                                        "rgba(184, 134, 11, 0.7)", // Dark goldenrod
+                                        "rgba(47, 79, 79, 0.7)", // Dark slate gray
+                                        "rgba(0, 0, 139, 0.7)", // Dark blue
+                                    ],
+                                },
+                            ],
+                        },
                     };
-
-
+                    console.log("3");
+                    const xChart = document.getElementById("myChart");
+                    const yChart = {
+                        type: "doughnut",
+                        data: {
+                            labels: shipping,
+                            datasets: [
+                                {
+                                    data: shipping,
+                                    backgroundColor: [
+                                        "rgb(255, 99, 132)",
+                                        "rgb(54, 162, 235)",
+                                        "rgb(255, 205, 86)",
+                                    ],
+                                    hoverOffset: 4,
+                                },
+                            ],
+                        },
+                    };
+                    console.log("4");
 
                     new Chart(twoWeeksSalesChartElement, twoWeeksSalesChartOptions);
-                    new Chart(categoryWiseRevenueChartElement, categoryWiseRevenueChartOptions);
 
+                    new Chart(
+                        categoryWiseRevenueChartElement,
+                        categoryWiseRevenueChartOptions
+                    );
+
+                    new Chart(xChart, yChart);
                 } catch (error) {
                     console.error(error);
                 }
@@ -518,6 +593,7 @@
 
 
 
+script
 
 
 
@@ -592,14 +668,7 @@
                                         </tr>
                                     </thead> -->
 
-
-
-
-
-
         <!-- SALES REPORT-------------------------------------------------------------------------------------------------------------------------------- -->
-
-
 
         <!-- <tbody>
                                         <tr>
@@ -766,7 +835,6 @@
                 </div
               
                 <!-- content-main end// -->
-
 
         <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:32:57 GMT -->
     </section>

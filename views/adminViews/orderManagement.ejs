@@ -27,6 +27,7 @@
                                 </button> </td>
                             <td>
                                 <%= order.userId %>
+                                <!-- <%= order.userId.username %> -->
                             </td>
                             <!--
                             <td></td>
@@ -34,7 +35,8 @@
                             <td>₹<%= order.grandTotalCost%>
                             </td>
                             <td>
-                                COD
+                                <%= order.paymentType %>
+
                             </td>
                             <td>
                                 <%= order.orderStatus %>

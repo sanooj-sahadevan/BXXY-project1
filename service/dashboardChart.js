@@ -28,6 +28,22 @@ const pendingOrdersCount = async () => {
     }
 };
 
+
+const shipping = async () => {
+    try {
+        console.log(orderCollection);
+        return await orderCollection.countDocuments({ orderStatus: "Shipped" });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+
+
+
+
+
 const completedOrdersCount = async () => {
     try {
         return await orderCollection.countDocuments({ orderStatus: "Delivered" });
@@ -107,5 +123,5 @@ module.exports = {
     completedOrdersCount,
     currentDayRevenue,
     fourteenDaysRevenue,
-    categoryWiseRevenue,
+    categoryWiseRevenue,shipping
 };

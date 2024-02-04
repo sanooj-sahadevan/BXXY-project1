@@ -121,6 +121,7 @@ const decQty = async (req, res) => {
     cartProduct = await cartProduct.save();
     await grandTotal(req);
     res.json({
+      success: true,
       cartProduct,
       grandTotal: req.session.grandTotal,
       currentUser: req.session.currentUser,
@@ -141,6 +142,7 @@ const incQty = async (req, res) => {
     cartProduct = await cartProduct.save();
     await grandTotal(req);
     res.json({
+      success: true,
       cartProduct,
       grandTotal: req.session.grandTotal,
       currentUser: req.session.currentUser,
@@ -183,7 +185,7 @@ const checkoutPage = async (req, res) => {
       addressData,
     });
   } catch (error) {
-    res.redirect('/loginpage')
+    res.redirect('/manageAdrressPage')
 
   }
 };
@@ -193,6 +195,7 @@ const orderPlaced = async (req, res) => {
   try {
     console.log(req.session.grandTotal);
     if (req.body.razorpay_payment_id) {
+
       //razorpay payment
       await orderCollection.updateOne(
         { _id: req.session.currentOrder._id },
@@ -206,6 +209,7 @@ const orderPlaced = async (req, res) => {
       res.redirect("/checkout/orderPlacedEnd");
    
     } else {
+      
       //incase of COD
       await orderCollection.updateOne(
         
@@ -254,7 +258,7 @@ const orderPlacedEnd = async (req, res) => {
     orderData: req.session.currentOrder,
   });
 
-  //delete the cart- since the order is placed
+  //delete product from cart since the order is placed
   await cartCollection.deleteMany({ userId: req.session.currentUser._id });
   console.log("deleting finished");
 }

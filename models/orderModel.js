@@ -1,7 +1,7 @@
 const mongoose= require('mongoose')
 
 const orderSchema= new mongoose.Schema({
-    userId: { type: mongoose.Types.ObjectId, required: true, ref: 'users'},
+    userId: { type: mongoose.Types.ObjectId, required: true, ref: 'user'},
     orderNumber: { type: Number, required: true},
     orderDate: { type: Date, required:true, default: new Date().toLocaleString()},
     paymentType: {type: String, default:'COD'},
@@ -15,3 +15,6 @@ const orderSchema= new mongoose.Schema({
 const orderCollection= mongoose.model( 'orders', orderSchema )
 
 module.exports= orderCollection
+
+
+

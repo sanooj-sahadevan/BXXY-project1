@@ -1,7 +1,7 @@
 <%- include('../adminPartials/header') %>
 
 
-   
+
 
 
 
@@ -16,41 +16,41 @@
 
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
                 <a href="/admin/salesReport/download/xlsx" class="btn btn-primary">Download</a>
-            </div>
-    
+            </div> -->
+
             <% if (dateValues) { %>
                 <div class="col-md-2">
                     <label for="startDate" class="form-label">From:</label>
                     <input id="startDate" type="date" class="form-control" value="<%= dateValues.startDate %>">
                 </div>
-    
+
                 <div class="col-md-2">
                     <label for="endDate" class="form-label">To:</label>
                     <input id="endDate" type="date" class="form-control" value="<%= dateValues.endDate %>">
                 </div>
-    
-            <% } else { %>
-    
-                <div class="col-md-2">
-                    <label for="startDate" class="form-label">From:</label>
-                    <input id="startDate" type="date" class="form-control">
-                </div>
-    
-                <div class="col-md-2">
-                    <label for="endDate" class="form-label">To:</label>
-                    <input id="endDate" type="date" class="form-control">
-                </div>
-    
-            <% } %>
-    
-            <div class="col-md-2">
-                <button id="filterBtn" class="btn btn-success">Filter</button>
-            </div>
+
+                <% } else { %>
+
+                    <div class="col-md-2">
+                        <label for="startDate" class="form-label">From:</label>
+                        <input id="startDate" type="date" class="form-control">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="endDate" class="form-label">To:</label>
+                        <input id="endDate" type="date" class="form-control">
+                    </div>
+
+                    <% } %>
+
+                        <div class="col-md-2">
+                            <button id="filterBtn" class="btn btn-success">Filter</button>
+                        </div>
         </div>
     </div>
-        
+
 
     <div class="container pt-3">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -64,7 +64,7 @@
                     <th scope="col">Total Cost</th>
                     <th scope="col">Payment Method</th>
                     <th scope="col">Status</th>
-                </tr>
+                </tr
             </thead>
             <tbody>
                 <% salesData.forEach(function(sale, index) { %>
@@ -73,7 +73,8 @@
                             <%= index + 1 %>
                         </td>
                         <td>
-                            <%= sale.userId %>
+                            <%= sale.userId?.username %>
+
                         </td>
                         <td>
                             <%= sale.orderDateFormatted %>
@@ -111,28 +112,53 @@
 
 
 
-
-        <div class="d-flex justify-content-center py-3">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-    
-                    <% for( let i=0; i < count/limit; i++ ) { %>
-                        <li class="page-item">
-                            <a class="page-link" href="/salesReport/?page=<%=i+1 %>">
-                                <%= i+1 %>
-                            </a>
-                        </li>
-                        <% } %>
-    
-                </ul>
-    
-        </div>
-       
-
-
+        
 
     </div>
 
 
-  
+    <script>
+        let startDate = document.getElementById('startDate')
+        let endDate = document.getElementById('endDate')
+
+        startDate.addEventListener('change', function () {
+            let startDateValue = startDate.value;
+            endDate.setAttribute('min', startDateValue);
+        });
+
+        endDate.addEventListener('change', function () {
+            let endDateValue = endDate.value;
+            startDate.setAttribute('max', endDateValue);
+        });
+
+    </script>
+
+
+    <script>
+        let filterBtn = document.getElementById('filterBtn')
+        filterBtn.addEventListener('click', async (e) => {
+            e.preventDefault()
+            let startDate = document.getElementById('startDate').value
+            let endDate = document.getElementById('endDate').value
+            let formData = { startDate, endDate }
+            console.log(formData)
+
+            let response = await fetch('/salesReport/filter',
+                {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                })
+            let result = await response.json()
+
+            if (result.success) {
+                console.log('hello')
+                location.reload()
+            }
+        })
+    </script>
+
+
+
+
     <%- include('../adminPartials/footer') %>

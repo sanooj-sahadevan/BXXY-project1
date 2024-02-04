@@ -74,6 +74,8 @@ const userManagement = async (req, res) => {
     console.log(error);
   }
 };
+
+
 const blockUser = async (req, res) => {
   try {
     await userCollection.findOneAndUpdate(
@@ -113,6 +115,7 @@ const dashboardData =  async (req, res) => {
       currentDayRevenue,
       fourteenDaysRevenue,
       categoryWiseRevenue,
+      shipping,
     ] = await Promise.all([
       dashboard.productsCount(),
       dashboard.categoryCount(),
@@ -121,6 +124,9 @@ const dashboardData =  async (req, res) => {
       dashboard.currentDayRevenue(),
       dashboard.fourteenDaysRevenue(),
       dashboard.categoryWiseRevenue(),
+      dashboard.shipping(),
+
+
     ]);
 
     const data = {
@@ -131,6 +137,7 @@ const dashboardData =  async (req, res) => {
       currentDayRevenue,
       fourteenDaysRevenue,
       categoryWiseRevenue,
+      shipping
     };
 
     res.json(data);
