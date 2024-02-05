@@ -251,6 +251,15 @@ const orderPlacedEnd = async (req, res) => {
     .find({ userId: req.session.currentUser._id })
     .populate("productId");
 
+   
+    cartData.map(async (v) => {
+      v.productId.productStock -= v.productQuantity;  //reducing from stock qty
+      await v.productId.save();
+      return v;
+    });
+
+
+
   console.log("rendering next");
   res.render("userViews/orderSucess", {
     user:req.session.user,

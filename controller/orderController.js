@@ -1,8 +1,6 @@
 const orderCollection = require("../models/orderModel.js");
 const userCollection = require("../models/userModels.js");
 
-
-
 // order management page
 const orderManagement = async (req, res) => {
   try {
@@ -11,15 +9,17 @@ const orderManagement = async (req, res) => {
     let skip = (page - 1) * limit;
 
     let count = await orderCollection.find().estimatedDocumentCount();
-    let orderData = await orderCollection.find().skip(skip).limit(limit);
+    let orderData = await orderCollection
+      .find()
+      .populate("userId")
+     
     console.log(orderData[0]);
+    console.log(orderData);
     res.render("adminViews/orderManagement", { orderData, count, limit, page });
   } catch (error) {
     console.error(error);
   }
 };
-
-
 
 // pending
 const changeStatusPending = async (req, res) => {
@@ -27,14 +27,12 @@ const changeStatusPending = async (req, res) => {
     await orderCollection.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { orderStatus: "Pending" } }
-    );  
+    );
     res.redirect("/orderManagement");
   } catch (error) {
     console.error(error);
   }
 };
-
-
 
 //shipped
 const changeStatusShipped = async (req, res) => {
@@ -49,8 +47,6 @@ const changeStatusShipped = async (req, res) => {
   }
 };
 
-
-
 //deliverd
 const changeStatusDelivered = async (req, res) => {
   try {
@@ -64,9 +60,6 @@ const changeStatusDelivered = async (req, res) => {
   }
 };
 
-
-
-
 //return
 const changeStatusReturn = async (req, res) => {
   try {
@@ -79,8 +72,6 @@ const changeStatusReturn = async (req, res) => {
     console.error(error);
   }
 };
-
-
 
 //cancelled
 const changeStatusCancelled = async (req, res) => {
@@ -100,14 +91,13 @@ const changeStatusCancelled = async (req, res) => {
   }
 };
 
-
 // orderStatus
 const orderStatusPage = async (req, res) => {
   try {
     let orderData = await orderCollection
       .findOne({ _id: req.params.id })
       .populate("addressChosen");
-    res.render("adminViews/orderStatus", { orderData,user:req.body.user});
+    res.render("adminViews/orderStatus", { orderData, user: req.body.user });
   } catch (error) {
     console.error(error);
   }
