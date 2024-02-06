@@ -4,20 +4,32 @@ const orderCollection = require("../models/orderModel.js");
 
 const profilePage = async (req, res) => {
   try {
+    let page = Number(req.query.page) || 1;
+    let limit = 8;
+    let skip = (page - 1) * limit;
+
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser._id,
       _id: req.params.id,
     });
-    let orderData = await orderCollection.find({
-      userId: req.session.currentUser._id,
-    });
+
+    let orderData = await orderCollection
+      .find({
+        userId: req.session.currentUser._id,
+      })
+      .skip(skip)
+      .limit(limit);
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
     });
+
+    let count = await orderCollection.countDocuments({ isListed: true });
+    let totalPages = Math.ceil(count / limit);
+    let totalPagesArray = new Array(totalPages).fill(null);
+
     console.log(req.session.currentUser);
     console.log(addressData);
     console.log(req.session.currentUser.password);
-
 
     console.log(req.session.user);
     res.render("userViews/profilePage", {
@@ -25,14 +37,14 @@ const profilePage = async (req, res) => {
       orderData,
       currentUser: req.session.currentUser,
       addressData,
-      existingAddress,
+      existingAddress,  count,
+      limit,      totalPagesArray,
+
     });
   } catch (error) {
     console.log(error);
   }
 };
-
-
 
 const orderStatus = async (req, res) => {
   try {
@@ -47,7 +59,7 @@ const orderStatus = async (req, res) => {
     let orderStatus = {
       Cancelled: isCancelled,
       Return: isReturn,
-      Delivered: isDelivered
+      Delivered: isDelivered,
     };
 
     res.render("userViews/orderStatus", {
@@ -57,13 +69,12 @@ const orderStatus = async (req, res) => {
       isDelivered,
       orderStatus,
       user: req.session.user,
-      currentUser:req.session.currentUser
+      currentUser: req.session.currentUser,
     });
   } catch (error) {
     console.error(error);
   }
 };
-
 
 const cancelOrder = async (req, res) => {
   try {
@@ -91,21 +102,21 @@ const addAddress = async (req, res) => {
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
     });
-    console.log('address Data:');
+    console.log("address Data:");
     console.log(addressData);
     let orderData = await orderCollection.find({
       userId: req.session.currentUser._id,
     });
-    console.log('req.session.currentUser:');
+    console.log("req.session.currentUser:");
     console.log(req.session.currentUser);
-    console.log('order Data:');
+    console.log("order Data:");
     console.log(orderData);
 
     res.render("userViews/manageAddrress", {
       user: req.session.user,
       currentUser: req.session.currentUser,
       addressData,
-      orderData
+      orderData,
     });
   } catch (error) {
     console.error(error);
@@ -163,35 +174,27 @@ const editProfile = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  console.log('222222222222222222222222222222222');
-
+  console.log("222222222222222222222222222222222");
 
   try {
-    
     console.log(req.session.currentUser);
-
 
     console.log(req.session.currentUser.password);
 
     res.render("userViews/changePassword", {
       user: req.session.user,
       orderData: req.session.currentOrder,
-    
+
       currentUser: req.session.currentUser,
- 
-      
-      
     });
     console.log(req.session.user);
     console.log(req.session.currentUser);
-
   } catch (error) {
     console.error(error);
   }
 };
 
 const changePasswordPatch = async (req, res) => {
-
   try {
     // console.log(req.body, req.session.currentUser);
     console.log(req.body.password);
@@ -201,13 +204,12 @@ const changePasswordPatch = async (req, res) => {
       { _id: req.session.currentUser._id },
       { $set: { password: req.body.password } }
     );
-    console.log('1234567');
+    console.log("1234567");
     res.json({ success: true });
   } catch (error) {
     console.error(error);
   }
 };
-
 
 const deleteAddress = async (req, res) => {
   try {
@@ -245,7 +247,8 @@ const editAddress = async (req, res) => {
     console.log(existingAddress);
     res.render("userViews/editAddress", {
       currentUser: req.session.currentUser,
-      existingAddress, user: req.session.user,
+      existingAddress,
+      user: req.session.user,
     });
   } catch (error) {
     console.error(error);
@@ -264,4 +267,40 @@ module.exports = {
   deleteAddress,
   editAddressPost,
   editAddress,
+};
+
+const productspage = async (req, res) => {
+  try {
+    let page = Number(req.query.page) || 1;
+    let limit = 8;
+    let skip = (page - 1) * limit;
+
+    let categoryData = await categoryCollection.find({ isListed: true });
+    let productData = await productCollection
+      .find({ isListed: true })
+      .skip(skip)
+      .limit(limit);
+
+    let count = await productCollection.countDocuments({ isListed: true });
+
+    let totalPages = Math.ceil(count / limit);
+    let totalPagesArray = new Array(totalPages).fill(null);
+
+    res.render("userViews/productlist", {
+      categoryData,
+      productData,
+      currentUser: req.session.currentUser,
+      user: req.session.user,
+      count,
+      limit,
+      totalPagesArray,
+      currentPage: page,
+      selectedFilter: req.session.selectedFilter,
+    });
+
+    console.log(req.session.currentUser);
+  } catch (error) {
+    console.error("Error fetching product data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };

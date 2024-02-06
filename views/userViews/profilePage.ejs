@@ -214,7 +214,29 @@
                                     </tr>
                                     <% }); %>
                             </tbody>
+                            <div class="d-flex justify-content-center py-3">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <% for (let i = 0; i < totalPagesArray.length; i++) { %>
+                                            <li class="page-item <%= (i + 1 === currentPage) ? 'active' : '' %>">
+                                                <a class="page-link" href="/profile/?page=<%= i + 1 %>"><%= i + 1 %></a>
+                                            </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
                         </table>
+                        <div class="d-flex justify-content-center py-3">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <% for (let i = 0; i < totalPagesArray.length; i++) { %>
+                                        <li class="page-item <%= (i + 1 === currentPage) ? 'active' : '' %>">
+                                            <a class="page-link" href="/profile/?page=<%= i + 1 %>"><%= i + 1 %></a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
 
 

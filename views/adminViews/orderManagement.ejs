@@ -86,39 +86,40 @@
                         </tr>
                         <% }); %>
                 </tbody>
+                <div class="d-flex justify-content-center py-3">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                
+                            <% for( let i = 0; i < count/limit; i++ ) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/orderManagement/?page=<%=i+1 %>"><%= i+1 %></a>
+                            </li>
+                            <% } %>
+                
+                        </ul>
+                    </nav>
+                </div>
             </table>
             <div class="d-flex justify-content-center py-3">
                 <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <% for (let i = 0; i < Math.ceil(count / limit); i++) { %>
-                      <li class="page-item">
-                        <a class="page-link" href="/orderManagement/?page=<%= i + 1 %>">
-                          <%= i + 1 %>
-                        </a>
-                      </li>
-                    <% } %>
-                  </ul>
+                    <ul class="pagination">
+            
+                        <% for( let i = 0; i < count/limit; i++ ) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/orderManagement/?page=<%=i+1 %>"><%= i+1 %></a>
+                        </li>
+                        <% } %>
+            
+                    </ul>
                 </nav>
-              </div>
+            </div>
               
 
 
 
 
         </div>
-        <div class="d-flex justify-content-center py-3">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <% for (let i = 0; i < Math.ceil(count / limit); i++) { %>
-                  <li class="page-item">
-                    <a class="page-link" href="/orderManagement/?page=<%= i + 1 %>">
-                      <%= i + 1 %>
-                    </a>
-                  </li>
-                <% } %>
-              </ul>
-            </nav>
-          </div>
+       
         
 
 

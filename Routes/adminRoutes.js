@@ -4,6 +4,7 @@ const multer = require('multer')
 const path = require('path')
 const adminController = require('../controller/adminController')
 const salesReportController = require('../controller/salesReportController')
+const couponController = require('../controller/couponController.js')
 const orderController = require('../controller/orderController.js')
 const productController = require('../controller/productController.js')
 const categoryController = require('../controller/categoryController.js')
@@ -84,6 +85,12 @@ adminRoutes.post('/salesReport/filter',  salesReportController.salesReportFilter
 
 
 
+
+
+
+adminRoutes.get('/couponManagement', couponController.couponManagement)
+adminRoutes.post('/couponManagement/addCoupon',  couponController.addCoupon)
+adminRoutes.put('/couponManagement/editCoupon/:id',couponController.editCoupon)
 
 
 

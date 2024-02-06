@@ -19,7 +19,7 @@ const salesReport = async (req, res) => {
     let   count = await orderCollection.find().estimatedDocumentCount();
 
 
-    let salesData = await orderCollection.find().populate("userId")
+    let salesData = await orderCollection.find().populate("userId").skip(skip).limit(limit);
     // .skip(skip).limit(limit);
 
     

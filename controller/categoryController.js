@@ -23,7 +23,7 @@ const addCategoriesPage = async (req, res) => {
 const categoriesPage = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
-    let limit = 8;
+    let limit = 4;
     let skip = (page - 1) * limit;
 
     let count = await categoryCollection.find().estimatedDocumentCount();
@@ -40,6 +40,49 @@ const categoriesPage = async (req, res) => {
     console.error(error);
   }
 };
+
+
+const productlist = async (req, res) => {
+  try {
+
+    let page = Number(req.query.page) || 1;
+    let limit = 4;
+    let skip = (page - 1) * limit;
+
+    let   count = await productCollection.find().estimatedDocumentCount();
+
+    let productData = await productCollection.find().skip(skip).limit(limit);
+    let categoryList = await categoryCollection.find(
+      {},
+      { categoryName: true }
+    );
+
+    res.render("adminViews/productlist.ejs", {
+      productData,
+      categoryList,count,
+      limit,
+      productExist: req.session.productAlreadyExists,
+    });
+    req.session.productAlreadyExists = null;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const addCategory = async (req, res) => {
   try {

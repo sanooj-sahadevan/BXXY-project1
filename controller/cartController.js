@@ -4,6 +4,7 @@ const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
 const orderCollection = require("../models/orderModel.js");
 const profileCollection = require("../models/profileModel.js");
+const couponCollection = require('../models/couponModel.js');
 const razorpay = require("../service/razorpay.js");
 
 
@@ -273,6 +274,70 @@ const orderPlacedEnd = async (req, res) => {
 }
 
 
+const applyCoupon =  async (req, res) => {
+  try {
+
+    console.log('1');
+    let { couponCode } = req.body;
+
+    //Retrive the coupon document from the database if it exists
+    let couponData = await couponCollection.findOne({ couponCode });
+
+    if (couponData) {
+      /*if coupon exists:
+      > check if it is applicable, i.e within minimum purchase limit & expiry date
+      >proceed... */
+      console.log('2');
+      console.log(couponData);
+   
+      let { grandTotal } = req.session;
+      let { minimumPurchase, expiryDate } = couponData;
+      let minimumPurchaseCheck = minimumPurchase < grandTotal;
+      let expiryDateCheck = new Date() < new Date(expiryDate);
+      console.log('3');
+      console.log(expiryDateCheck);
+      console.log(minimumPurchaseCheck);
+
+      if (minimumPurchaseCheck && expiryDateCheck) {
+        
+        console.log('4');
+
+        let { discountPercentage, maximumDiscount } = couponData;
+        let discountAmount =
+          (grandTotal * discountPercentage) / 100 > maximumDiscount
+            ? maximumDiscount
+            : (grandTotal * discountPercentage) / 100;
+
+        let { currentOrder } = req.session;
+        await orderCollection.findByIdAndUpdate(
+          { _id: currentOrder._id },
+          {
+            $set: { couponApplied: couponData._id },
+            $inc: { grandTotalCost: -discountAmount },
+          }
+        );
+        console.log('5');
+
+        req.session.grandTotal -= discountAmount;
+        req.session.grandTotal -= discountAmount;
+        console.log(req.session.grandTotal);
+        console.log(discountAmount);
+
+
+        // Respond with a success status and indication that the coupon was applied
+        res.status(202).json({ couponApplied: true, discountAmount });
+      } else {
+        // Respond with an error status if the coupon is not applicable
+        res.status(501).json({ couponApplied: false });
+      }
+    } else {
+      // Respond with an error status if the coupon does not exist
+      res.status(501).json({ couponApplied: false });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 
 module.exports = {
@@ -284,5 +349,6 @@ module.exports = {
   incQty,
   checkoutPage,
   orderPlaced,
-  razorpayCreateOrderId, orderPlacedEnd
+  razorpayCreateOrderId, orderPlacedEnd,
+  applyCoupon
 };

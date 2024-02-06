@@ -100,6 +100,13 @@ userRoutes.get('/checkout', blockedUserCheck, cartController.checkoutPage)
 userRoutes.all('/orderSucess', blockedUserCheck, cartController.orderPlaced)
 userRoutes.all('/checkout/orderPlacedEnd', blockedUserCheck,  cartController.orderPlacedEnd)
 userRoutes.post('/checkout/razorpay/create/orderId', blockedUserCheck, cartController.razorpayCreateOrderId)
+userRoutes.post('/checkout/applyCoupon', blockedUserCheck, cartController.applyCoupon)
+
+
+
+
+
+
 
 
 

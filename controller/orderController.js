@@ -11,7 +11,7 @@ const orderManagement = async (req, res) => {
     let count = await orderCollection.find().estimatedDocumentCount();
     let orderData = await orderCollection
       .find()
-      .populate("userId")
+      .populate("userId").skip(skip).limit(limit);
      
     console.log(orderData[0]);
     console.log(orderData);
