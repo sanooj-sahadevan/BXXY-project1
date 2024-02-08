@@ -64,6 +64,8 @@ userRoutes.put('/profile/orderStatus/cancelOrder/:id', blockedUserCheck,  accoun
 userRoutes.get('/changePassword', blockedUserCheck, accountController.changePassword)
 userRoutes.patch('/changePassword', blockedUserCheck,accountController.changePasswordPatch)
 userRoutes.get('/editProfile', blockedUserCheck, accountController.editProfile)
+userRoutes.get('/profile/downloadInvoice/:id', blockedUserCheck,  accountController.downloadInvoice)
+
 
 
 

@@ -1,6 +1,6 @@
 const orderCollection = require("../models/orderModel.js");
 const formatDate = require("../service/formerDataHelper.js");
-// const exceljs = require("exceljs");
+const exceljs = require("exceljs");
 const { ObjectId } = require("mongodb");
 
 // sales report page
@@ -13,7 +13,7 @@ const salesReport = async (req, res) => {
     }
     
     let page = Number(req.query.page) || 1;
-    let limit = 4;
+    let limit = 10;
     let skip = (page - 1) * limit;
 
     let   count = await orderCollection.find().estimatedDocumentCount();
@@ -30,43 +30,6 @@ const salesReport = async (req, res) => {
     console.error(error);
   }
 };
-
-
-const productlist = async (req, res) => {
-  try {
-
-    let page = Number(req.query.page) || 1;
-    let limit = 4;
-    let skip = (page - 1) * limit;
-
-    let   count = await productCollection.find().estimatedDocumentCount();
-
-    let productData = await productCollection.find().skip(skip).limit(limit);
-    let categoryList = await categoryCollection.find(
-      {},
-      { categoryName: true }
-    );
-
-    res.render("adminViews/productlist.ejs", {
-      productData,
-      categoryList,count,
-      limit,
-      productExist: req.session.productAlreadyExists,
-    });
-    req.session.productAlreadyExists = null;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-
-
-
-
-
-
-
-
 
 
 
@@ -98,4 +61,73 @@ const salesReportFilter = async (req, res) => {
   }
 };
 
-module.exports = { salesReport, salesReportFilter };
+
+const salesReportDownload = async (req, res) => {
+  try {
+    const workBook = new exceljs.Workbook();
+    const sheet = workBook.addWorksheet("book");
+    sheet.columns = [
+      { header: "No", key: "no", width: 10 },
+      { header: "Username", key: "username", width: 25 },
+      { header: "Order Date", key: "orderDate", width: 25 },
+      { header: "Products", key: "products", width: 35 },
+      { header: "No of items", key: "noOfItems", width: 35 },
+      { header: "Total Cost", key: "totalCost", width: 25 },
+      { header: "Payment Method", key: "paymentMethod", width: 25 },
+      { header: "Status", key: "status", width: 20 },
+    ];
+
+    let salesData = req.session?.admin?.dateValues
+      ? await orderCollection
+          .find({
+            orderDate: {
+              $gte: new Date(req.session.admin.dateValues.startDate),
+              $lte: new Date(req.session.admin.dateValues.endDate),
+            },
+          })
+          .populate("userId")
+      : await orderCollection.find().populate("userId");
+
+    salesData = salesData.map((v) => {
+      v.orderDateFormatted = formatDate(v.orderDate);
+      return v;
+    });
+
+    salesData.map((v) => {
+      sheet.addRow({
+        no: v.orderNumber,
+        username: v.userId.username,
+        orderDate: v.orderDateFormatted,
+        products: v.cartData.map((v) => v.productId.productName).join(", "),
+        noOfItems: v.cartData.map((v) => v.productQuantity).join(", "),
+        totalCost: "₹" + v.grandTotalCost,
+        paymentMethod: v.paymentType,
+        status: v.orderStatus,
+      });
+    });
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=salesReport.xlsx"
+    );
+
+    workBook.xlsx.write(res);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+module.exports = { salesReport,salesReportDownload, salesReportFilter };

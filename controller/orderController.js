@@ -5,7 +5,7 @@ const userCollection = require("../models/userModels.js");
 const orderManagement = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
-    let limit = 6;
+    let limit = 15;
     let skip = (page - 1) * limit;
 
     let count = await orderCollection.find().estimatedDocumentCount();

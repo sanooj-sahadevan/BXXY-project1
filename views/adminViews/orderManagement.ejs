@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% orderData.forEach(order=> { %>
+                    <% orderData.reverse().forEach(order=> { %>
                         <tr>
                             <td><button disabled="disabled">
                                     <a href="/orderManagement/orderStatus/<%= order._id %>">

@@ -82,6 +82,8 @@ adminRoutes.get('/orderManagement/orderStatus/:id', orderController.orderStatusP
 
 adminRoutes.get('/salesReport',  salesReportController.salesReport)
 adminRoutes.post('/salesReport/filter',  salesReportController.salesReportFilter)
+adminRoutes.get('/salesReport/download/xlsx',  salesReportController.salesReportDownload)
+
 
 
 

@@ -1,6 +1,8 @@
 let userCollection = require("../models/userModels.js");
 let addressCollection = require("../models/profileModel.js");
 const orderCollection = require("../models/orderModel.js");
+const {  generatevoice } = require("../service/genertePDF.js");
+
 
 const profilePage = async (req, res) => {
   try {
@@ -255,6 +257,29 @@ const editAddress = async (req, res) => {
   }
 };
 
+
+
+const downloadInvoice =  async (req, res) => {
+  try {
+    let orderData = await orderCollection
+      .findOne({ _id: req.params.id })
+      .populate("addressChosen");
+console.log(orderData);
+    const stream = res.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": "attachment;filename=invoice.pdf",
+    });
+    console.log('verind');
+    generatevoice(
+      (chunk) => stream.write(chunk),
+      () => stream.end(),
+      orderData
+    );console.log( generatevoice);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 module.exports = {
   profilePage,
   addAddress,
@@ -266,41 +291,5 @@ module.exports = {
   cancelOrder,
   deleteAddress,
   editAddressPost,
-  editAddress,
-};
-
-const productspage = async (req, res) => {
-  try {
-    let page = Number(req.query.page) || 1;
-    let limit = 8;
-    let skip = (page - 1) * limit;
-
-    let categoryData = await categoryCollection.find({ isListed: true });
-    let productData = await productCollection
-      .find({ isListed: true })
-      .skip(skip)
-      .limit(limit);
-
-    let count = await productCollection.countDocuments({ isListed: true });
-
-    let totalPages = Math.ceil(count / limit);
-    let totalPagesArray = new Array(totalPages).fill(null);
-
-    res.render("userViews/productlist", {
-      categoryData,
-      productData,
-      currentUser: req.session.currentUser,
-      user: req.session.user,
-      count,
-      limit,
-      totalPagesArray,
-      currentPage: page,
-      selectedFilter: req.session.selectedFilter,
-    });
-
-    console.log(req.session.currentUser);
-  } catch (error) {
-    console.error("Error fetching product data:", error);
-    res.status(500).send("Internal Server Error");
-  }
+  editAddress,downloadInvoice
 };

@@ -4,9 +4,8 @@ const userCollection = require("../models/userModels.js");
 const productCollection = require("../models/productModel.js");
 const orderCollection = require("../models/orderModel.js");
 const profileCollection = require("../models/profileModel.js");
-const couponCollection = require('../models/couponModel.js');
+const couponCollection = require("../models/couponModel.js");
 const razorpay = require("../service/razorpay.js");
-
 
 async function grandTotal(req) {
   try {
@@ -41,8 +40,6 @@ async function grandTotal(req) {
 
 const cart = async (req, res) => {
   try {
-
-
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
     });
@@ -64,8 +61,7 @@ const cart = async (req, res) => {
   } catch (error) {
     // console.error("Error in cart:", error);
     // res.status(500).send("Internal Server Error");
-    res.redirect('/loginpage')
-
+    res.redirect("/loginpage");
   }
 };
 
@@ -95,8 +91,7 @@ const addToCart = async (req, res) => {
     console.log(req.body);
     res.redirect("back");
   } catch (error) {
-   
-    res.redirect('/loginpage')
+    res.redirect("/loginpage");
 
     // console.error("Error in addToCart:", error);
     // res.status(500).send("Internal Server Error");
@@ -159,11 +154,9 @@ const checkoutPage = async (req, res) => {
     let cartData = await cartCollection
       .find({ userId: req.session.currentUser._id, productId: req.params.id })
       .populate("productId");
-
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
     });
-
     req.session.currentOrder = await orderCollection.create({
       userId: req.session.currentUser._id,
       orderNumber: (await orderCollection.countDocuments()) + 1,
@@ -172,9 +165,7 @@ const checkoutPage = async (req, res) => {
       cartData: await grandTotal(req),
       grandTotalCost: req.session.grandTotal,
     });
-
     let userCartData = await grandTotal(req);
-
     console.log(addressData);
     res.render("userViews/checkout", {
       user: req.body.user,
@@ -186,17 +177,14 @@ const checkoutPage = async (req, res) => {
       addressData,
     });
   } catch (error) {
-    res.redirect('/manageAdrressPage')
-
+    res.redirect("/manageAdrressPage");
   }
 };
-
-
 const orderPlaced = async (req, res) => {
+  console.log('q');
   try {
     console.log(req.session.grandTotal);
     if (req.body.razorpay_payment_id) {
-
       //razorpay payment
       await orderCollection.updateOne(
         { _id: req.session.currentOrder._id },
@@ -208,12 +196,9 @@ const orderPlaced = async (req, res) => {
         }
       );
       res.redirect("/checkout/orderPlacedEnd");
-   
     } else {
-      
       //incase of COD
       await orderCollection.updateOne(
-        
         { _id: req.session.currentOrder._id },
         {
           $set: {
@@ -222,62 +207,64 @@ const orderPlaced = async (req, res) => {
           },
         }
       );
-      console.log('ed');
+      console.log("ed");
       res.json({ success: true });
     }
   } catch (error) {
     console.error(error);
   }
-}
-
-
-
-
+};
 const razorpayCreateOrderId = async (req, res) => {
+  console.log('1');
   var options = {
     amount: req.session.grandTotal + "00", // amount in the smallest currency unit
     currency: "INR",
-  };    console.log('poind'),
-
-
-  razorpay.instance.orders.create(options, function (err, order) {
-    res.json(order);
-    console.log(order);
-  });
-}
+  };
+  console.log("poind"),
+    razorpay.instance.orders.create(options, function (err, order) {
+      res.json(order);
+      console.log(order);
+    });
+};
 
 
 const orderPlacedEnd = async (req, res) => {
   let cartData = await cartCollection
     .find({ userId: req.session.currentUser._id })
     .populate("productId");
+console.log(cartData);
+  cartData.map(async (v) => {
+    v.productId.productStock -= v.productQuantity; //reducing from stock qty
+    await v.productId.save();
+    return v;
+  });
 
-   
-    cartData.map(async (v) => {
-      v.productId.productStock -= v.productQuantity;  //reducing from stock qty
-      await v.productId.save();
-      return v;
-    });
+  let orderData= await orderCollection.findOne({ _id: req.session.currentOrder._id})
+  if(orderData.paymentType =='toBeChosen'){
+    orderData.paymentType = 'COD'
+    orderData.save()
+  }
 
+  let x = await cartCollection.findOneAndUpdate({ _id: req.session.currentOrder._id}).populate("productId");
 
+console.log(productId);
+console.log(x);
 
+console.log('StockSold incremented successfully.');
   console.log("rendering next");
   res.render("userViews/orderSucess", {
-    user:req.session.user,
+    user: req.session.user,
     orderCartData: cartData,
     orderData: req.session.currentOrder,
   });
-
   //delete product from cart since the order is placed
-  await cartCollection.deleteMany({ userId: req.session.currentUser._id });
-  console.log("deleting finished");
-}
+  // await cartCollection.deleteMany({ userId: req.session.currentUser._id });
+  // console.log("deleting finished");
+};
 
-
-const applyCoupon =  async (req, res) => {
+const applyCoupon = async (req, res) => {
   try {
-
-    console.log('1');
+    console.log("1");
     let { couponCode } = req.body;
 
     //Retrive the coupon document from the database if it exists
@@ -287,20 +274,19 @@ const applyCoupon =  async (req, res) => {
       /*if coupon exists:
       > check if it is applicable, i.e within minimum purchase limit & expiry date
       >proceed... */
-      console.log('2');
+      console.log("2");
       console.log(couponData);
-   
+
       let { grandTotal } = req.session;
       let { minimumPurchase, expiryDate } = couponData;
       let minimumPurchaseCheck = minimumPurchase < grandTotal;
       let expiryDateCheck = new Date() < new Date(expiryDate);
-      console.log('3');
+      console.log("3");
       console.log(expiryDateCheck);
       console.log(minimumPurchaseCheck);
 
       if (minimumPurchaseCheck && expiryDateCheck) {
-        
-        console.log('4');
+        console.log("4");
 
         let { discountPercentage, maximumDiscount } = couponData;
         let discountAmount =
@@ -316,13 +302,12 @@ const applyCoupon =  async (req, res) => {
             $inc: { grandTotalCost: -discountAmount },
           }
         );
-        console.log('5');
+        console.log("5");
 
         req.session.grandTotal -= discountAmount;
         req.session.grandTotal -= discountAmount;
         console.log(req.session.grandTotal);
         console.log(discountAmount);
-
 
         // Respond with a success status and indication that the coupon was applied
         res.status(202).json({ couponApplied: true, discountAmount });
@@ -337,8 +322,7 @@ const applyCoupon =  async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
-
+};
 
 module.exports = {
   cart,
@@ -349,6 +333,7 @@ module.exports = {
   incQty,
   checkoutPage,
   orderPlaced,
-  razorpayCreateOrderId, orderPlacedEnd,
-  applyCoupon
+  razorpayCreateOrderId,
+  orderPlacedEnd,
+  applyCoupon,
 };

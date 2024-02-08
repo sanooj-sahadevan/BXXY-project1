@@ -20,15 +20,36 @@
 
 
 
-      <!-- <div class="checkout-discount">
-        <form action="#" id="couponApplyForm">
-          <input type="text" class="form-control" name="couponCode" required id="appendedInputButton">
-          <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your
-              code</span></label> -->
-          <!-- <button class="col-lg-4 btn btn-success" type="submit">Apply!</button> -->
-        <!-- </form>
-      </div> -->
-      <!-- <tr>
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="checkout">
+            <div class="checkout-discount">
+
+              <div class="checkout-discount">
+                <form action="#" id="couponApplyForm" class="d-flex">
+                  <input type="text" class="form-control flex-grow-1 mr-2" name="couponCode" required
+                    id="appendedInputButton">
+                  <hr><br><br>
+                  <button class="btn btn-primary square-btn" type="submit"></button>
+                </form>
+                <label for="checkout-discount-input" class="text-truncate mt-2">Have a coupon?<span>Click the
+                    button</span> </label>
+              </div>
+              <hr>
+              <hr>
+              <style>
+                .square-btn {
+                  width: 10px;
+                  /* Adjust the width as needed */
+                  height: 30px;
+                  /* Adjust the height as needed */
+                  padding: 0;
+                  /* Remove padding */
+                  border-radius: 0;
+                  /* Remove border radius */
+                }
+              </style>
+              <!-- <tr>
         <td colspan="2">
           <div class="input-append couponForm">
             <form id="couponApplyForm">
@@ -40,17 +61,10 @@
         </td>
       </tr> -->
 
-      <!-- <div class="checkout-discount">
-        <form action="#" id="couponApplyForm">
-            <input type="text" class="form-control" required id="appendedInputButton">
-            <label for="appendedInputButton" class="text-truncate">Have a coupon? <span>Click here to enter your
-                code</span></label>
-            <button type="submit">Apply!</button>
-        </form>
-    </div> -->
-    <!-- End .checkout-discount -->
-    
-      <tr>
+
+              <!-- End .checkout-discount -->
+
+              <!-- <tr>
         <td colspan="2">
           <div class="input-append couponForm">
             <form id="couponApplyForm">
@@ -60,7 +74,7 @@
             </form>
           </div>
         </td>
-      </tr>
+      </tr> -->
 
 
 
@@ -68,12 +82,6 @@
 
 
 
-
-
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="checkout">
-            <div class="checkout-discount">
 
 
 
@@ -106,11 +114,9 @@
                                       </p>
                                     </div>
                                     <div id="BillingInformation" class="panel-collapse collapse in" role="tabpanel"
-                                      aria-labelledby="BillingInformation">
+                                      aria-labelledby="BillingInformation" style="float: left; width: 50%;">
                                       <div class="panel-body">
-
                                         <div style="clear: both"></div>
-
                                         <!-- Address Choosing Section -->
                                         <div class="form-group required maxwidth300">
                                           <label for="SelectAddress">Select Address <sup>*</sup></label>
@@ -122,27 +128,21 @@
                                               </option>
                                               <% }); %>
                                           </select>
-
                                           <br>
-                                          <a class="btn " id="editAddressButton" role="button">Edit Address</a>
+                                          <a class="btn" id="editAddressButton" role="button">Edit Address</a>
                                         </div>
-
                                         <script>
                                           document.getElementById('editAddressButton').addEventListener('click', function () {
                                             var selectedAddressId = document.getElementById('SelectAddress').value;
-
                                             window.location.href = "/profile/" + selectedAddressId;
                                           });
                                         </script>
-
-
                                         <!-- End of Address Choosing Section -->
-
                                         <!-- Other Checkout Sections -->
                                         <!-- Add your other checkout sections here -->
-
                                       </div>
                                     </div>
+
                                   </div>
                                 </div>
                                 <!--onepage-checkout-->
@@ -164,6 +164,9 @@
 
             </div>
             <!-- End .checkout -->
+          </div>
+          <div>
+            <hr><br>
           </div>
 
           <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -224,11 +227,21 @@
                       <!-- Display Total -->
                       <tr class="summary-total">
                         <td>Total:</td>
-                        <td>
+                        <td id="grandTotal">
                           <%= grandTotal %>
                         </td>
                       </tr>
+
+
+
                 </tbody>
+
+
+
+
+
+
+
               </table>
 
               <!-- End .table table-summary -->
@@ -349,7 +362,7 @@
                 </div>
               </div> -->
 
-              <div class="panel panel-default">
+              <!-- <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="panel-heading-id">
                   <h6 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
@@ -364,35 +377,109 @@
                     <div class="onepage-payment">
                       <div style="clear:both;"></div>
 
-                      <div class="card-paynemt-box payment-method">
-                        <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                          <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
-                        </label>
-                      </div>
 
-                      <div class="card-paynemt-box payment-method">
-                        <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
-                          <input name="radios" id="wallet" value="wallet" type="radio">Wallet
-                        </label>
-                      </div>
 
-                      <div class="card-paynemt-box payment-method">
-                        <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
-                          <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
-                        </label>
-                      </div>
+                      <% if (grandTotal <=1000) { %>
+
+                        <div class="card-paynemt-box payment-method">
+                          <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+                            <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+                          </label>
+                        </div>
+
+
+                        <% } else { %>
+
+
+
+                          <div class="card-paynemt-box payment-method">
+                            <p> your Amount is more than 1000rs, so we can't provide COD</p>
+
+                          </div>
+
+
+
+                          <% } %>
+
+
+
+                            <div class="card-paynemt-box payment-method">
+                              <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
+                                <input name="radios" id="wallet" value="wallet" type="radio">Wallet
+                              </label>
+                            </div>
+
+                            <div class="card-paynemt-box payment-method">
+                              <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
+                                <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
+                              </label>
+                            </div>
 
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
+
+              <tr class="summary-total">
+
+
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="panel-heading-id">
+                    <h6 class="panel-title">
+                      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                        href="#Paymentmethod" aria-expanded="false" aria-controls="Paymentmethod">
+                        Payment method:
+                      </a>
+                    </h6>
+                  </div>
+
+                  <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
+                    <div class="panel-body">
+                      <div class="onepage-payment">
+                        <div style="clear:both;"></div>
+
+                      
+                          <div class="card-paynemt-box payment-method">
+                              <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+                                  <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+                              </label>
+                          </div>
+                      
+
+
+                       
+
+
+                             
+
+                              <div class="card-paynemt-box payment-method">
+                                <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
+                                  <input name="radios" id="wallet" value="wallet" type="radio">Wallet
+                                </label>
+                              </div>
 
 
 
+                              <div class="card-paynemt-box payment-method">
+                                <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
+                                  <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
+                                </label>
+                              </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </tr>
               <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span class="btn-text">Place Order</span>
                 <span class="btn-hover-text">Proceed to Checkout</span>
               </button>
+
             </div>
             <!-- End .summary -->
 
@@ -413,95 +500,7 @@
   </main>
   <!-- End .main -->
 
-
-
-
-
-
-
-
-
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-<script>
-  // Attach a submit event listener to the couponApplyForm element
-  document.addEventListener('DOMContentLoaded', function () {
-    const couponApplyFormElement = document.getElementById('couponApplyForm');
-    couponApplyFormElement.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      await couponApply();
-    });
-  });
-
-  // Async function to handle coupon application
-  async function couponApply() {
-    try {
-      // Prepare form data with the coupon code
-      const couponApplyForm = document.getElementById('couponApplyForm');
-      const formData = { couponCode: couponApplyForm.couponCode.value };
-
-      // Send a POST request to the server to apply the coupon
-      const response = await fetch('/checkout/applyCoupon', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      // Parse the JSON response from the server
-      const { couponApplied, discountAmount } = await response.json();
-
-      // Check if the coupon is applied or not
-      if (couponApplied) {
-        // If the coupon is applied, update the UI and show a success message
-        const grandTotalElement = document.getElementById('grandTotal');
-        const grandTotal = parseFloat(grandTotalElement.innerHTML.replace('₹', '')) - discountAmount;
-        grandTotalElement.innerHTML = '₹' + grandTotal.toFixed(2);
-
-        const totalDiscountElement = document.getElementById('totalDiscount');
-        totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
-
-        await Swal.fire({
-          icon: "success",
-          title: "Coupon has been applied",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } else {
-        // If the coupon is not applicable, show an error message
-        await Swal.fire({
-          icon: "error",
-          title: "Coupon not applicable",
-          text: "Sorry! Your coupon is not applicable",
-        });
-      }
-    } catch (error) {
-      console.error('Error applying coupon:', error);
-      // Handle error if necessary
-    }
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -509,25 +508,26 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
+    console.log('aa');
     const orderBtnElement = document.getElementById('orderBtn');
     const CODElement = document.getElementById('COD');
     const razorpayElement = document.getElementById('razorpay');
-    console.log(CODElement);
-    // const walletElement = document.getElementById('wallet');
 
     orderBtnElement.addEventListener('click', orderBtnClickFunction);
-
+    console.log('a');
     async function orderBtnClickFunction(event) {
       try {
         event.preventDefault();
         if (CODElement.checked) {
+          console.log('cod');
           window.location.href = '/checkout/orderPlacedEnd';
-        } else if (razorpayElement.checked) {
+        } else if (razorpayElement.checked) { console.log('poon');
           const orderResponse = await fetch('/checkout/razorpay/create/orderId', { method: 'POST' });
+          console.log('vann');
           const order = await orderResponse.json();
           console.log(order.amount);
           await openRazorpay(order.amount, order.id);
-        }
+        }console.log('ww');
       } catch (error) {
         console.error(error);
       }
@@ -557,6 +557,94 @@
       }
     }
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <script>
+    // Attach a submit event listener to the couponApplyForm element
+    document.addEventListener('DOMContentLoaded', function () {
+      const couponApplyFormElement = document.getElementById('couponApplyForm');
+      couponApplyFormElement.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        await couponApply();
+      });
+    });
+
+    // Async function to handle coupon application
+    async function couponApply() {
+      try {
+        // Prepare form data with the coupon code
+        const couponApplyForm = document.getElementById('couponApplyForm');
+        const formData = { couponCode: couponApplyForm.couponCode.value };
+
+        // Send a POST request to the server to apply the coupon
+        const response = await fetch('/checkout/applyCoupon', {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        // Parse the JSON response from the server
+        const { couponApplied, discountAmount } = await response.json();
+
+        // Check if the coupon is applied or not
+        if (couponApplied) {
+          // If the coupon is applied, update the UI and show a success message
+          const grandTotalElement = document.getElementById('grandTotal');
+          const grandTotal = parseFloat(grandTotalElement.innerHTML.replace('₹', '')) - discountAmount;
+          grandTotalElement.innerHTML = '₹' + grandTotal.toFixed(2);
+
+          const totalDiscountElement = document.getElementById('totalDiscount');
+          totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
+
+          await Swal.fire({
+            icon: "success",
+            title: "Coupon has been applied",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          // If the coupon is not applicable, show an error message
+          await Swal.fire({
+            icon: "error",
+            title: "Coupon not applicable",
+            text: "Sorry! Your coupon is not applicable",
+          });
+        }
+      } catch (error) {
+        console.error('Error applying coupon:', error);
+        // Handle error if necessary
+      }
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
