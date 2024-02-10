@@ -12,6 +12,11 @@ const salesReport = async (req, res) => {
       return res.render("adminViews/salesReport", { salesData, dateValues });
     }
     
+    
+
+
+
+    
     let page = Number(req.query.page) || 1;
     let limit = 10;
     let skip = (page - 1) * limit;

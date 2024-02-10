@@ -1,7 +1,7 @@
 <%- include('../adminPartials/header') %>
 
 
-<div><br><br><br></div>
+    <div><br><br><br></div>
     <!-- Add Category Modal Button trigger modal -->
     <div class="container">
         <div class="row justify-content-center">
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Add Coupon Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -245,50 +245,50 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
-        $(document).ready(function () {
-            $("#editCouponForm<%= index %>").submit(async function (event) {
-                event.preventDefault();
-console.log('1');
-                let formData = {
-                    couponCode: $("#couponCodeEdit<%= index %>").val(),
-                    discountPercentage: $("#discountPercentageEdit<%= index %>").val(),
-                    startDate: $("#startDateEdit<%= index %>").val(),
-                    expiryDate: $("#expiryDateEdit<%= index %>").val(),
-                    minimumPurchase: $("#minimumPurchaseEdit<%= index %>").val(),
-                    maximumDiscount: $("#maximumDiscountEdit<%= index %>").val()
-                };
+            $(document).ready(function () {
+                $("#editCouponForm<%= index %>").submit(async function (event) {
+                    event.preventDefault();
+                    console.log('1');
+                    let formData = {
+                        couponCode: $("#couponCodeEdit<%= index %>").val(),
+                        discountPercentage: $("#discountPercentageEdit<%= index %>").val(),
+                        startDate: $("#startDateEdit<%= index %>").val(),
+                        expiryDate: $("#expiryDateEdit<%= index %>").val(),
+                        minimumPurchase: $("#minimumPurchaseEdit<%= index %>").val(),
+                        maximumDiscount: $("#maximumDiscountEdit<%= index %>").val()
+                    };
 
-                let response = await fetch('/couponManagement/editCoupon/<%= coupon._id %>', {
-                    method: 'PUT',
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData)
-                });
-
-                let result = await response.json();
-
-                if (result.couponEdited) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Your coupon has been updated",
-                        showConfirmButton: false,
-                        timer: 3500
-                    }).then(() => location.reload());
-                } else if (result.couponCodeExists) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Coupon code already exists",
-                        text: "Coupon code must be unique"
+                    let response = await fetch('/couponManagement/editCoupon/<%= coupon._id %>', {
+                        method: 'PUT',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(formData)
                     });
-                }
+
+                    let result = await response.json();
+
+                    if (result.couponEdited) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Your coupon has been updated",
+                            showConfirmButton: false,
+                            timer: 3500
+                        }).then(() => location.reload());
+                    } else if (result.couponCodeExists) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Coupon code already exists",
+                            text: "Coupon code must be unique"
+                        });
+                    }
+                });
             });
-        });
-    </script>
+        </script>
         <% }); %>
 
 
- 
+
             <div>
-                
+
                 <br /><br /> <br><br><br>
             </div>
 
@@ -343,5 +343,11 @@ console.log('1');
                     });
                 });
             </script>
+
+
+
+
+
+
 
             <%- include('../adminPartials/footer') %>

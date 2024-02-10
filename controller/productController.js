@@ -2,18 +2,12 @@ const adminCollection = require("../models/Model");
 const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
 
-
-
-
 const editProduct = async (req, res) => {
-  console.log("edit");
   try {
     let existingProduct = await productCollection.findOne({
       productName: { $regex: new RegExp(req.body.productName, "i") },
     });
     if (!existingProduct || existingProduct._id == req.params.id) {
-      console.log("edit1");
-
       const updateFields = {
         $set: {
           productName: req.body.productName,
@@ -23,6 +17,7 @@ const editProduct = async (req, res) => {
         },
       };
 
+      // Check and add image to the query
       if (req.files[0]) {
         updateFields.$set.productImage1 = req.files[0].filename;
       }
@@ -39,8 +34,6 @@ const editProduct = async (req, res) => {
         { _id: req.params.id },
         updateFields
       );
-      console.log("edit3");
-
       res.redirect("/products");
     } else {
       req.session.productAlreadyExists = existingProduct;
@@ -56,15 +49,16 @@ const editProductpage = async (req, res) => {
     console.log("editpage");
     const productId = req.params.id;
     console.log(productId);
-    const productData = await productCollection.findOne({_id:productId}); 
-    const categories = await categoryCollection.find({})
+    const productData = await productCollection.findOne({ _id: productId });
+    const categories = await categoryCollection.find({});
     console.log(categories);
     res.render("adminViews/editproduct.ejs", {
-      productData,categories
+      productData,
+      categories,
       // productExists: req.session.productAlreadyExists,
     });
   } catch (error) {
-    console.error( error);
+    console.error(error);
   }
 };
 
@@ -102,27 +96,38 @@ const deleteProduct = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-
   console.log(productCollection);
   try {
     let existingProduct = await productCollection.findOne({
       productName: { $regex: new RegExp(req.body.productName, "i") },
-       productName: req.body.productName,
+      productName: req.body.productName,
     });
-    if (!existingProduct) {
-      console.log("in");
-      await productCollection.insertMany([
-        {
+    if (!existingProduct || existingProduct._id == req.params.id) {
+      const updateFields = {
+        $set: {
           productName: req.body.productName,
           parentCategory: req.body.parentCategory,
-          productImage1: req.files[0].filename,
-          productImage2: req.files[1].filename,
-          productImage3: req.files[2].filename,
           productPrice: req.body.productPrice,
           productStock: req.body.productStock,
         },
-      ]);
-      // console.log(req.files[0].filename);
+      };
+
+      // Check and add image to the query
+      if (req.files[0]) {
+        updateFields.$set.productImage1 = req.files[0].filename;
+      }
+
+      if (req.files[1]) {
+        updateFields.$set.productImage2 = req.files[1].filename;
+      }
+
+      if (req.files[2]) {
+        updateFields.$set.productImage3 = req.files[2].filename;
+      }
+      await productCollection.findOneAndUpdate(
+        { _id: req.params.id },
+        updateFields
+      );
       res.redirect("/products");
     } else {
       console.log("out");
@@ -140,7 +145,7 @@ const editAdminPage = async (req, res) => {
 
 const addProductPage = async (req, res) => {
   try {
-    const categories = await categoryCollection.find({ isListed:true});
+    const categories = await categoryCollection.find({ isListed: true });
 
     console.log(categories);
     res.render("adminViews/addproduct.ejs", {
@@ -154,12 +159,11 @@ const addProductPage = async (req, res) => {
 
 const productlist = async (req, res) => {
   try {
-
     let page = Number(req.query.page) || 1;
     let limit = 4;
     let skip = (page - 1) * limit;
 
-    let   count = await productCollection.find().estimatedDocumentCount();
+    let count = await productCollection.find().estimatedDocumentCount();
 
     let productData = await productCollection.find().skip(skip).limit(limit);
     let categoryList = await categoryCollection.find(
@@ -169,7 +173,8 @@ const productlist = async (req, res) => {
 
     res.render("adminViews/productlist.ejs", {
       productData,
-      categoryList,count,
+      categoryList,
+      count,
       limit,
       productExist: req.session.productAlreadyExists,
     });
@@ -178,7 +183,6 @@ const productlist = async (req, res) => {
     console.error(error);
   }
 };
-
 
 module.exports = {
   productlist,

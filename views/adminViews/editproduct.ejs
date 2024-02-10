@@ -1,6 +1,6 @@
 <%- include('../adminPartials/header') %>
     <main class="main-wrap">
-        
+
         <section class="content-main">
 
             <div class="card mb-4">
@@ -38,11 +38,11 @@
 
 
                         <div class="input-group mb-3">
-                            <img src="/upload/<%= productData.productImage1 %>" alt="" id="preview1"
-                                style="width: 100px; height: 100px">
+                            <img src="/upload/<%= productData.productImage1 %>" alt="" id="preview1" style="width: 500px; height: 500px; display: none"
+                                >
                             <div class="input-group mb-3">
                                 <input name="productImage1" id="productImage1" type="file" class="form-control"
-                                    placeholder="Product Image1" onchange="displayImage1()" required>
+                                    placeholder="Product Image1" onchange="displayImage1(event)" required>
                             </div>
                         </div>
 
@@ -51,14 +51,15 @@
                                 style="width: 100px; height: 100px">
                             <div class="input-group mb-3">
                                 <input name="productImage2" id="productImage2" type="file" class="form-control"
-                                    placeholder="Product Image2" onchange="displayImage2()" required>
+                                    placeholder="Product Image2" onchange="displayImage2(event)" required>
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage3 %>" alt=""
                                 style="width: 100px; height: 100px" id="preview1">
                             <div class="input-group mb-3">
-                                <input name="productImage3" type="file" class="form-control" onchange="displayImage3()">
+                                <input name="productImage3" type="file" class="form-control"
+                                    onchange="displayImage3(event)">
                             </div>
                         </div>
                         <div class="input-group mb-3">
@@ -75,16 +76,17 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Category">Category</label>
 
-                                <select class="form-control p_input" name="category" placeholder="category" required>
-                                    <% categories.forEach((value)=>{ %>
-                                        <option value="<%=value.categoryName  %>">
-                                            <%= value.categoryName %>
+
+                                <span>Select Parent Category</span>
+                                <select name="parentCategory" class="form-select" aria-label="Default select example">
+                                    <% categories.forEach(function(category) { %>
+                                        <option>
+                                            <%= category.categoryName %>
                                         </option>
-                                        <% }) %>
-
+                                        <% }); %>
                                 </select>
+
 
                                 <!-- <div class="form-group">
 
@@ -127,19 +129,213 @@
             </nav>
         </div> -->
         </section> <!-- content-main end// -->
-        
+
     </main>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
+        integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+        integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        function displayImage1(event) {
+            let image = document.getElementById("preview1");
+            let croppedImg = document.getElementById("croppedImg1");
+            let inputImg = document.getElementById("input-img1");
+            image.src = null;
+            croppedImg.src = "";
+
+            const file = event.target.files[0];
+
+            console.log("start");
+            console.log(file);
+
+            if (file) {
+                image.src = URL.createObjectURL(file);
+                console.log("second");
+
+                let cropper = new Cropper(image, {
+                    aspectRatio: 5 / 4,
+                    autoCrop: false,
+                });
+
+                document.getElementById("cropButton").addEventListener(
+                    "click",
+                    function () {
+                        const canvas = cropper.getCroppedCanvas();
+
+                        croppedImg.src = canvas.toDataURL("image/png");
+
+                        canvas.toBlob(function (blob) {
+                            const file = new File([blob], "croppedImg.png", {
+                                type: "image/png",
+                            });
+
+                            const formData = new FormData();
+                            formData.append("image", file);
+
+                            fetch("/editProduct", {
+                                method: "POST",
+                                body: formData,
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.success) {
+                                        window.location.href = "/products";
+                                    } else {
+                                        console.error("Upload failed:", data.error);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error("Error:", error);
+                                });
+                        });
+
+                        cropper.destroy();
+                    },
+                    "image/png"
+                );
+            }
+        }
+
+        function displayImage2(event) {
+            let image = document.getElementById("preview2");
+            let croppedImg = document.getElementById("croppedImg2");
+            let inputImg = document.getElementById("input-img3");
+            image.src = null;
+            croppedImg.src = "";
+
+            const file = event.target.files[0];
+
+            console.log("start");
+            console.log(file);
+
+            if (file) {
+                image.src = URL.createObjectURL(file);
+                console.log("second");
+
+                let cropper = new Cropper(image, {
+                    aspectRatio: 5 / 4,
+                    autoCrop: false,
+                });
+
+                document.getElementById("cropButton").addEventListener(
+                    "click",
+                    function () {
+                        const canvas = cropper.getCroppedCanvas();
+
+                        croppedImg.src = canvas.toDataURL("image/png");
+
+                        canvas.toBlob(function (blob) {
+                            const file = new File([blob], "croppedImg.png", {
+                                type: "image/png",
+                            });
+
+                            const formData = new FormData();
+                            formData.append("image", file);
+
+                            fetch("/editProduct", {
+                                method: "POST",
+                                body: formData,
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.success) {
+                                        window.location.href = "/products"; // Change this URL
+                                    } else {
+                                        console.error("Upload failed:", data.error);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error("Error:", error);
+                                });
+                        });
+
+                        cropper.destroy();
+                    },
+                    "image/png"
+                );
+            }
+        }
+
+        function displayImage3(event) {
+            let image = document.getElementById("preview3");
+            let croppedImg = document.getElementById("croppedImg3");
+            let inputImg = document.getElementById("input-img3");
+            image.src = null;
+            croppedImg.src = "";
+
+            const file = event.target.files[0];
+
+            console.log("start");
+            console.log(file);
+
+            if (file) {
+                image.src = URL.createObjectURL(file);
+                console.log("second");
+
+                let cropper = new Cropper(image, {
+                    aspectRatio: 5 / 4,
+                    autoCrop: false,
+                });
+                // document.getElementById("img-container").style.height = "200px"
+
+                document.getElementById("cropButton").addEventListener(
+                    "click",
+                    function () {
+                        // Get the cropped canvas data
+                        const canvas = cropper.getCroppedCanvas();
+
+                        // Set the source of the cropped image
+                        croppedImg.src = canvas.toDataURL("image/png");
+
+                        canvas.toBlob(function (blob) {
+                            const file = new File([blob], "croppedImg.png", {
+                                type: "image/png",
+                            });
+
+                            const formData = new FormData();
+                            formData.append("image", file);
+
+                            fetch("/editProduct", {
+                                method: "POST",
+                                body: formData,
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    // Check if the upload was successful
+                                    if (data.success) {
+                                        // Optionally, you can handle success here
+                                        window.location.href = "/products"; // Change this URL
+                                    } else {
+                                        // Handle the case where upload was not successful
+                                        console.error("Upload failed:", data.error);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error("Error:", error);
+                                });
+                        });
+
+                        cropper.destroy();
+                        // image.style.display = "none";
+                    },
+                    "image/png"
+                );
+            }
+        }
+    </script>
 
 
 
 
 
 
-
-
-
-
+    <!-- 
     {{!-- onchange image display --}}
     <script>
         function displayImage1() {
@@ -175,7 +371,7 @@
                 reader.readAsDataURL(file)
             }
         }
-    </script>
+    </script> -->
 
 
 

@@ -438,33 +438,30 @@
                       <div class="onepage-payment">
                         <div style="clear:both;"></div>
 
-                      
-                          <div class="card-paynemt-box payment-method">
-                              <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                                  <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
-                              </label>
+
+                                                                          
+
+                            <div class="card-paynemt-box payment-method">
+                            <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+                              <input name="radios" id="COD"  value="COD" type="radio" checked>Cash On Delivery
+                            </label>
                           </div>
-                      
-
-
-                       
-
-
-                             
-
-                              <div class="card-paynemt-box payment-method">
-                                <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
-                                  <input name="radios" id="wallet" value="wallet" type="radio">Wallet
-                                </label>
-                              </div>
 
 
 
-                              <div class="card-paynemt-box payment-method">
-                                <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
-                                  <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
-                                </label>
-                              </div>
+                        <div class="card-paynemt-box payment-method">
+                          <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
+                            <input name="radios" id="wallet" value="wallet" type="radio">Wallet
+                          </label>
+                        </div>
+
+
+
+                        <div class="card-paynemt-box payment-method">
+                          <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
+                            <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
+                          </label>
+                        </div>
 
                       </div>
                     </div>
@@ -500,7 +497,7 @@
   </main>
   <!-- End .main -->
 
-  
+
 
 
 
@@ -513,6 +510,12 @@
     const CODElement = document.getElementById('COD');
     const razorpayElement = document.getElementById('razorpay');
 
+    
+    if ('<%= grandTotal %>' >= 4000) {
+        CODElement.disabled = true; 
+        CODElement.parentElement.style.display = 'none'; 
+    }
+
     orderBtnElement.addEventListener('click', orderBtnClickFunction);
     console.log('a');
     async function orderBtnClickFunction(event) {
@@ -521,13 +524,14 @@
         if (CODElement.checked) {
           console.log('cod');
           window.location.href = '/checkout/orderPlacedEnd';
-        } else if (razorpayElement.checked) { console.log('poon');
+        } else if (razorpayElement.checked) {
+          console.log('poon');
           const orderResponse = await fetch('/checkout/razorpay/create/orderId', { method: 'POST' });
           console.log('vann');
           const order = await orderResponse.json();
           console.log(order.amount);
           await openRazorpay(order.amount, order.id);
-        }console.log('ww');
+        } console.log('ww');
       } catch (error) {
         console.error(error);
       }
@@ -556,7 +560,7 @@
         console.error(error);
       }
     }
-  </script>
+</script>
 
 
 

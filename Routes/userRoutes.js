@@ -1,116 +1,75 @@
-const express = require('express')
-const userRoutes = express.Router()
-const userController = require("../controller/userController.js")
-const userAuth=require('../Authentication.js/userAuth.js')
-const blockedUserCheck = require('../middleware/blockUserCheck.js')
-const accountController =  require("../controller/profileController.js")
-const cartController =  require("../controller/cartController.js")
-const auth = require('../middleware/adminAuth.js')
-const path = require('path');
-
-
+const express = require("express");
+const userRoutes = express.Router();
+const userController = require("../controller/userController.js");
+const userAuth = require("../Authentication.js/userAuth.js");
+const blockedUserCheck = require("../middleware/blockUserCheck.js");
+const accountController = require("../controller/profileController.js");
+const cartController = require("../controller/cartController.js");
+const Userauth = require("../middleware/userAuth.js");
+const path = require("path");
 
 // userRoutes.set('view engine', 'ejs');
 // userRoutes.set('views', './views/userViews');
 
-
-
 // -------------------------------------------------------LOGIN SIGNUP------------------------------------------------------------------------------
 
-
-
-userRoutes.get('/',userController.userPage)
-userRoutes.get('/loginpage',userAuth.isLogin,userController.userLogin) 
-userRoutes.post('/login',userController.verifyLogin)
-userRoutes.get('/logout',userAuth.isLogout,userController.userLogout) 
-userRoutes.post('/signup',userController.checkUser);
-
+userRoutes.get("/", userController.userPage);
+userRoutes.get("/loginpage", userAuth.isLogin, userController.userLogin);
+userRoutes.post("/login", userController.verifyLogin);
+userRoutes.get("/logout", userAuth.isLogout, userController.userLogout);
+userRoutes.post("/signup", userController.checkUser);
 
 // -------------------------------------------------------OTP------------------------------------------------------------------------------
 
-
-userRoutes.get('/otpPage',userController.otpPage);
-userRoutes.post('/otp', userController. successOTP)
-userRoutes.get('/resendOTP', userController.resendOtpPage)      
-userRoutes.get('/home',userController.userPage)  
-
-
+userRoutes.get("/otpPage", userController.otpPage);
+userRoutes.post("/otp", userController.successOTP);
+userRoutes.get("/resendOTP", userController.resendOtpPage);
+userRoutes.get("/home", userController.userPage);
 
 // -------------------------------------------------------PRODUCTS------------------------------------------------------------------------------
 
-
-userRoutes.get('/productList',   userController.productspage)
-userRoutes.get('/productDetails/:id',blockedUserCheck, userController.productDetils)
-
-
+userRoutes.get("/productList", userController.productspage);
+userRoutes.get("/productDetails/:id",blockedUserCheck,userController.productDetils);
 
 // -------------------------------------------------------FORGOTEN PASSWORD-------------------------------------------------------------------------
 
-
-userRoutes.get('/forgotPasswordPage',  userController.forgotPasswordPage)
-userRoutes.post('/forgotOTP', userController.forgotUserDetailsInModel, userController.sendForgotOTP)
-userRoutes.post('/forgotPasswordPage3', userController.forgotPasswordPage3)
-userRoutes.post('/forgotPasswordReset', userController.forgotPasswordReset)
-
-
+userRoutes.get("/forgotPasswordPage", userController.forgotPasswordPage);
+userRoutes.post("/forgotOTP",userController.forgotUserDetailsInModel,userController.sendForgotOTP);
+userRoutes.post("/forgotPasswordPage3", userController.forgotPasswordPage3);
+userRoutes.post("/forgotPasswordReset", userController.forgotPasswordReset);
 
 // -------------------------------------------------------PROFILE------------------------------------------------------------------------------
 
-
-
-userRoutes.get('/profile/:id', blockedUserCheck,  accountController.profilePage)
-userRoutes.get('/profile/orderStatus/:id', blockedUserCheck,  accountController.orderStatus)
-userRoutes.put('/profile/orderStatus/cancelOrder/:id', blockedUserCheck,  accountController.cancelOrder )
-userRoutes.get('/changePassword', blockedUserCheck, accountController.changePassword)
-userRoutes.patch('/changePassword', blockedUserCheck,accountController.changePasswordPatch)
-userRoutes.get('/editProfile', blockedUserCheck, accountController.editProfile)
-userRoutes.get('/profile/downloadInvoice/:id', blockedUserCheck,  accountController.downloadInvoice)
-
-
-
+userRoutes.get("/profile/:id", blockedUserCheck, Userauth, accountController.profilePage);
+userRoutes.get("/profile/orderStatus/:id",blockedUserCheck,  Userauth, accountController.orderStatus);
+userRoutes.put("/profile/orderStatus/cancelOrder/:id",blockedUserCheck,Userauth,  accountController.cancelOrder);
+userRoutes.get("/changePassword",blockedUserCheck,Userauth, accountController.changePassword);
+userRoutes.patch("/changePassword",blockedUserCheck,Userauth, accountController.changePasswordPatch);
+userRoutes.get("/editProfile", blockedUserCheck, Userauth, accountController.editProfile);
+userRoutes.get("/profile/downloadInvoice/:id",blockedUserCheck,Userauth, accountController.downloadInvoice);
 
 // -------------------------------------------------------MANAGE ADDRESS------------------------------------------------------------------------------
 
+userRoutes.get("/manageAdrressPage",blockedUserCheck, Userauth, accountController.addAddress);
+userRoutes.post("/manageAddress",blockedUserCheck,Userauth, accountController.addAddressPost);
+userRoutes.get("/deleteAddress/:id",blockedUserCheck,Userauth, accountController.deleteAddress);
+userRoutes.get("/editAddress/:id",blockedUserCheck,Userauth, accountController.editAddress);
+userRoutes.post("/editAddress/:id",blockedUserCheck,Userauth, accountController.editAddressPost);
 
+// ----------------------------------------------------------CART------------------------------------------------------------------------------
 
-userRoutes.get('/manageAdrressPage', blockedUserCheck, accountController.addAddress)
-userRoutes.post('/manageAddress', blockedUserCheck, accountController.addAddressPost)
-userRoutes.get('/deleteAddress/:id', blockedUserCheck, accountController.deleteAddress)
-userRoutes.get('/editAddress/:id', blockedUserCheck,  accountController.editAddress)
-userRoutes.post('/editAddress/:id', blockedUserCheck,  accountController.editAddressPost)
-
-
-
-// -------------------------------------------------------CART------------------------------------------------------------------------------
-
-
-
-
-userRoutes.get('/cartPage', blockedUserCheck,      cartController.cart) 
-userRoutes.get('/cart/:id', blockedUserCheck,   cartController.addToCart) 
-userRoutes.delete('/cart/delete/:id', blockedUserCheck, cartController.deleteFromCart) 
-userRoutes.put('/cart/decQty/:id', blockedUserCheck,  cartController.decQty)
-userRoutes.put('/cart/incQty/:id', blockedUserCheck,  cartController.incQty)
-
-
+userRoutes.get("/cartPage", blockedUserCheck,Userauth, cartController.cart);
+userRoutes.get("/cart/:id", blockedUserCheck,Userauth, cartController.addToCart);
+userRoutes.delete("/cart/delete/:id",blockedUserCheck,Userauth,cartController.deleteFromCart);
+userRoutes.put("/cart/decQty/:id", blockedUserCheck, Userauth, cartController.decQty);
+userRoutes.put("/cart/incQty/:id", blockedUserCheck, Userauth, cartController.incQty);
 
 // -------------------------------------------------------CHECKOUT------------------------------------------------------------------------------
 
+userRoutes.get("/checkout", blockedUserCheck, Userauth, cartController.checkoutPage);
+userRoutes.all("/orderSucess", blockedUserCheck, Userauth, cartController.orderPlaced);
+userRoutes.all("/checkout/orderPlacedEnd",blockedUserCheck, Userauth, cartController.orderPlacedEnd);
+userRoutes.post("/checkout/razorpay/create/orderId",blockedUserCheck, Userauth, cartController.razorpayCreateOrderId);
+userRoutes.post("/checkout/applyCoupon",blockedUserCheck,Userauth, cartController.applyCoupon);
 
-
-userRoutes.get('/checkout', blockedUserCheck, cartController.checkoutPage)
-userRoutes.all('/orderSucess', blockedUserCheck, cartController.orderPlaced)
-userRoutes.all('/checkout/orderPlacedEnd', blockedUserCheck,  cartController.orderPlacedEnd)
-userRoutes.post('/checkout/razorpay/create/orderId', blockedUserCheck, cartController.razorpayCreateOrderId)
-userRoutes.post('/checkout/applyCoupon', blockedUserCheck, cartController.applyCoupon)
-
-
-
-
-
-
-
-
-
-
-module.exports = userRoutes
+module.exports = userRoutes;

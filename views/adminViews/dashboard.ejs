@@ -434,9 +434,9 @@
             <br />
             <hr />
             <h5></h5>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <canvas id="myChart"></canvas>
-            </div>
+            </div> -->
         </div>
 
         <style>
@@ -524,24 +524,24 @@
                         },
                     };
                     console.log("3");
-                    const xChart = document.getElementById("myChart");
-                    const yChart = {
-                        type: "doughnut",
-                        data: {
-                            labels: shipping,
-                            datasets: [
-                                {
-                                    data: shipping,
-                                    backgroundColor: [
-                                        "rgb(255, 99, 132)",
-                                        "rgb(54, 162, 235)",
-                                        "rgb(255, 205, 86)",
-                                    ],
-                                    hoverOffset: 4,
-                                },
-                            ],
-                        },
-                    };
+                    // const xChart = document.getElementById("myChart");
+                    // const yChart = {
+                    //     type: "doughnut",
+                    //     data: {
+                    //         labels: shipping,
+                    //         datasets: [
+                    //             {
+                    //                 data: shipping,
+                    //                 backgroundColor: [
+                    //                     "rgb(255, 99, 132)",
+                    //                     "rgb(54, 162, 235)",
+                    //                     "rgb(255, 205, 86)",
+                    //                 ],
+                    //                 hoverOffset: 4,
+                    //             },
+                    //         ],
+                    //     },
+                    // };
                     console.log("4");
 
                     new Chart(twoWeeksSalesChartElement, twoWeeksSalesChartOptions);
@@ -557,6 +557,106 @@
                 }
             })();
         </script>
+
+        <div><br><br></div>
+
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="w100 productFilter clearfix">
+                <p class="pull-left">Showing <strong>
+                        <%= productData.length %>
+                    </strong> products</p>
+                <div class="pull-right">
+                    <div class="change-order pull-right">
+                        <select id="sortDropdown" class="form-control" name="orderby" onchange="sortDropdownFn()">
+                            <option id="default" value="default" selected="selected">Default sorting</option>
+                            <option id="priceAscending" value="priceAscending">Sort by Best Selling Product: low to high
+                            </option>
+                            <option id="priceDescending" value="priceDescending">Sort by Best Selling Product: high to
+                                low</option>
+
+                        </select>
+                    </div>
+                    <div class="change-view pull-right">
+                        <a href="#" title="Grid" class="grid-view">
+                            <i class="fa fa-th-large"></i>
+                        </a>
+                        <a href="#" title="List" class="list-view"><i class="fa fa-th-list"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!--/.productFilter-->
+
+            <div class="row categoryProduct xsResponse clearfix">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Counts</th>
+                                <th>Price (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% productData.forEach(function(product) { %>
+                                <tr>
+                                    <td>
+                                        <a href="/productDetails/<%= product._id %>">
+                                            <%= product.productName %>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <%= product.stockSold %>
+                                    </td>
+
+
+
+                                    <td>₹<%= product.productPrice %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            async function sortDropdownFn() {
+                try {
+                    console.log('1');
+                    const sortDropdown = document.getElementById('sortDropdown');
+                    if (sortDropdown.value === 'default') {
+                        console.log('default');
+
+                        return window.location.href = '/adminHome';
+                    } console.log('2');
+
+                    const response = await fetch('/sort/' + sortDropdown.value, { method: 'GET' });
+                    console.log('2');
+
+                    const data = await response.json();
+                    console.log('3');
+
+                    if (data.success) {
+                        localStorage.setItem('selectedDropdownOption', sortDropdown.value);
+                        window.location.href = '/adminHome';
+                        console.log('data sucess');
+
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const selectedDropdownOption = localStorage.getItem('selectedDropdownOption');
+                if (selectedDropdownOption) {
+                    document.getElementById('sortDropdown').value = selectedDropdownOption;
+                }
+            });
+        </script>
+
 
         <!-- 
                 <SCript>
@@ -817,6 +917,21 @@ script
         <!-- table-responsive end// -->
         <!-- </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
                 <div class="pagination-area mt-30 mb-50">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-start">

@@ -71,7 +71,6 @@ adminRoutes.get('/orderManagement/shipped/:id', orderController.changeStatusShip
 adminRoutes.get('/orderManagement/delivered/:id', orderController.changeStatusDelivered)
 adminRoutes.get('/orderManagement/return/:id', orderController.changeStatusReturn)
 adminRoutes.get('/orderManagement/cancelled/:id', orderController.changeStatusCancelled)
-adminRoutes.get('/orderManagement/cancelled/:id', orderController.changeStatusCancelled)
 adminRoutes.get('/orderManagement/orderStatus/:id', orderController.orderStatusPage)
 
 
@@ -97,8 +96,10 @@ adminRoutes.put('/couponManagement/editCoupon/:id',couponController.editCoupon)
 
 
 
-
-
+adminRoutes.get('/filter/category/:categoryName', adminController.filterCategory)
+adminRoutes.get('/filter/priceRange',  adminController.filterPriceRange)
+adminRoutes.get('/sort/priceAscending',  adminController.sortPriceAscending)
+adminRoutes.get('/sort/priceDescending',  adminController.sortPriceDescending)
 
 
 

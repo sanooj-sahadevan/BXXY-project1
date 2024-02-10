@@ -13,7 +13,8 @@ async function grandTotal(req) {
     let userCartData = await cartCollection
       .find({ userId: req.session.currentUser._id })
       .populate("productId");
-    console.log(Array.isArray(userCartData));
+    console.log("uCD");
+    console.log(userCartData);
     let grandTotal = 0;
     for (const v of userCartData) {
       grandTotal += v.productId.productPrice * v.productQuantity;
@@ -39,6 +40,7 @@ async function grandTotal(req) {
 }
 
 const cart = async (req, res) => {
+  console.log("1");
   try {
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
@@ -48,6 +50,7 @@ const cart = async (req, res) => {
     console.log(userCartData);
     console.log(req.session.currentUser);
     console.log(req.session.user);
+    console.log("2");
 
     res.render("userViews/cart", {
       user: req.body.user,
@@ -180,8 +183,9 @@ const checkoutPage = async (req, res) => {
     res.redirect("/manageAdrressPage");
   }
 };
+
 const orderPlaced = async (req, res) => {
-  console.log('q');
+  console.log("q");
   try {
     console.log(req.session.grandTotal);
     if (req.body.razorpay_payment_id) {
@@ -215,7 +219,7 @@ const orderPlaced = async (req, res) => {
   }
 };
 const razorpayCreateOrderId = async (req, res) => {
-  console.log('1');
+  console.log("1");
   var options = {
     amount: req.session.grandTotal + "00", // amount in the smallest currency unit
     currency: "INR",
@@ -227,39 +231,48 @@ const razorpayCreateOrderId = async (req, res) => {
     });
 };
 
-
 const orderPlacedEnd = async (req, res) => {
   let cartData = await cartCollection
     .find({ userId: req.session.currentUser._id })
     .populate("productId");
-console.log(cartData);
-  cartData.map(async (v) => {
-    v.productId.productStock -= v.productQuantity; //reducing from stock qty
-    await v.productId.save();
-    return v;
-  });
+  console.log(cartData);
 
-  let orderData= await orderCollection.findOne({ _id: req.session.currentOrder._id})
-  if(orderData.paymentType =='toBeChosen'){
-    orderData.paymentType = 'COD'
-    orderData.save()
+  // Reduce product stock and increase stockSold by 1 for each product in the cart
+  for (const item of cartData) {
+    // Update product stock
+    item.productId.productStock -= item.productQuantity;
+
+    // Increase stockSold by 1
+    item.productId.stockSold += 1;
+
+    // Save changes to the product document
+    await item.productId.save();
   }
 
-  let x = await cartCollection.findOneAndUpdate({ _id: req.session.currentOrder._id}).populate("productId");
+  let orderData = await orderCollection.findOne({
+    _id: req.session.currentOrder._id,
+  });
 
-console.log(productId);
-console.log(x);
+  if (orderData.paymentType === "toBeChosen") {
+    await orderCollection.findByIdAndUpdate(orderData._id, {
+      $set: { paymentType: "COD" },
+    });
+  }
 
-console.log('StockSold incremented successfully.');
-  console.log("rendering next");
+  //delete the cart- since the order is placed
+  await cartCollection.deleteMany({ userId: req.session.currentUser._id });
+  console.log("deleting finished");
+
+  console.log(cartData);
+
+  console.log(productCollection);
+
+  // console.log("rendering next");
   res.render("userViews/orderSucess", {
     user: req.session.user,
     orderCartData: cartData,
     orderData: req.session.currentOrder,
   });
-  //delete product from cart since the order is placed
-  // await cartCollection.deleteMany({ userId: req.session.currentUser._id });
-  // console.log("deleting finished");
 };
 
 const applyCoupon = async (req, res) => {
@@ -304,7 +317,7 @@ const applyCoupon = async (req, res) => {
         );
         console.log("5");
 
-        req.session.grandTotal -= discountAmount;
+        // req.session.grandTotal -= discountAmount;
         req.session.grandTotal -= discountAmount;
         console.log(req.session.grandTotal);
         console.log(discountAmount);
