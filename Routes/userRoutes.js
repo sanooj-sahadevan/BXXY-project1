@@ -72,4 +72,12 @@ userRoutes.all("/checkout/orderPlacedEnd",blockedUserCheck, Userauth, cartContro
 userRoutes.post("/checkout/razorpay/create/orderId",blockedUserCheck, Userauth, cartController.razorpayCreateOrderId);
 userRoutes.post("/checkout/applyCoupon",blockedUserCheck,Userauth, cartController.applyCoupon);
 
+
+
+
+userRoutes.post("/search",  userController.search);
+
+
+
+
 module.exports = userRoutes;

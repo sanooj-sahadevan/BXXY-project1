@@ -41,15 +41,13 @@ const categoriesPage = async (req, res) => {
   }
 };
 
-
 const productlist = async (req, res) => {
   try {
-
     let page = Number(req.query.page) || 1;
     let limit = 4;
     let skip = (page - 1) * limit;
 
-    let   count = await productCollection.find().estimatedDocumentCount();
+    let count = await productCollection.find().estimatedDocumentCount();
 
     let productData = await productCollection.find().skip(skip).limit(limit);
     let categoryList = await categoryCollection.find(
@@ -59,7 +57,8 @@ const productlist = async (req, res) => {
 
     res.render("adminViews/productlist.ejs", {
       productData,
-      categoryList,count,
+      categoryList,
+      count,
       limit,
       productExist: req.session.productAlreadyExists,
     });
@@ -69,37 +68,26 @@ const productlist = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const addCategory = async (req, res) => {
   try {
-    let existingcategory = await categoryCollection.findOne({
+    let categoryExists = await categoryCollection.findOne({
       categoryName: { $regex: new RegExp(req.body.categoryName, "i") },
-      categoryName: req.body.categoryName,
-    });console.log(existingcategory);
+    });
+    console.log(categoryExists);
+    console.log(req.body);
+    if (!categoryExists) {
+      new categoryCollection({
+        categoryName: req.body.categoryName,
+        categoryDescription: req.body.categoryDescription,
+      }).save();
+      console.log("Added category");
+      res.redirect("/categories");
+    } else {
+      console.log("No way");
 
-    if (!existingcategory) {
-      await categoryCollection.insertMany([
-        {
-          categoryName: req.body.categoriesName,
-          categoryDescription: req.body.categoriesDescription,
-        },
-      ]);
+      req.session.categoryExists = categoryExists;
+      res.redirect("/categories");
     }
-    res.redirect("/categories");
   } catch (error) {
     console.error(error);
   }

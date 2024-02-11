@@ -2,6 +2,13 @@
 
 
     <main class="main">
+
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title">Products Detils<span>Shop</span></h1>
+            </div>
+            <!-- End .container -->
+        </div>
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
             <div class="container d-flex align-items-center">
                 <ol class="breadcrumb">
@@ -24,159 +31,191 @@
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
-        <div class="page-content">
-            <div class="container">
-                <div class="product-details-top">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="product-gallery product-gallery-vertical">
-                                <div class="row">
-                                    <figure class="product-main-image">
-                                        <img id="main-img" class="zoom"
-                                            src="/upload/<%= currentProduct.productImage1 %>"
-                                            data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
-                                            alt="product image">
-                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery"
-                                            onclick="changeImg(this)">
-                                            <i class="icon-arrows"></i>
+
+
+
+
+
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Product Details</title>
+            <!-- Add your CSS stylesheets and JavaScript files here -->
+        </head>
+
+        <body>
+            <div class="page-content">
+                <div class="container">
+                    <div class="product-details-top">
+                        <div class="row">
+                            <!-- Product Gallery Column -->
+                            <div class="col-md-6">
+                                <div class="product-gallery product-gallery-vertical">
+                                    <div class="row">
+                                        <figure class="product-main-image">
+                                            <img id="disp-img" src="/upload/<%= currentProduct.productImage1 %>"
+                                                data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
+                                                alt="product image">
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        </figure><!-- End .product-main-image -->
+                                    
+                                        <div id="disp-img-thumbnails" class="product-image-gallery">
+                                            <a class="product-gallery-item active" href="#"
+                                                data-image="/upload/<%= currentProduct.productImage1 %>"
+                                                data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
+                                                onclick="changeImg(this)">
+                                                <img src="/upload/<%= currentProduct.productImage1 %>"
+                                                    alt="product side">
+                                            </a>
+                                    
+                                            <a class="product-gallery-item" href="#"
+                                                data-image="/upload/<%= currentProduct.productImage2 %>"
+                                                data-zoom-image="/upload/<%= currentProduct.productImage2 %>"
+                                                onclick="changeImg(this)">
+                                                <img src="/upload/<%= currentProduct.productImage2 %>"
+                                                    alt="product cross">
+                                            </a>
+                                            <a class="product-gallery-item" href="#"
+                                                data-image="/upload/<%= currentProduct.productImage3 %>"
+                                                data-zoom-image="/upload/<%= currentProduct.productImage3 %>"
+                                                onclick="changeImg(this)">
+                                                <img src="/upload/<%= currentProduct.productImage3 %>"
+                                                    alt="product with model">
+                                            </a>
+                                        </div><!-- End .product-image-gallery -->
+                                    </div><!-- End .row -->
+                                    
+                                </div><!-- End .product-gallery -->
+                            </div><!-- End .col-md-6 -->
+
+                            <!-- Product Details Column -->
+                            <div class="col-md-6">
+                                <div class="product-details">
+                                    <!-- Product Title -->
+                                    <h1 class="product-title">
+                                        <%= currentProduct.productName %>
+                                    </h1><!-- End .product-title -->
+
+                                    <!-- Product Ratings -->
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
+                                            )</a>
+                                        <!-- Your rating HTML content goes here -->
+                                    </div><!-- End .ratings-container -->
+
+                                    <!-- Product Price -->
+                                    <div class="product-price">
+                                        <%= currentProduct.productPrice %>
+                                    </div><!-- End .product-price -->
+
+                                    <!-- Product Content/Description -->
+                                    <div class="product-content">
+                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus
+                                            metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus.
+                                        </p>
+                                    </div><!-- End .product-content -->
+
+                                    <!-- Other Details -->
+                                    <div class="details-filter-row details-row-size">
+                                        <label for="size">Size:</label>
+                                        <div class="select-custom">
+                                            <select name="size" id="size" class="form-control">
+                                                <option value="#" selected="selected">Select a size</option>
+                                                <option value="s">8</option>
+                                                <option value="m">7</option>
+                                                <option value="l">9</option>
+                                                <option value="xl">6</option>
+                                            </select>
+                                        </div><!-- End .select-custom -->
+
+                                        <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                    </div><!-- End .details-filter-row -->
+
+                                    <div class="details-filter-row details-row-size">
+                                        <label for="qty"> Qty:<%= currentProduct.productStock %></label>
+                                        <div class="product-details-quantity">
+                                            <!-- <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required> -->
+                                        </div><!-- End .product-details-quantity -->
+                                    </div><!-- End .details-filter-row -->
+
+                                    <div class="product-details-action">
+                                        <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart"
+                                            onclick="addToCart()"><span>add to cart</span></a>
+
+                                        <div class="details-action-wrapper">
+                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
+                                                    Wishlist</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
+                                                    Compare</span></a>
+                                        </div><!-- End .details-action-wrapper -->
+                                    </div><!-- End .product-details-action -->
+
+                                </div><!-- End .product-details-action -->
+                                <div class="product-details-footer">
+                                    <div class="product-cat">
+                                        <span>Category:</span>
+                                        <a href="#">
+                                            <%= currentProduct.parentCategory%>
                                         </a>
-                                    </figure>
+                                        <!-- <a href="#">Shoe</a>,
+                                                <a href="#">oots</a> -->
+                                    </div><!-- End .product-cat -->
 
-                                    <div id="product-image-gallery" class="product-image-gallery">
-                                        <a class="product-gallery-item active" href="#"
-                                            data-image="/assets/images/products/single/1.jpg"
-                                            data-zoom-image="/assets/images/products/single/1-big.jpg">
-                                            <img src="/upload/<%= currentProduct.productImage1 %>" alt="product side">
-                                        </a>
+                                    <div class="social-icons social-icons-sm">
+                                        <span class="social-label">Share:</span>
+                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
+                                                class="icon-facebook-f"></i></a>
+                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
+                                                class="icon-twitter"></i></a>
+                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
+                                                class="icon-instagram"></i></a>
+                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
+                                                class="icon-pinterest"></i></a>
+                                    </div>
+                                </div><!-- End .product-details-footer -->
+                            </div><!-- End .product-details -->
 
-                                        <a class="product-gallery-item" href="#"
-                                            data-image="/assets/images/products/single/2.jpg"
-                                            data-zoom-image="/assets/images/products/single/2-big.jpg">
-                                            <img src="/upload/<%= currentProduct.productImage2 %>" alt="product cross">
-                                        </a>
+                        </div>
+                    </div><!-- End .col-md-6 -->
+                </div><!-- End .row -->
+            </div><!-- End .product-details-top -->
 
-                                        <a class="product-gallery-item" href="#"
-                                            data-image="/assets/images/products/single/3.jpg"
-                                            data-zoom-image="/assets/images/products/single/3-big.jpg">
-                                            <img src="/upload/<%= currentProduct.productImage3 %>"
-                                                alt="product with model">
-                                        </a>
+            <!-- Add your JavaScript files here -->
+        </body>
 
-                                        <!-- Add more product-gallery-items as needed -->
-                                    </div><!-- End .product-image-gallery -->
-                                </div><!-- End .row -->
-
-
-
-
+        </html>
 
 
 
 
-                            </div><!-- End .product-gallery -->
-                        </div><!-- End .col-md-6 -->
+        <script>
+            // Get reference to the main image and the thumbnail images
+            const mainImage = document.getElementById('product-zoom');
+            const thumbnailImages = document.querySelectorAll('.product-gallery-item');
 
-                        <div class="col-md-6">
-                            <div class="product-details">
-                                <h1 class="product-title">
-                                    <%= currentProduct.productName %>
-                                </h1><!-- End .product-title -->
+            // Loop through thumbnail images and attach click event listeners
+            thumbnailImages.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent default link behavior
 
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
-                                        )</a>
-                                </div><!-- End .rating-container -->
+                    // Get the URL of the clicked thumbnail image
+                    const imageURL = this.getAttribute('data-image');
 
-                                <div class="product-price">
-                                    <%=currentProduct.productPrice %>
-                                </div><!-- End .product-price -->
-
-                                <div class="product-content">
-                                    <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus
-                                        libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus. </p>
-                                </div><!-- End .product-content -->
-
-                                <div class="details-filter-row details-row-size">
-                                    <!-- <label>Color:</label> -->
-
-                                    <!-- <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active"> -->
-                                    <!-- <img src="/images/about.jpg" alt="product desc"> -->
-                                    <!-- </a>
-                                    <a href="#"> -->
-                                    <!-- <img src="/images/about.jpg" alt="product desc"> -->
-                                    <!-- </a> -->
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .details-filter-row -->
-
-                            <div class="details-filter-row details-row-size">
-                                <label for="size">Size:</label>
-                                <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="#" selected="selected">Select a size</option>
-                                        <option value="s">8</option>
-                                        <option value="m">7</option>
-                                        <option value="l">9</option>
-                                        <option value="xl">6</option>
-                                    </select>
-                                </div><!-- End .select-custom -->
-
-                                <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                            </div><!-- End .details-filter-row -->
-
-                            <div class="details-filter-row details-row-size">
-                                <label for="qty"> Qty:<%= currentProduct.productStock %></label>
-                                <div class="product-details-quantity">
-                                    <!-- <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required> -->
-                                </div><!-- End .product-details-quantity -->
-                            </div><!-- End .details-filter-row -->
-
-                            <div class="product-details-action">
-                                <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart"
-                                    onclick="addToCart()"><span>add to cart</span></a>
-
-                                <div class="details-action-wrapper">
-                                    <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                                            Wishlist</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                                            Compare</span></a>
-                                </div><!-- End .details-action-wrapper -->
-                            </div>
-
-                        </div><!-- End .product-details-action -->
-
-                        <div class="product-details-footer">
-                            <div class="product-cat">
-                                <span>Category:</span>
-                                <a href="#">
-                                    <%= currentProduct.parentCategory%>
-                                </a>
-                                <!-- <a href="#">Shoe</a>,
-                                    <a href="#">oots</a> -->
-                            </div><!-- End .product-cat -->
-
-                            <div class="social-icons social-icons-sm">
-                                <span class="social-label">Share:</span>
-                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                        class="icon-facebook-f"></i></a>
-                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                        class="icon-twitter"></i></a>
-                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                        class="icon-instagram"></i></a>
-                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-                                        class="icon-pinterest"></i></a>
-                            </div>
-                        </div><!-- End .product-details-footer -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .col-md-6 -->
-            </div><!-- End .row -->
-        </div><!-- End .product-details-top -->
-
-
-
+                    // Update the source of the main image
+                    mainImage.src = imageURL;
+                    mainImage.setAttribute('data-zoom-image', this.getAttribute('data-zoom-image'));
+                });
+            });
+        </script>
 
 
 
@@ -363,7 +402,7 @@
     <script src="path/to/jquery.elevatezoom.js"></script>
 
 
-   
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -372,28 +411,6 @@
 
 
     <script>
-
-function changeImg(clickedImg) {
-    let image = $("#main-img");
-    image.attr("src", clickedImg.src);
-
-    // Destroy the existing ElevateZoom instance
-    image.removeData('elevateZoom');
-    $('.zoomContainer').remove();
-
-    // Reinitialize the ElevateZoom plugin
-    image.elevateZoom({
-        cursor: "crosshair",
-        easing: true,
-    });
-}
-
-$(document).ready(function () {
-    $(".zoom").elevateZoom({
-        cursor: "crosshair",
-        easing: true,
-    });
-});
 
 
         function addToCart() {
@@ -409,11 +426,27 @@ $(document).ready(function () {
 
     </script>
 
+<script src="https://cdn.jsdelivr.net/npm/elevatezoom.js"></script>
 
-
-
-
-
+<script>
+    function changeImg(clickedImg) {
+        let image = document.getElementById("disp-img");
+        image.src = clickedImg.getAttribute('data-image');
+        // Optional: Update the zoom image source if needed
+        image.setAttribute('data-zoom-image', clickedImg.getAttribute('data-zoom-image'));
+        // Re-initialize ElevateZoom on the main image
+        $('#disp-img').elevateZoom({
+            cursor: "crosshair",
+            easing: true,
+        });
+    }
+    $(document).ready(function () {
+        $(".zoom-img").elevateZoom({
+            cursor: "crosshair",
+            easing: true,
+        });
+    });
+</script>
 
 
 

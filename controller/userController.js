@@ -371,8 +371,27 @@ const productspage = async (req, res) => {
 
 
 
+const search = async (req, res) => {
+  try {
+    console.log('1');
+    const { q: searchQuery } = req.body; // Adjust according to the name attribute of your form input
+    const searchProduct = await productCollection.find({
+      $or: [
+        { productName: { $regex: searchQuery, $options: "i" } },
+        { parentCategory: { $regex: searchQuery, $options: "i" } },
+      ],    
 
-
+    }) 
+     
+  console.log('1');
+console.log(searchProduct);
+    req.session.searchProduct = searchProduct;
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
 
 
@@ -391,5 +410,5 @@ module.exports = {
   sendForgotOTP,
   forgotPasswordPage3,
   forgotPasswordReset,
-  productDetils,resendOtpPage
+  productDetils,resendOtpPage,search
 };

@@ -36,7 +36,20 @@
 
 
 
+                        <div id="img-container" class="input-group mb-3">
+                            <img id="preview1" src="/upload/<%= productData.productImage1 %>"
+                                style="width: 500px; height: 500px; display: none" alt="Img" />
+                            <img id="croppedImg1" src="" style="width: 500px; height: 500px; display: none" alt="Img" />
+                            <div class="input-group mb-3">
+                                <input id="input-img1" name="productImage1" type="file" class="form-control"
+                                    placeholder="Product Image1" onchange="displayImage1(event)" required />
+                            </div>
+                        </div>
 
+
+
+
+                        <!-- 
                         <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage1 %>" alt="" id="preview1" style="width: 500px; height: 500px; display: none"
                                 >
@@ -44,16 +57,46 @@
                                 <input name="productImage1" id="productImage1" type="file" class="form-control"
                                     placeholder="Product Image1" onchange="displayImage1(event)" required>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="input-group mb-3">
+                        <!-- <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage2 %>" alt=""
                                 style="width: 100px; height: 100px">
                             <div class="input-group mb-3">
                                 <input name="productImage2" id="productImage2" type="file" class="form-control"
                                     placeholder="Product Image2" onchange="displayImage2(event)" required>
                             </div>
+                        </div> -->
+
+
+
+                        <div class="input-group mb-3">
+                            <img id="preview2" src="/upload/<%= productData.productImage2 %>" style="width: 500px; height: 500px; display: none"
+                                alt="Img" />
+                            <img id="croppedImg2" src="" style="width: 500px; height: 500px; display: none"
+                                alt="Img" />
+                            <div class="input-group mb-3">
+                                <input id="input-img2" name="productImage2" type="file"
+                                    class="form-control" placeholder="Product Image2"
+                                    onchange="displayImage2(event)" required />
+                            </div>
                         </div>
+
+
+                        <div class="input-group mb-3">
+                            <img id="preview3" src="/upload/<%= productData.productImage3 %>" style="width: 500px; height: 500px; display: none"
+                                alt="Img" />
+                            <img id="croppedImg3" src="" style="width: 500px; height: 500px; display: none"
+                                alt="Img" />
+                            <div class="input-group mb-3">
+                                <input id="input-img2" name="productImage2" type="file"
+                                    class="form-control" placeholder="Product Image2"
+                                    onchange="displayImage3(event)" required />
+                            </div>
+                        </div>
+
+
+<!-- 
                         <div class="input-group mb-3">
                             <img src="/upload/<%= productData.productImage3 %>" alt=""
                                 style="width: 100px; height: 100px" id="preview1">
@@ -61,7 +104,7 @@
                                 <input name="productImage3" type="file" class="form-control"
                                     onchange="displayImage3(event)">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="input-group mb-3">
                             <input name="productPrice" type="text" class="form-control"
                                 value="<%= productData.productPrice %>">
@@ -142,192 +185,146 @@
 
 
     <script>
-        function displayImage1(event) {
-            let image = document.getElementById("preview1");
-            let croppedImg = document.getElementById("croppedImg1");
-            let inputImg = document.getElementById("input-img1");
-            image.src = null;
-            croppedImg.src = "";
+      function displayImage1(event) {
+        let image = document.getElementById("preview1");
+        let inputImg = document.getElementById("input-img1");
+        image.src = null;
 
-            const file = event.target.files[0];
+        const file = event.target.files[0];
 
-            console.log("start");
-            console.log(file);
+        if (file) {
+            image.src = URL.createObjectURL(file);
 
-            if (file) {
-                image.src = URL.createObjectURL(file);
-                console.log("second");
+            let cropper = new Cropper(image, {
+                aspectRatio: 5 / 4,
+                autoCrop: false,
+            });
 
-                let cropper = new Cropper(image, {
-                    aspectRatio: 5 / 4,
-                    autoCrop: false,
-                });
+            document.getElementById("cropButton").addEventListener(
+                "click",
+                function () {
+                    const canvas = cropper.getCroppedCanvas();
 
-                document.getElementById("cropButton").addEventListener(
-                    "click",
-                    function () {
-                        const canvas = cropper.getCroppedCanvas();
+                    canvas.toBlob(function (blob) {
+                        const formData = new FormData(document.getElementById('editProductForm'));
+                        formData.append("productImage1", blob, "croppedImg.png");
 
-                        croppedImg.src = canvas.toDataURL("image/png");
-
-                        canvas.toBlob(function (blob) {
-                            const file = new File([blob], "croppedImg.png", {
-                                type: "image/png",
-                            });
-
-                            const formData = new FormData();
-                            formData.append("image", file);
-
-                            fetch("/editProduct", {
-                                method: "POST",
-                                body: formData,
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data.success) {
-                                        window.location.href = "/products";
-                                    } else {
-                                        console.error("Upload failed:", data.error);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error("Error:", error);
-                                });
+                        fetch("/editProduct", {
+                            method: "POST",
+                            body: formData,
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                window.location.href = "/products";
+                            } else {
+                                console.error("Upload failed:", data.error);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
                         });
+                    });
 
-                        cropper.destroy();
-                    },
-                    "image/png"
-                );
-            }
+                    cropper.destroy();
+                }
+            );
         }
+    }
 
-        function displayImage2(event) {
-            let image = document.getElementById("preview2");
-            let croppedImg = document.getElementById("croppedImg2");
-            let inputImg = document.getElementById("input-img3");
-            image.src = null;
-            croppedImg.src = "";
+    function displayImage2(event) {
+        let image = document.getElementById("preview2");
+        let inputImg = document.getElementById("input-img2");
+        image.src = null;
 
-            const file = event.target.files[0];
+        const file = event.target.files[0];
 
-            console.log("start");
-            console.log(file);
+        if (file) {
+            image.src = URL.createObjectURL(file);
 
-            if (file) {
-                image.src = URL.createObjectURL(file);
-                console.log("second");
+            let cropper = new Cropper(image, {
+                aspectRatio: 5 / 4,
+                autoCrop: false,
+            });
 
-                let cropper = new Cropper(image, {
-                    aspectRatio: 5 / 4,
-                    autoCrop: false,
-                });
+            document.getElementById("cropButton").addEventListener(
+                "click",
+                function () {
+                    const canvas = cropper.getCroppedCanvas();
 
-                document.getElementById("cropButton").addEventListener(
-                    "click",
-                    function () {
-                        const canvas = cropper.getCroppedCanvas();
+                    canvas.toBlob(function (blob) {
+                        const formData = new FormData(document.getElementById('editProductForm'));
+                        formData.append("productImage1", blob, "croppedImg.png");
 
-                        croppedImg.src = canvas.toDataURL("image/png");
-
-                        canvas.toBlob(function (blob) {
-                            const file = new File([blob], "croppedImg.png", {
-                                type: "image/png",
-                            });
-
-                            const formData = new FormData();
-                            formData.append("image", file);
-
-                            fetch("/editProduct", {
-                                method: "POST",
-                                body: formData,
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    if (data.success) {
-                                        window.location.href = "/products"; // Change this URL
-                                    } else {
-                                        console.error("Upload failed:", data.error);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error("Error:", error);
-                                });
+                        fetch("/editProduct", {
+                            method: "POST",
+                            body: formData,
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                window.location.href = "/products";
+                            } else {
+                                console.error("Upload failed:", data.error);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
                         });
+                    });
 
-                        cropper.destroy();
-                    },
-                    "image/png"
-                );
-            }
+                    cropper.destroy();
+                }
+            );
         }
+    }
 
-        function displayImage3(event) {
-            let image = document.getElementById("preview3");
-            let croppedImg = document.getElementById("croppedImg3");
-            let inputImg = document.getElementById("input-img3");
-            image.src = null;
-            croppedImg.src = "";
+    function displayImage3(event) {
+        let image = document.getElementById("preview3");
+        let inputImg = document.getElementById("input-img3");
+        image.src = null;
 
-            const file = event.target.files[0];
+        const file = event.target.files[0];
 
-            console.log("start");
-            console.log(file);
+        if (file) {
+            image.src = URL.createObjectURL(file);
 
-            if (file) {
-                image.src = URL.createObjectURL(file);
-                console.log("second");
+            let cropper = new Cropper(image, {
+                aspectRatio: 5 / 4,
+                autoCrop: false,
+            });
 
-                let cropper = new Cropper(image, {
-                    aspectRatio: 5 / 4,
-                    autoCrop: false,
-                });
-                // document.getElementById("img-container").style.height = "200px"
+            document.getElementById("cropButton").addEventListener(
+                "click",
+                function () {
+                    const canvas = cropper.getCroppedCanvas();
 
-                document.getElementById("cropButton").addEventListener(
-                    "click",
-                    function () {
-                        // Get the cropped canvas data
-                        const canvas = cropper.getCroppedCanvas();
+                    canvas.toBlob(function (blob) {
+                        const formData = new FormData(document.getElementById('editProductForm'));
+                        formData.append("productImage1", blob, "croppedImg.png");
 
-                        // Set the source of the cropped image
-                        croppedImg.src = canvas.toDataURL("image/png");
-
-                        canvas.toBlob(function (blob) {
-                            const file = new File([blob], "croppedImg.png", {
-                                type: "image/png",
-                            });
-
-                            const formData = new FormData();
-                            formData.append("image", file);
-
-                            fetch("/editProduct", {
-                                method: "POST",
-                                body: formData,
-                            })
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    // Check if the upload was successful
-                                    if (data.success) {
-                                        // Optionally, you can handle success here
-                                        window.location.href = "/products"; // Change this URL
-                                    } else {
-                                        // Handle the case where upload was not successful
-                                        console.error("Upload failed:", data.error);
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error("Error:", error);
-                                });
+                        fetch("/editProduct", {
+                            method: "POST",
+                            body: formData,
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                window.location.href = "/products";
+                            } else {
+                                console.error("Upload failed:", data.error);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
                         });
+                    });
 
-                        cropper.destroy();
-                        // image.style.display = "none";
-                    },
-                    "image/png"
-                );
-            }
+                    cropper.destroy();
+                }
+            );
         }
+    }
     </script>
 
 

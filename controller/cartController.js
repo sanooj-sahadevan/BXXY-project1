@@ -76,12 +76,15 @@ const addToCart = async (req, res) => {
       productId: req.params.id,
     });
 
-    if (existingProduct) {
-      await cartCollection.updateOne(
-        { _id: existingProduct._id },
-        { $inc: { productQuantity: 1 } }
-      );
-    } else {
+    if (!existingProduct) {
+      // Product not in cart, check product stock
+      const product = await productCollection.findOne({ productId: req.params.id });
+
+      if (!product || product.productStock === 0) {
+        console.log('Product out of stock');
+        return res.redirect("back");
+      }
+
       await cartCollection.create({
         userId: req.session.currentUser._id,
         productId: req.params.id,
@@ -89,17 +92,23 @@ const addToCart = async (req, res) => {
         currentUser: req.session.currentUser,
         user: req.body.user,
       });
+    } else {
+      // Product already in cart, update quantity
+      await cartCollection.updateOne(
+        { _id: existingProduct._id },
+        { $inc: { productQuantity: 1 } }
+      );
     }
 
     console.log(req.body);
     res.redirect("back");
   } catch (error) {
-    res.redirect("/loginpage");
-
-    // console.error("Error in addToCart:", error);
-    // res.status(500).send("Internal Server Error");
+    console.error("Error in addToCart:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
+
+
 
 const deleteFromCart = async (req, res) => {
   try {
