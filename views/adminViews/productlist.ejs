@@ -1,28 +1,28 @@
 <%- include('../adminPartials/header') %>
 
 
-     
-        <section class="content-main">
-            <div class="content-header">
-                <div>
-                    <h2 class="content-title card-title">Products List</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div>
-                    <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
-                <a href="#" class="btn btn-light rounded  font-md">Import</a> -->
-                    <a href="/addProduct" class="btn btn-primary btn-sm rounded">Add new product</a>
-                </div>
+
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Products List</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
             </div>
-            <div class="card mb-4">
-                <header class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col col-check flex-grow-0">
-                            <div class="form-check ms-2">
-                                <input class="form-check-input" type="checkbox" value="">
-                            </div>
+            <div>
+                <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
+                <a href="#" class="btn btn-light rounded  font-md">Import</a> -->
+                <a href="/addProduct" class="btn btn-primary btn-sm rounded">Add new product</a>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <!-- <header class="card-header">
+                <div class="row align-items-center">
+                    <div class="col col-check flex-grow-0">
+                        <div class="form-check ms-2">
+                            <input class="form-check-input" type="checkbox" value="">
                         </div>
-                        <!-- <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                    </div> -->
+                    <!-- <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
                         <select class="form-select">
                             <option selected>All category</option>
                             <option>Electronics</option>
@@ -30,37 +30,37 @@
                             <option>Automobile</option>
                         </select>
                     </div> -->
-                        <div class="col-md-2 col-6">
+                    <!-- <div class="col-md-2 col-6">
                             <input type="date" value="02.05.2021" class="form-control">
-                        </div>
-                        <div class="col-md-2 col-6">
+                        </div> -->
+                    <!-- <div class="col-md-2 col-6">
                             <select class="form-select">
                                 <option selected>Status</option>
                                 <option>Active</option>
                                 <option>Disabled</option>
                                 <option>Show all</option>
                             </select>
-                        </div>
-                    </div>
-                </header> <!-- card-header end// -->
-                <div class="card-body">
+                        </div> -->
+                <!-- </div> -->
+            <!-- </header> -->
+            <div class="card-body">
 
-                    <table id="example" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Parent Category</th>
-                                <th>Product Image1</th>
-                                <th>Product Image2</th>
-                                <th>Product Image3</th>
-                                <th>Price in INR</th>
-                                <th>In stock</th>
-                                <th>List/Unlist</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- {{#each productData}}
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Parent Category</th>
+                            <th>Product Image1</th>
+                            <th>Product Image2</th>
+                            <th>Product Image3</th>
+                            <th>Price in INR</th>
+                            <th>In stock</th>
+                            <th>List/Unlist</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- {{#each productData}}
                         <tr>
                             <td>{{this.productName}}</td>
                             <td>{{this.parentCategory}}</td>
@@ -102,51 +102,51 @@
                         </tr>
                         {{/each}} -->
 
-                            <% productData.reverse().forEach(function(product, index) { %>
-                                <tr>
-                                    <td>
-                                        <%= product.productName %>
-                                    </td>
-                                    <td>
-                                        <%= product.parentCategory %>
-                                    </td>
-                                    <td><img src="/upload/<%= product.productImage1 %>" alt=""
-                                            style="width: 100px; height: 100px"></td>
-                                    <td><img src="/upload/<%= product.productImage2 %>" alt=""
-                                            style="width: 100px; height: 100px"></td>
-                                    <td><img src="/upload/<%= product.productImage3 %>" alt=""
-                                            style="width: 100px; height: 100px"></td>
-                                    <td>₹<%= product.productPrice %>
-                                    </td>
-                                    <td>
-                                        <%= product.productStock %>
-                                    </td>
+                        <% productData.reverse().forEach(function(product, index) { %>
+                            <tr>
+                                <td>
+                                    <%= product.productName %>
+                                </td>
+                                <td>
+                                    <%= product.parentCategory %>
+                                </td>
+                                <td><img src="/upload/<%= product.productImage1 %>" alt=""
+                                        style="width: 100px; height: 100px"></td>
+                                <td><img src="/upload/<%= product.productImage2 %>" alt=""
+                                        style="width: 100px; height: 100px"></td>
+                                <td><img src="/upload/<%= product.productImage3 %>" alt=""
+                                        style="width: 100px; height: 100px"></td>
+                                <td>₹<%= product.productPrice %>
+                                </td>
+                                <td>
+                                    <%= product.productStock %>
+                                </td>
 
 
 
-                                    <% if (product.isListed) { %>
+                                <% if (product.isListed) { %>
+                                    <td>
+                                        <form action="/unlist/<%= product._id %>" method="POST">
+                                            <button type="submit" class="btn btn-success">Unlist</button>
+                                        </form>
+                                    </td>
+                                    <% } else { %>
                                         <td>
-                                            <form action="/unlist/<%= product._id %>" method="POST">
-                                                <button type="submit" class="btn btn-success">Unlist</button>
+                                            <form action="/list/<%= product._id %>" method="POST">
+                                                <button type="submit" class="btn btn-danger">List</button>
                                             </form>
                                         </td>
-                                        <% } else { %>
+                                        <% } %>
+
+
                                             <td>
-                                                <form action="/list/<%= product._id %>" method="POST">
-                                                    <button type="submit" class="btn btn-danger">List</button>
-                                                </form>
-                                            </td>
-                                            <% } %>
-
-
-                                                <td>
 
 
 
 
 
-                                                    <a href="/productEdit/<%= product._id %>"
-                                                        class="btn btn-primary btn-sm rounded">edit</a>
+                                                <a href="/productEdit/<%= product._id %>"
+                                                    class="btn btn-primary btn-sm rounded">edit</a>
 
 
 
@@ -155,45 +155,37 @@
 
 
 
-                                                    <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                         data-bs-target="#editModal<%= index %>">
                                         <i class="fas fa-edit"></i>
                                     </button> -->
 
-                                                    <a class="btn btn-info"
-                                                        onclick="return deleteConfirmation('<%= product.categoryName %>', '<%= product._id %>')"
-                                                        href="#">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                                    </a>
+                                                <a class="btn btn-info"
+                                                    onclick="return deleteConfirmation('<%= product.categoryName %>', '<%= product._id %>')"
+                                                    href="#">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                                </a>
 
-                                                    <script>
-                                                        function deleteConfirmation(categoryName, productId) {
-                                                            if (confirm(`Are you sure you want to delete ${categoryName} product?`)) {
-                                                                window.location.href = `/deleteProduct/${productId}`;
-                                                                return true;
-                                                            }
-                                                            return false;
+                                                <script>
+                                                    function deleteConfirmation(categoryName, productId) {
+                                                        if (confirm(`Are you sure you want to delete ${categoryName} product?`)) {
+                                                            window.location.href = `/deleteProduct/${productId}`;
+                                                            return true;
                                                         }
-                                                    </script>
+                                                        return false;
+                                                    }
+                                                </script>
 
 
 
 
 
-                                                </td>
-                                </tr>
-                                <% }); %>
+                                            </td>
+                            </tr>
+                            <% }); %>
 
-                        </tbody>
-                    </table>
-
-
-
-
-
-
-
-
+                    </tbody>
+                </table>
 
 
 
@@ -210,11 +202,19 @@
 
 
 
-                </div> <!-- card-body end// -->
 
 
-            </div> <!-- card end// -->
-            <!-- <div class="pagination-area mt-30 mb-50">
+
+
+
+
+
+
+            </div> <!-- card-body end// -->
+
+
+        </div> <!-- card end// -->
+        <!-- <div class="pagination-area mt-30 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">
                         <li class="page-item active"><a class="page-link" href="#">01</a></li>
@@ -227,28 +227,30 @@
                     </ul>
                 </nav>
             </div> -->
-            <div class="d-flex justify-content-center py-3">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                   
-                    <% for( let i = 0; i < count/limit; i++ ) { %>
-                    <li class="page-item">
-                      <a class="page-link" href="/products/?page=<%=i+1 %>"><%= i+1 %></a>
-                    </li>
-                    <% } %>
-                   
-                  </ul>
-                
-              </div>
-            
-           
-        </section> <!-- content-main end// -->
+        <div class="d-flex justify-content-center py-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+
+                    <% for( let i=0; i < count/limit; i++ ) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/products/?page=<%=i+1 %>">
+                                <%= i+1 %>
+                            </a>
+                        </li>
+                        <% } %>
+
+                </ul>
+
+        </div>
 
 
-        
-        
-        
-    
+    </section> <!-- content-main end// -->
+
+
+
+
+
+
 
 
 
