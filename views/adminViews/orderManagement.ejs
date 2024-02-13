@@ -1,126 +1,130 @@
 <%- include('../adminPartials/header') %>
-    
-      
 
-        <div class="container pt-3">
-            <table id="example" class="table table-bordered table-hover" style="width: 100%">
-                <thead>
-                    <tr>
-                        <th scope="col" class="border-dark">Order No</th>
-                        <th scope="col" class="border-dark">Name</th>
-                        <!--
+
+
+    <div class="container pt-3">
+        <table id="example" class="table table-bordered table-hover" style="width: 100%">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-dark">Order No</th>
+                    <th scope="col" class="border-dark">Name</th>
+                    <!--
                         <th scope="col" class="border-dark">Date</th>
                         -->
-                        <th scope="col" class="border-dark">Amount</th>
-                        <th scope="col" class="border-dark">Payment</th>
-                        <th scope="col" class="border-dark">Status</th>
-                        <th class="border-dark">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% orderData.reverse().forEach(order=> { %>
-                        <tr>
-                            <td><button disabled="disabled">
-                                    <a href="/orderManagement/orderStatus/<%= order._id %>">
-                                        <%= order.orderNumber %>
-                                    </a>
-                                </button> </td>
-                            <td>
-                                <%= order.userId?.username %>
-            
-                            </td>
-                            <!--
+                    <th scope="col" class="border-dark">Amount</th>
+                    <th scope="col" class="border-dark">Payment</th>
+                    <th scope="col" class="border-dark">Status</th>
+                    <th class="border-dark">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+
+                <% orderData.reverse().forEach(order=> { %>
+
+                    <tr>
+                        <td><button disabled="disabled">
+                                <a href="/orderManagement/orderStatus/<%= order._id %>">
+                                    <%= order.orderNumber %>
+                                </a>
+                            </button> </td>
+                        <td>
+                            <%= order.userId?.username %>
+
+                        </td>
+                        <!--
                             <td></td>
                             -->
-                            <td>₹<%= order.grandTotalCost%>
-                            </td>
-                            <td>
-                                <%= order.paymentType %>
+                        <td>₹<%= order.grandTotalCost%>
+                        </td>
+                        <td>
+                            <%= order.paymentType %>
 
-                            </td>
-                            <td>
-                                <%= order.orderStatus %>
-                            </td>
-                            <td>
-                                <% if (order.orderStatus !=='Cancelled' ) { %>
-                                    <div class="btn-group">
-                                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/orderManagement/pending/<%= order._id %>"
-                                                    onclick="return confirm('Are you sure you want to change the status to Pending?')">
-                                                    Pending
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/orderManagement/shipped/<%= order._id %>">
-                                                    Shipped
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/orderManagement/delivered/<%= order._id %>">
-                                                    Delivered
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/orderManagement/return/<%= order._id %>">
-                                                    Return
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/orderManagement/cancelled/<%= order._id %>">
-                                                    Cancelled
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <% } %>
-                            </td>
+                        </td>
+                        <td>
+                            <%= order.orderStatus %>
+                        </td>
+                        <td>
+                            <% if (order.orderStatus !=='Cancelled' ) { %>
+                                <div class="btn-group">
+                                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="/orderManagement/pending/<%= order._id %>"
+                                                onclick="return confirm('Are you sure you want to change the status to Pending?')">
+                                                Pending
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/orderManagement/shipped/<%= order._id %>">
+                                                Shipped
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/orderManagement/delivered/<%= order._id %>">
+                                                Delivered
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/orderManagement/return/<%= order._id %>">
+                                                Return
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/orderManagement/cancelled/<%= order._id %>">
+                                                Cancelled
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <% } %>
+                        </td>
 
-                        </tr>
-                        <% }); %>
-                </tbody>
-                <div class="d-flex justify-content-center py-3">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                
-                            <% for( let i = 0; i < count/limit; i++ ) { %>
-                            <li class="page-item">
-                                <a class="page-link" href="/orderManagement/?page=<%=i+1 %>"><%= i+1 %></a>
-                            </li>
-                            <% } %>
-                
-                        </ul>
-                    </nav>
-                </div>
-            </table>
+                    </tr>
+                    <% }); %>
+            </tbody>
             <div class="d-flex justify-content-center py-3">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-            
-                        <% for( let i = 0; i < count/limit; i++ ) { %>
-                        <li class="page-item">
-                            <a class="page-link" href="/orderManagement/?page=<%=i+1 %>"><%= i+1 %></a>
-                        </li>
-                        <% } %>
-            
+
+                        <% for( let i=0; i < count/limit; i++ ) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/orderManagement/?page=<%=i+1 %>">
+                                    <%= i+1 %>
+                                </a>
+                            </li>
+                            <% } %>
+
                     </ul>
                 </nav>
             </div>
-              
+        </table>
+        <div class="d-flex justify-content-center py-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
 
+                    <% for( let i=0; i < count/limit; i++ ) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/orderManagement/?page=<%=i+1 %>">
+                                <%= i+1 %>
+                            </a>
+                        </li>
+                        <% } %>
 
-
-
+                </ul>
+            </nav>
         </div>
-       
-        
+
+
+
+
+
+    </div>
+
+
 
 
     <%- include('../adminPartials/footer') %>

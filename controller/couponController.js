@@ -9,10 +9,6 @@ const couponManagement = async (req, res) => {
 
 
 
-
-
-
-
     let couponData = await couponCollection.find();
     couponData = couponData.map((v) => {
       v.startDateFormatted = formatDate(v.startDate, "YYYY-MM-DD");
@@ -29,11 +25,9 @@ const couponManagement = async (req, res) => {
 
 const addCoupon = async (req, res) => {
   try {
-    console.log('vann');
     let existingCoupon = await couponCollection.findOne({
       couponCode: { $regex: new RegExp(req.body.couponCode, "i") },
     });
-    console.log('vann');
 
     if (!existingCoupon) {
       await couponCollection.insertMany([
@@ -46,8 +40,6 @@ const addCoupon = async (req, res) => {
           maximumDiscount: req.body.maximumDiscount,
         },
       ]);
-      console.log('vann2');
-
       res.json({ couponAdded: true });
     } else {
       res.json({ couponCodeExists: true });

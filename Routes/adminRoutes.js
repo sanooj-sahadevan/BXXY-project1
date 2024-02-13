@@ -15,8 +15,6 @@ const upload = require('../service/multer.js')
 
 
 
-// adminRoutes.set('view engine', 'ejs');
-// adminRoutes.set('views', './views/Admin');
 
 
 // --------------------------------------------------ADMIN--------------------------------------------------------------------------------
@@ -85,6 +83,7 @@ adminRoutes.get('/salesReport/download/xlsx',  salesReportController.salesReport
 
 
 
+// -------------------------------------------------------Coupon Managementt------------------------------------------------------------------------------
 
 
 
@@ -94,13 +93,13 @@ adminRoutes.post('/couponManagement/addCoupon',  couponController.addCoupon)
 adminRoutes.put('/couponManagement/editCoupon/:id',couponController.editCoupon)
 
 
+// -------------------------------------------------------Filter(dashboard)------------------------------------------------------------------------------
+
 
 
 adminRoutes.get('/filter/category/:categoryName', adminController.filterCategory)
 adminRoutes.get('/filter/priceRange',  adminController.filterPriceRange)
 adminRoutes.get('/sort/priceAscending',  adminController.sortPriceAscending)
 adminRoutes.get('/sort/priceDescending',  adminController.sortPriceDescending)
-
-
 
 module.exports = adminRoutes

@@ -8,8 +8,6 @@ const cartController = require("../controller/cartController.js");
 const Userauth = require("../middleware/userAuth.js");
 const path = require("path");
 
-// userRoutes.set('view engine', 'ejs');
-// userRoutes.set('views', './views/userViews');
 
 // -------------------------------------------------------LOGIN SIGNUP------------------------------------------------------------------------------
 
@@ -73,11 +71,12 @@ userRoutes.post("/checkout/razorpay/create/orderId",blockedUserCheck, Userauth, 
 userRoutes.post("/checkout/applyCoupon",blockedUserCheck,Userauth, cartController.applyCoupon);
 
 
+// -------------------------------------------------------filters------------------------------------------------------------------------------
 
 
-userRoutes.post("/search",  userController.search);
-
-
+userRoutes.post("/search",  userController.search);/* no work put some extra tym*/
+userRoutes.get("/clearfilters",  blockedUserCheck, userController.clearFilters);
+userRoutes.get('/product/filter/category/:categoryName', blockedUserCheck, userController.filterCategory)
 
 
 module.exports = userRoutes;

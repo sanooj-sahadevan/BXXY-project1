@@ -5,6 +5,7 @@ const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
 const cartCollection = require("../models/cartModel.js");
 const userCollection = require('../models/userModels.js');
+const walletCollection =  require('../models/walletModel.js')
 
 
 
@@ -142,6 +143,7 @@ const checkUser = async (req, res) => {
     // req.session.user = await userModels.findOne({ email: req.body.email });
 
     req.session.user = newUser
+    await walletCollection.create({ userId : req.session.user._id })
 
 
     console.log("req.session.user" + req.session.user);
@@ -304,7 +306,7 @@ const forgotPasswordReset = async (req, res) => {
     // let encryptedPassword = bcrypt.hashSync(req.body.newPassword, 10);
     await collection.findOneAndUpdate(
       { _id: req.session.forgotUserData._id },
-      { $set: { password: encryptedPassword } }
+      { $set: { password: req.body.password } }
     );
     req.session.passwordResetSucess = true;
     req.session.user = true;
@@ -338,11 +340,17 @@ const productspage = async (req, res) => {
     let limit = 8;
     let skip = (page - 1) * limit;
 
-    let categoryData = await categoryCollection.find({ isListed: true });
-    let productData = await productCollection
-      .find({ isListed: true })
-      .skip(skip)
+
+    let productData = req.session?.shopProductData || await productCollection
+      .find({ isListed: true }).skip(skip)
       .limit(limit)
+
+
+    let categoryData = await categoryCollection.find({ isListed: true });
+    // let productData = await productCollection
+    //   .find({ isListed: true })
+    //   .skip(skip)
+    //   .limit(limit)
 
 
     let count = await productCollection.countDocuments({ isListed: true });
@@ -394,6 +402,33 @@ console.log(searchProduct);
 };
 
 
+const filterCategory = async (req, res) => {
+  try {
+    console.log('filter');
+    req.session.shopProductData = await productCollection.find({
+      isListed: true,
+      parentCategory: req.params.categoryName,
+    });
+    console.log(req.session.shopProductData);
+
+    res.redirect("/productlist");
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
+const clearFilters = async (req, res) => {
+  try {
+      req.session.shopProductData = null;
+      res.redirect("/productlist");
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+  }
+}
+
 
 
 module.exports = {
@@ -410,5 +445,5 @@ module.exports = {
   sendForgotOTP,
   forgotPasswordPage3,
   forgotPasswordReset,
-  productDetils,resendOtpPage,search
+  productDetils,resendOtpPage,search,filterCategory,clearFilters
 };

@@ -5,6 +5,8 @@ const productCollection = require("../models/productModel.js");
 const orderCollection = require("../models/orderModel.js");
 const profileCollection = require("../models/profileModel.js");
 const couponCollection = require("../models/couponModel.js");
+const walletCollection = require("../models/walletModel.js");
+
 const razorpay = require("../service/razorpay.js");
 
 async function grandTotal(req) {
@@ -40,7 +42,6 @@ async function grandTotal(req) {
 }
 
 const cart = async (req, res) => {
-  console.log("1");
   try {
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
@@ -50,7 +51,6 @@ const cart = async (req, res) => {
     console.log(userCartData);
     console.log(req.session.currentUser);
     console.log(req.session.user);
-    console.log("2");
 
     res.render("userViews/cart", {
       user: req.body.user,
@@ -78,12 +78,9 @@ const addToCart = async (req, res) => {
 
     if (!existingProduct) {
       // Product not in cart, check product stock
-      const product = await productCollection.findOne({ productId: req.params.id });
-
-      if (!product || product.productStock === 0) {
-        console.log('Product out of stock');
-        return res.redirect("back");
-      }
+      const product = await productCollection.findOne({
+        productId: req.params.id,
+      });
 
       await cartCollection.create({
         userId: req.session.currentUser._id,
@@ -107,8 +104,6 @@ const addToCart = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
-
 
 const deleteFromCart = async (req, res) => {
   try {
@@ -194,7 +189,7 @@ const checkoutPage = async (req, res) => {
 };
 
 const orderPlaced = async (req, res) => {
-  console.log("q");
+
   try {
     console.log(req.session.grandTotal);
     if (req.body.razorpay_payment_id) {
@@ -209,6 +204,35 @@ const orderPlaced = async (req, res) => {
         }
       );
       res.redirect("/checkout/orderPlacedEnd");
+    } else if (req.body.walletPayment) {
+      const walletData = await walletCollection.findOne({
+        userId : req.session.currentUser._id,
+      });
+      if (walletData.walletBalance >= req.session.grandTotal) {
+        walletData.walletBalance -= req.session.grandTotal;
+
+        //wallet tranaction data
+        let walletTransaction = {
+          transactionDate : new Date(),
+          transactionAmount: -req.session.grandTotal,
+          transactionType: "Debited for placed order",
+        };
+        walletData.walletTransaction.push(walletTransaction)
+        await walletData.save();
+
+        await orderCollection.updateOne(
+          { _id: req.session.currentOrder._id },
+          {
+            $set: {
+              paymentId: Math.floor(Math.random() * 9000000000) + 1000000000 ,
+              paymentType: "Wallet",
+            },
+          })
+
+        res.json({ success: true });
+      } else {
+        return res.json({ insufficientWalletBalance: true });
+      }
     } else {
       //incase of COD
       await orderCollection.updateOne(
@@ -228,11 +252,19 @@ const orderPlaced = async (req, res) => {
   }
 };
 const razorpayCreateOrderId = async (req, res) => {
-  console.log("1");
+  if(req.query?.combinedWalletPayment){
+
+    let walletData = await walletCollection.findOne({userId: req.session.currentUser._id})
+    var options = {
+      amount: req.session.grandTotal - walletData.walletBalance  + "00", // amount in the smallest currency unit
+      currency: "INR",
+    };
+  }else{
   var options = {
     amount: req.session.grandTotal + "00", // amount in the smallest currency unit
     currency: "INR",
   };
+}
   console.log("poind"),
     razorpay.instance.orders.create(options, function (err, order) {
       res.json(order);
@@ -246,15 +278,9 @@ const orderPlacedEnd = async (req, res) => {
     .populate("productId");
   console.log(cartData);
 
-  // Reduce product stock and increase stockSold by 1 for each product in the cart
   for (const item of cartData) {
-    // Update product stock
-    item.productId.productStock -= item.productQuantity;
-
-    // Increase stockSold by 1
-    item.productId.stockSold += 1;
-
-    // Save changes to the product document
+    item.productId.productStock -= item.productQuantity; // we use for reducing Qyantity
+    item.productId.stockSold += 1;  //stocjSolf ++
     await item.productId.save();
   }
 
@@ -263,6 +289,7 @@ const orderPlacedEnd = async (req, res) => {
   });
 
   if (orderData.paymentType === "toBeChosen") {
+    console.log("tobechosen");
     await orderCollection.findByIdAndUpdate(orderData._id, {
       $set: { paymentType: "COD" },
     });
@@ -289,13 +316,10 @@ const applyCoupon = async (req, res) => {
     console.log("1");
     let { couponCode } = req.body;
 
-    //Retrive the coupon document from the database if it exists
     let couponData = await couponCollection.findOne({ couponCode });
 
     if (couponData) {
-      /*if coupon exists:
-      > check if it is applicable, i.e within minimum purchase limit & expiry date
-      >proceed... */
+      
       console.log("2");
       console.log(couponData);
 

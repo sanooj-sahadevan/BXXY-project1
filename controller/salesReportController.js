@@ -1,7 +1,7 @@
 const orderCollection = require("../models/orderModel.js");
 const formatDate = require("../service/formerDataHelper.js");
 const exceljs = require("exceljs");
-const { ObjectId } = require("mongodb");
+// const { ObjectId } = require("mongodb");
 
 // sales report page
 
@@ -11,33 +11,35 @@ const salesReport = async (req, res) => {
       let { salesData, dateValues } = req.session.admin;
       return res.render("adminViews/salesReport", { salesData, dateValues });
     }
-    
-    
 
+    // let page = Number(req.query.page) || 1;
+    // let limit = 10;
+    // let skip = (page - 1) * limit;
 
+    // let count = await orderCollection.countDocuments({ isListed: true });
 
-    
-    let page = Number(req.query.page) || 1;
-    let limit = 10;
-    let skip = (page - 1) * limit;
-
-    let   count = await orderCollection.find().estimatedDocumentCount();
-
-
-    let salesData = await orderCollection.find().populate("userId").skip(skip).limit(limit);
+    let salesData = await orderCollection
+      .find()
+      .populate("userId")
+      // .skip(skip)
+      // .limit(limit);
     // .skip(skip).limit(limit);
 
-    
+
+    const deliveredOrders = salesData.filter(
+      (order) => order.orderStatus === "Delivered"
+    );
+
     console.log(salesData);
-    res.render("adminViews/salesReport", { salesData,count,limit,
- dateValues: null });
+    res.render("adminViews/salesReport", {
+      salesData: deliveredOrders,
+      dateValues: null,
+   
+    });
   } catch (error) {
     console.error(error);
   }
 };
-
-
-
 
 // sales report filter
 
@@ -65,7 +67,6 @@ const salesReportFilter = async (req, res) => {
     console.error(error);
   }
 };
-
 
 const salesReportDownload = async (req, res) => {
   try {
@@ -124,15 +125,6 @@ const salesReportDownload = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-
-
-
-
-
-
-
-
-
-module.exports = { salesReport,salesReportDownload, salesReportFilter };
+module.exports = { salesReport, salesReportDownload, salesReportFilter };

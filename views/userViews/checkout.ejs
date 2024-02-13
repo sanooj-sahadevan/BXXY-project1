@@ -439,13 +439,13 @@
                         <div style="clear:both;"></div>
 
 
-                                                                          
 
-                            <div class="card-paynemt-box payment-method">
-                            <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                              <input name="radios" id="COD"  value="COD" type="radio" checked>Cash On Delivery
-                            </label>
-                          </div>
+
+                        <div class="card-paynemt-box payment-method">
+                          <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+                            <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+                          </label>
+                        </div>
 
 
 
@@ -508,12 +508,14 @@
     console.log('aa');
     const orderBtnElement = document.getElementById('orderBtn');
     const CODElement = document.getElementById('COD');
+    const walletElement = document.getElementById('wallet')
     const razorpayElement = document.getElementById('razorpay');
 
-    
+
+
     if ('<%= grandTotal %>' >= 4000) {
-        CODElement.disabled = true; 
-        CODElement.parentElement.style.display = 'none'; 
+      CODElement.disabled = true;
+      CODElement.parentElement.style.display = 'none';
     }
 
     orderBtnElement.addEventListener('click', orderBtnClickFunction);
@@ -524,10 +526,28 @@
         if (CODElement.checked) {
           console.log('cod');
           window.location.href = '/checkout/orderPlacedEnd';
+        } else if (walletElement.checked) {
+          console.log('q');
+          let response = await fetch("/orderSucess", {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ walletPayment: true }),
+          });
+          response = await response.json()
+          if (response.insufficientWalletBalance) {
+            return Swal.fire({
+              icon: "error",
+              title: "Insufficient Balance",
+              text: "No sufficent balance"
+            });
+          } else if (response.success) {
+            window.location.href = '/checkout/orderPlacedEnd'
+          }
         } else if (razorpayElement.checked) {
-          console.log('poon');
+          console.log('razz');
           const orderResponse = await fetch('/checkout/razorpay/create/orderId', { method: 'POST' });
-          console.log('vann');
           const order = await orderResponse.json();
           console.log(order.amount);
           await openRazorpay(order.amount, order.id);
@@ -560,7 +580,7 @@
         console.error(error);
       }
     }
-</script>
+  </script>
 
 
 

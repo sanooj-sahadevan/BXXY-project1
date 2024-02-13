@@ -1,47 +1,55 @@
 let userCollection = require("../models/userModels.js");
 let addressCollection = require("../models/profileModel.js");
 const orderCollection = require("../models/orderModel.js");
-const {  generatevoice } = require("../service/genertePDF.js");
-
+const walletCollection = require("../models/walletModel.js");
+const { generatevoice } = require("../service/genertePDF.js");
 
 const profilePage = async (req, res) => {
   try {
-    let page = Number(req.query.page) || 1;
-    let limit = 8;
-    let skip = (page - 1) * limit;
-
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser._id,
       _id: req.params.id,
     });
-
-    let orderData = await orderCollection
-      .find({
-        userId: req.session.currentUser._id,
-      })
-      .skip(skip)
-      .limit(limit);
+    // let page = Number(req.query.page) || 1;
+    // let limit = 20;
+    // let skip = (page - 1) * limit;
+    let orderData = await orderCollection.find({
+      userId: req.session.currentUser._id,
+    });
+    // .skip(skip)
+    // .limit(limit);
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
     });
 
-    let count = await orderCollection.countDocuments({ isListed: true });
-    let totalPages = Math.ceil(count / limit);
-    let totalPagesArray = new Array(totalPages).fill(null);
+    // let count = await orderCollection.countDocuments({ isListed: true });
+    // let totalPages = Math.ceil(count / limit);
+    // let totalPagesArray = new Array(totalPages).fill(null);
+    let walletData = await walletCollection.findOne({
+      userId: req.session.currentUser._id,
+    });
 
+    //sending the formatted date to the page
+    if (walletData?.walletTransaction.length > 0) {
+      walletData.walletTransaction = walletData.walletTransaction
+        .map((v) => {
+          v.transactionDateFormatted = formatDate(v.transactionDate);
+          return v;
+        })
+        .reverse(); //reverse is for sorting the latest transactions
+    }
     console.log(req.session.currentUser);
     console.log(addressData);
     console.log(req.session.currentUser.password);
-
+    console.log(walletData);
     console.log(req.session.user);
     res.render("userViews/profilePage", {
       user: req.session.user,
       orderData,
       currentUser: req.session.currentUser,
       addressData,
-      existingAddress,  count,
-      limit,      totalPagesArray,
-
+      existingAddress,
+      walletData,
     });
   } catch (error) {
     console.log(error);
@@ -257,28 +265,27 @@ const editAddress = async (req, res) => {
   }
 };
 
-
-
-const downloadInvoice =  async (req, res) => {
+const downloadInvoice = async (req, res) => {
   try {
     let orderData = await orderCollection
       .findOne({ _id: req.params.id })
       .populate("addressChosen");
-console.log(orderData);
+    console.log(orderData);
     const stream = res.writeHead(200, {
       "Content-Type": "application/pdf",
       "Content-Disposition": "attachment;filename=invoice.pdf",
     });
-    console.log('verind');
+    console.log("verind");
     generatevoice(
       (chunk) => stream.write(chunk),
       () => stream.end(),
       orderData
-    );console.log( generatevoice);
+    );
+    console.log(generatevoice);
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 module.exports = {
   profilePage,
@@ -291,5 +298,6 @@ module.exports = {
   cancelOrder,
   deleteAddress,
   editAddressPost,
-  editAddress,downloadInvoice
+  editAddress,
+  downloadInvoice,
 };

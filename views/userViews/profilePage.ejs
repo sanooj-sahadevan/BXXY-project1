@@ -27,40 +27,47 @@
                             Personal Information
                         </div>
                         <div class="card-body">
-        
+
                             <!-- Displaying personal information dynamically -->
                             <div class="card">
                                 <div class="card-body">
-        
+
                                     <!-- Check if req.session.currentUser exists -->
                                     <% if (currentUser) { %>
-                                        <p> <strong>Name:</strong>  <%= currentUser.username %>    </p>
-                                        <p> <strong>Email:</strong> <%= currentUser.email %>       </p>
-                                        <p> <strong>Phone:</strong> <%= currentUser.phonenumber %> </p>
+                                        <p> <strong>Name:</strong>
+                                            <%= currentUser.username %>
+                                        </p>
+                                        <p> <strong>Email:</strong>
+                                            <%= currentUser.email %>
+                                        </p>
+                                        <p> <strong>Phone:</strong>
+                                            <%= currentUser.phonenumber %>
+                                        </p>
                                         <!-- Add more information as needed -->
-        
+
                                         <!-- Example button to trigger some action -->
                                         <button class="btn btn-primary">Edit Information</button>
-                                    <% } else { %>
-                                        <p>No user data available.</p>
-                                    <% } %>
-        
+                                        <% } else { %>
+                                            <p>No user data available.</p>
+                                            <% } %>
+
                                 </div>
                             </div>
-        
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+      
         
 
 
-        
-<div>
-    <!-- <hr><hr><hr><hr> -->
-     <br><br><br><br>
-</div>
+
+        <div>
+            <!-- <hr><hr><hr><hr> -->
+            <br><br><br><br>
+        </div>
 
 
 
@@ -124,7 +131,7 @@
                                                                     <%= address.addressLine2 %>
                                                                 </span></li>
                                                             <li><span> <strong>Mobile</strong> : <%= address.phone %>
-                                                                        </span></li>
+                                                                </span></li>
                                                         </ul>
                                                     </div>
 
@@ -164,10 +171,8 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>No. of Items</th>
-
                                     <th>Payment Method</th>
                                     <th>Price</th>
-                                    <!-- <th>Name</th> -->
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -180,64 +185,25 @@
                                         <td>
                                             <%= order.cartData.length %> <small>items</small>
                                         </td>
-
                                         <td>
                                             <%= order.paymentType %>
                                         </td>
                                         <td>$<%= order.grandTotalCost %>
                                         </td>
-                                        <!-- <td>
-                                            <% order.cartData.forEach(cartItem => { %>
-                                                <div>
-                                                    <img src="/upload/<%= cartItem.productId.productImage1 %>" alt="Product Image"
-                                                        style="max-width: 50px; max-height: 50px;">
-                                                    <%= cartItem.productId.productName %>
-                                                </div>
-                                            <% }); %>
-                                        </td> -->
-                                        <!-- <td>
-                                            <td>$<%= order.userId?.username %>
-
-                                        </td> -->
-
-
-
-
                                         <td><span class="label label-primary">
                                                 <%= order.orderStatus %>
                                             </span></td>
-                                        <td>
-                                            <a href="/profile/orderStatus/<%= order._id %>"
-                                                class="btn btn-primary btn-sm">View
-                                                Status</a>
-                                        </td>
+                                        <td><a href="/profile/orderStatus/<%= order._id %>"
+                                                class="btn btn-primary btn-sm">View Status</a></td>
                                     </tr>
                                     <% }); %>
                             </tbody>
-                            <div class="d-flex justify-content-center py-3">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <% for (let i = 0; i < totalPagesArray.length; i++) { %>
-                                            <li class="page-item <%= (i + 1 === currentPage) ? 'active' : '' %>">
-                                                <a class="page-link" href="/profile/?page=<%= i + 1 %>"><%= i + 1 %></a>
-                                            </li>
-                                        <% } %>
-                                    </ul>
-                                </nav>
-                            </div>
                         </table>
-                        <div class="d-flex justify-content-center py-3">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <% for (let i = 0; i < totalPagesArray.length; i++) { %>
-                                        <li class="page-item <%= (i + 1 === currentPage) ? 'active' : '' %>">
-                                            <a class="page-link" href="/profile/?page=<%= i + 1 %>"><%= i + 1 %></a>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            </nav>
-                        </div>
                     </div>
+
+
+
+
 
 
 

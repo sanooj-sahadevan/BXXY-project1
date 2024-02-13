@@ -195,6 +195,7 @@ module.exports = {
   adminLogout,
   userManagement,
   blockUser,
+  unBlockUser,adminLogout,dashboardData,
   unBlockUser,
   adminLogout,
   dashboardData,

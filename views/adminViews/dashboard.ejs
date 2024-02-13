@@ -628,27 +628,27 @@
                     const sortDropdown = document.getElementById('sortDropdown');
                     if (sortDropdown.value === 'default') {
                         console.log('default');
-
-                        return window.location.href = '/adminHome';
-                    } console.log('2');
-
+                        window.location.href = '/adminHome';
+                        return; // Added return statement to exit the function
+                    }
+                    console.log('2');
+        
                     const response = await fetch('/sort/' + sortDropdown.value, { method: 'GET' });
                     console.log('2');
-
+        
                     const data = await response.json();
                     console.log('3');
-
+        
                     if (data.success) {
                         localStorage.setItem('selectedDropdownOption', sortDropdown.value);
                         window.location.href = '/adminHome';
-                        console.log('data sucess');
-
+                        console.log('data success');
                     }
                 } catch (error) {
                     console.error(error);
                 }
             }
-
+        
             document.addEventListener('DOMContentLoaded', function () {
                 const selectedDropdownOption = localStorage.getItem('selectedDropdownOption');
                 if (selectedDropdownOption) {
@@ -656,6 +656,7 @@
                 }
             });
         </script>
+        
 
 
         <!-- 
