@@ -100,44 +100,28 @@ const addProduct = async (req, res) => {
   try {
     let existingProduct = await productCollection.findOne({
       productName: { $regex: new RegExp(req.body.productName, "i") },
-      productName: req.body.productName,
     });
-    if (!existingProduct || existingProduct._id == req.params.id) {
-      const updateFields = {
-        $set: {
+    if (!existingProduct) {
+      await productCollection.insertMany([
+        {
           productName: req.body.productName,
           parentCategory: req.body.parentCategory,
+          productImage1: req.files[0].filename,
+          productImage2: req.files[1].filename,
+          productImage3: req.files[2].filename,
           productPrice: req.body.productPrice,
-          productStock: req.body.productStock,
+          productStock: req.body.productStock
         },
-      };
-
-      // Check and add image to the query
-      if (req.files[0]) {
-        updateFields.$set.productImage1 = req.files[0].filename;
-      }
-
-      if (req.files[1]) {
-        updateFields.$set.productImage2 = req.files[1].filename;
-      }
-
-      if (req.files[2]) {
-        updateFields.$set.productImage3 = req.files[2].filename;
-      }
-      await productCollection.findOneAndUpdate(
-        { _id: req.params.id },
-        updateFields
-      );
+      ]);
       res.redirect("/products");
     } else {
-      console.log("out");
       req.session.productAlreadyExists = existingProduct;
-      res.redirect("/addproduct");
+      res.redirect("/products");
     }
   } catch (err) {
     console.log(err);
   }
-};
+}
 
 const editAdminPage = async (req, res) => {
   res.render("adminViews/editPage");

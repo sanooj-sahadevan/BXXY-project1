@@ -98,19 +98,21 @@ const salesReportDownload = async (req, res) => {
       v.orderDateFormatted = formatDate(v.orderDate);
       return v;
     });
+    
+    const deliveredOrders = salesData.filter(order => order.orderStatus === "Delivered");
 
-    salesData.map((v) => {
-      sheet.addRow({
-        no: v.orderNumber,
-        username: v.userId.username,
-        orderDate: v.orderDateFormatted,
-        products: v.cartData.map((v) => v.productId.productName).join(", "),
-        noOfItems: v.cartData.map((v) => v.productQuantity).join(", "),
-        totalCost: "₹" + v.grandTotalCost,
-        paymentMethod: v.paymentType,
-        status: v.orderStatus,
-      });
-    });
+deliveredOrders.map((v) => {
+  sheet.addRow({
+    no: v.orderNumber,
+    username: v.userId.username,
+    orderDate: v.orderDateFormatted,
+    products: v.cartData.map((v) => v.productId.productName).join(", "),
+    noOfItems: v.cartData.map((v) => v.productQuantity).join(", "),
+    totalCost: "₹" + v.grandTotalCost,
+    paymentMethod: v.paymentType,
+    status: v.orderStatus
+  });
+});
 
     res.setHeader(
       "Content-Type",
