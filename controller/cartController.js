@@ -43,6 +43,11 @@ async function grandTotal(req) {
 
 const cart = async (req, res) => {
   try {
+
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
+
+
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
     });
@@ -53,12 +58,13 @@ const cart = async (req, res) => {
     console.log(req.session.user);
 
     res.render("userViews/cart", {
-      user: req.body.user,
+      user: req.session.user,
+
       // addressData: req.session.addressData,
       addressData,
       currentUser: req.session.currentUser,
       userCartData,
-      grandTotal: req.session.grandTotal,
+      grandTotal: req.session.grandTotal,cartData
     });
     console.log(req.session.currentUser);
   } catch (error) {
@@ -158,9 +164,13 @@ const incQty = async (req, res) => {
 
 const checkoutPage = async (req, res) => {
   try {
-    let cartData = await cartCollection
-      .find({ userId: req.session.currentUser._id, productId: req.params.id })
-      .populate("productId");
+
+
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
+
+
+    
     let addressData = await profileCollection.find({
       userId: req.session.currentUser._id,
     });
@@ -273,9 +283,12 @@ const razorpayCreateOrderId = async (req, res) => {
 };
 
 const orderPlacedEnd = async (req, res) => {
-  let cartData = await cartCollection
-    .find({ userId: req.session.currentUser._id })
-    .populate("productId");
+
+  const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
+
+
+  
   console.log(cartData);
 
   for (const item of cartData) {
@@ -306,7 +319,7 @@ const orderPlacedEnd = async (req, res) => {
   // console.log("rendering next");
   res.render("userViews/orderSucess", {
     user: req.session.user,
-    orderCartData: cartData,
+    cartData,
     orderData: req.session.currentOrder,
   });
 };

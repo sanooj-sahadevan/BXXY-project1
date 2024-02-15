@@ -2,10 +2,13 @@ let userCollection = require("../models/userModels.js");
 let addressCollection = require("../models/profileModel.js");
 const orderCollection = require("../models/orderModel.js");
 const walletCollection = require("../models/walletModel.js");
+const cartCollection = require("../models/cartModel.js");
 const { generatevoice } = require("../service/genertePDF.js");
 
 const profilePage = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser._id,
       _id: req.params.id,
@@ -16,6 +19,8 @@ const profilePage = async (req, res) => {
     let orderData = await orderCollection.find({
       userId: req.session.currentUser._id,
     });
+    orderData = orderData.filter(order => order.paymentType !== "toBeChosen");
+
     // .skip(skip)
     // .limit(limit);
     let addressData = await addressCollection.find({
@@ -49,7 +54,7 @@ const profilePage = async (req, res) => {
       currentUser: req.session.currentUser,
       addressData,
       existingAddress,
-      walletData,
+      walletData,cartData
     });
   } catch (error) {
     console.log(error);
@@ -58,6 +63,8 @@ const profilePage = async (req, res) => {
 
 const orderStatus = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     let orderData = await orderCollection
       .findOne({ _id: req.params.id })
       .populate("addressChosen");
@@ -79,7 +86,7 @@ const orderStatus = async (req, res) => {
       isDelivered,
       orderStatus,
       user: req.session.user,
-      currentUser: req.session.currentUser,
+      currentUser: req.session.currentUser,cartData
     });
   } catch (error) {
     console.error(error);
@@ -109,6 +116,8 @@ const cancelOrder = async (req, res) => {
 
 const addAddress = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
     });
@@ -126,7 +135,7 @@ const addAddress = async (req, res) => {
       user: req.session.user,
       currentUser: req.session.currentUser,
       addressData,
-      orderData,
+      orderData,cartData
     });
   } catch (error) {
     console.error(error);
@@ -168,6 +177,8 @@ const addAddressPost = async (req, res) => {
 
 const editProfile = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser,
       _id: req.params.id,
@@ -176,7 +187,7 @@ const editProfile = async (req, res) => {
     res.render("userViews/editProfile", {
       // currentUser: req.session.currentUser,
       user: req.session.user,
-      existingAddress,
+      existingAddress,cartData
     });
   } catch (error) {
     console.error(error);
@@ -184,16 +195,17 @@ const editProfile = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  console.log("222222222222222222222222222222222");
 
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     console.log(req.session.currentUser);
 
     console.log(req.session.currentUser.password);
 
     res.render("userViews/changePassword", {
       user: req.session.user,
-      orderData: req.session.currentOrder,
+      orderData: req.session.currentOrder,cartData,
 
       currentUser: req.session.currentUser,
     });

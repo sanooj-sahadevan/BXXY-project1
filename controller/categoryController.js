@@ -23,7 +23,7 @@ const addCategoriesPage = async (req, res) => {
 const categoriesPage = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
-    let limit = 4;
+    let limit = 9;
     let skip = (page - 1) * limit;
 
     let count = await categoryCollection.find().estimatedDocumentCount();
@@ -41,57 +41,36 @@ const categoriesPage = async (req, res) => {
   }
 };
 
-const productlist = async (req, res) => {
-  try {
-    let page = Number(req.query.page) || 1;
-    let limit = 4;
-    let skip = (page - 1) * limit;
-
-    let count = await productCollection.find().estimatedDocumentCount();
-
-    let productData = await productCollection.find().skip(skip).limit(limit);
-    let categoryList = await categoryCollection.find(
-      {},
-      { categoryName: true }
-    );
-
-    res.render("adminViews/productlist.ejs", {
-      productData,
-      categoryList,
-      count,
-      limit,
-      productExist: req.session.productAlreadyExists,
-    });
-    req.session.productAlreadyExists = null;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const addCategory = async (req, res) => {
   try {
+    let categoryName = req.body.categoriesName;
     let categoryExists = await categoryCollection.findOne({
-      categoryName: { $regex: new RegExp(req.body.categoryName, "i") },
+      categoryName: { $regex: new RegExp(`^${categoryName}$`, "i") },
     });
     console.log(categoryExists);
     console.log(req.body);
     if (!categoryExists) {
-      new categoryCollection({
-        categoryName: req.body.categoryName,
-        categoryDescription: req.body.categoryDescription,
+      await new categoryCollection({
+        categoryName: req.body.categoriesName,
+        categoryDescription: req.body.categoriesDescription,
       }).save();
       console.log("Added category");
       res.redirect("/categories");
     } else {
-      console.log("No way");
+      console.log("Category already exists!");
 
       req.session.categoryExists = categoryExists;
       res.redirect("/categories");
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error adding category:", error);
   }
 };
+
+
+
+
+
 
 const unlistCategory = async (req, res) => {
   try {

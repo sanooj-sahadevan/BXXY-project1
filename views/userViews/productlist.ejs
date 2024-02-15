@@ -32,7 +32,7 @@
 						<div class="toolbox">
 							<div class="toolbox-left">
 								<div class="toolbox-info">
-									Showing <span>9 of 56</span> Products
+									<!-- Showing <span>9 of 56</span> Products -->
 								</div>
 								<!-- End .toolbox-info -->
 							</div>
@@ -53,49 +53,7 @@
 								</div>
 								<!-- End .toolbox-sort -->
 
-								<div class="toolbox-layout">
-									<a href="category-list.html" class="btn-layout">
-										<svg width="16" height="10">
-											<rect x="0" y="0" width="4" height="4" />
-											<rect x="6" y="0" width="10" height="4" />
-											<rect x="0" y="6" width="4" height="4" />
-											<rect x="6" y="6" width="10" height="4" />
-										</svg>
-									</a>
-
-									<a href="category-2cols.html" class="btn-layout">
-										<svg width="10" height="10">
-											<rect x="0" y="0" width="4" height="4" />
-											<rect x="6" y="0" width="4" height="4" />
-											<rect x="0" y="6" width="4" height="4" />
-											<rect x="6" y="6" width="4" height="4" />
-										</svg>
-									</a>
-
-									<a href="category.html" class="btn-layout active">
-										<svg width="16" height="10">
-											<rect x="0" y="0" width="4" height="4" />
-											<rect x="6" y="0" width="4" height="4" />
-											<rect x="12" y="0" width="4" height="4" />
-											<rect x="0" y="6" width="4" height="4" />
-											<rect x="6" y="6" width="4" height="4" />
-											<rect x="12" y="6" width="4" height="4" />
-										</svg>
-									</a>
-
-									<a href="category-4cols.html" class="btn-layout">
-										<svg width="22" height="10">
-											<rect x="0" y="0" width="4" height="4" />
-											<rect x="6" y="0" width="4" height="4" />
-											<rect x="12" y="0" width="4" height="4" />
-											<rect x="18" y="0" width="4" height="4" />
-											<rect x="0" y="6" width="4" height="4" />
-											<rect x="6" y="6" width="4" height="4" />
-											<rect x="12" y="6" width="4" height="4" />
-											<rect x="18" y="6" width="4" height="4" />
-										</svg>
-									</a>
-								</div>
+								
 								<!-- End .toolbox-layout -->
 							</div>
 							<!-- End .toolbox-right -->
@@ -225,20 +183,18 @@
 												<div class="panel-body">
 													<% categoryData.forEach(function(category) { %>
 														<li class="active dropdown-tree open-tree">
-															<div class="custom-control custom-checkbox">
-																<input type="checkbox" class="custom-control-input" id="cat-<%= category.id %>" />
-																<label class="custom-control-label" for="cat-<%= category.id %>">
-																	<a href="/product/filter/category/<%= category.categoryName %>">
-																		<%= category.categoryName %>
-																	</a>
-																</label>
-															</div>
+															<label>
+																<a href="/product/filter/category/<%= category.categoryName %>">
+																	<%= category.categoryName %>
+																</a>
+															</label>
 														</li>
 													<% }); %>
 												</div>
 											</ul>
 											<!-- <a href="/clearfilters" id="clearFiltersButton">Clear Filters</a> -->
 										</div>
+										
 										
 
 

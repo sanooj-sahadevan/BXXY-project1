@@ -46,16 +46,20 @@ const userPage = async (req, res) => {
 if(req.session.admin){
   res.redirect("/adminHome");
 }else{
-    res.render("userViews/landingpage", { user: req.session?.user });
+  const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
+    res.render("userViews/landingpage", { user: req.session?.user,cartData });
 }
 }
 
 
 const   userLogin = async (req, res) => {
   console.log("1");
+  const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
   res.render("userViews/signupLoginPage", {
    
-    user: req.session.user,
+    user: req.session.user,cartData
   });
 };
 
@@ -69,6 +73,7 @@ const verifyLogin = async (req, res) => {
     console.log("loginakkum");
 
     const checking = await userCollection.findOne({ email: req.body.email });
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
 
     if (checking) {
       if (checking.block === false) {
@@ -84,7 +89,7 @@ const verifyLogin = async (req, res) => {
           req.session.currentUser = checking;
           res.render("userViews/landingpage", {
             user: req.session.user,
-            currentUser: req.session.currentUser,
+            currentUser: req.session.currentUser,cartData
           })};
           console.log("login Successfull");
           console.log(req.session.currentUser);
@@ -142,9 +147,7 @@ const checkUser = async (req, res) => {
     // await newUser.save();
     // req.session.user = await userModels.findOne({ email: req.body.email });
 
-    req.session.user = newUser
-    await walletCollection.create({ userId : req.session.user._id })
-
+    
 
     console.log("req.session.user" + req.session.user);
     const otp = generateOTP();
@@ -162,6 +165,8 @@ const checkUser = async (req, res) => {
 //otp page
 const otpPage = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     const userEmail = req.session.user.email;
     const otp = req.session.otp;
     console.log("Generated OTP:", otp);
@@ -172,7 +177,7 @@ const otpPage = async (req, res) => {
       req.session.otp = otp;  // Store the generated OTP in the session
       res.render("userViews/otp", {
         otp,  // Pass OTP to the template
-        user: req.session.user,
+        user: req.session.user,cartData
       });
     } else {
       throw new Error("Error sending OTP");
@@ -189,6 +194,8 @@ const otpPage = async (req, res) => {
 
 const resendOtpPage = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     const userEmail = req.session.user.email;
     const otp = req.session.otp;
 
@@ -201,7 +208,7 @@ const resendOtpPage = async (req, res) => {
       req.session.otp = resendOtp;  // Store the generated OTP in the session
       res.render("userViews/otp", {
         otp,  // Pass OTP to the template
-        user: req.session.user,
+        user: req.session.user,cartData
       });
     } else {
       throw new Error("Error sending OTP");
@@ -230,6 +237,8 @@ const successOTP = async (req, res) => {
 
     const userInstance = new userCollection(newUser);
     await userInstance.save();     // Save the user instance
+    req.session.user = newUser
+    await walletCollection.create({ userId : req.session.user._id })
 
     res.render("userViews/signupLoginPage", {
       user: req.session.user, currentUser:req.session.currentUser,
@@ -322,13 +331,36 @@ const forgotPasswordReset = async (req, res) => {
 
 const productDetils = async (req, res) => {
   try {
+    console.log('comes');
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    console.log('comes2');
+
     const currentProduct = await productCollection.findOne({
       _id: req.params.id,
     });
-    res.render("userViews/productDetils.ejs", {
+    console.log('comes3');
+    var cartProductQuantity=0
+    if(req.session?.user?._id){
+      const cartProduct = await cartCollection.findOne({ userId: req.session.user._id})
+      if(cartProduct){
+        var cartProductQuantity= cartProduct.productQuantity
+      }
+    }     
+    console.log('comes4');
+
+    let productQtyLimit= [],i=0
+    while(i<(currentProduct.productStock - cartProductQuantity )){
+      productQtyLimit.push(i+1)
+      i++
+    }
+    console.log('comes5');
+
+  res.render("userViews/productDetils",{
       user: req.session.user,
-      currentProduct,
+      cartData,currentProduct
     });
+    console.log('comes6');
+
     console.log(currentProduct);
   } catch (error) { }
 };
@@ -345,6 +377,7 @@ const productspage = async (req, res) => {
       .find({ isListed: true }).skip(skip)
       .limit(limit)
 
+      const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
 
     let categoryData = await categoryCollection.find({ isListed: true });
     // let productData = await productCollection
@@ -353,7 +386,7 @@ const productspage = async (req, res) => {
     //   .limit(limit)
 
 
-    let count = await productCollection.countDocuments({ isListed: true });
+    let count = req.session?.shopProductData.length || await productCollection.countDocuments({ isListed: true });
 
     let totalPages = Math.ceil(count / limit);
     let totalPagesArray = new Array(totalPages).fill(null);
@@ -367,7 +400,7 @@ const productspage = async (req, res) => {
       limit,
       totalPagesArray,
       currentPage: page,
-      selectedFilter: req.session.selectedFilter,
+      selectedFilter: req.session.selectedFilter,cartData
     });
 
     console.log(req.session.currentUser);
@@ -428,6 +461,11 @@ const clearFilters = async (req, res) => {
       res.status(500).send("Internal Server Error");
   }
 }
+
+
+
+
+
 
 
 

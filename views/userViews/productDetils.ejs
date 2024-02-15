@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Default</li>
                 </ol>
 
-                <nav class="product-pager ml-auto" aria-label="Product">
+                <!-- <nav class="product-pager ml-auto" aria-label="Product">
                     <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
                         <i class="icon-angle-left"></i>
                         <span>Prev</span>
@@ -27,7 +27,7 @@
                         <span>Next</span>
                         <i class="icon-angle-right"></i>
                     </a>
-                </nav><!-- End .pager-nav -->
+                </nav> -->
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
@@ -64,7 +64,7 @@
                                                 <i class="icon-arrows"></i>
                                             </a>
                                         </figure><!-- End .product-main-image -->
-                                    
+
                                         <div id="disp-img-thumbnails" class="product-image-gallery">
                                             <a class="product-gallery-item active" href="#"
                                                 data-image="/upload/<%= currentProduct.productImage1 %>"
@@ -73,7 +73,7 @@
                                                 <img src="/upload/<%= currentProduct.productImage1 %>"
                                                     alt="product side">
                                             </a>
-                                    
+
                                             <a class="product-gallery-item" href="#"
                                                 data-image="/upload/<%= currentProduct.productImage2 %>"
                                                 data-zoom-image="/upload/<%= currentProduct.productImage2 %>"
@@ -90,7 +90,7 @@
                                             </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
-                                    
+
                                 </div><!-- End .product-gallery -->
                             </div><!-- End .col-md-6 -->
 
@@ -104,11 +104,9 @@
 
                                     <!-- Product Ratings -->
                                     <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
-                                            )</a>
+                                      
+                                        <!-- <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
+                                            )</a> -->
                                         <!-- Your rating HTML content goes here -->
                                     </div><!-- End .ratings-container -->
 
@@ -124,21 +122,7 @@
                                         </p>
                                     </div><!-- End .product-content -->
 
-                                    <!-- Other Details -->
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="size">Size:</label>
-                                        <div class="select-custom">
-                                            <select name="size" id="size" class="form-control">
-                                                <option value="#" selected="selected">Select a size</option>
-                                                <option value="s">8</option>
-                                                <option value="m">7</option>
-                                                <option value="l">9</option>
-                                                <option value="xl">6</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
-
-                                        <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                                    </div><!-- End .details-filter-row -->
+                     
 
                                     <div class="details-filter-row details-row-size">
                                         <label for="qty"> Qty:<%= currentProduct.productStock %></label>
@@ -152,10 +136,10 @@
                                             onclick="addToCart()"><span>add to cart</span></a>
 
                                         <div class="details-action-wrapper">
-                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
+                                            <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
                                                     Wishlist</span></a>
                                             <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                                                    Compare</span></a>
+                                                    Compare</span></a> -->
                                         </div><!-- End .details-action-wrapper -->
                                     </div><!-- End .product-details-action -->
 
@@ -170,17 +154,6 @@
                                                 <a href="#">oots</a> -->
                                     </div><!-- End .product-cat -->
 
-                                    <div class="social-icons social-icons-sm">
-                                        <span class="social-label">Share:</span>
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-                                                class="icon-pinterest"></i></a>
-                                    </div>
                                 </div><!-- End .product-details-footer -->
                             </div><!-- End .product-details -->
 
@@ -426,27 +399,27 @@
 
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/elevatezoom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/elevatezoom.js"></script>
 
-<script>
-    function changeImg(clickedImg) {
-        let image = document.getElementById("disp-img");
-        image.src = clickedImg.getAttribute('data-image');
-        // Optional: Update the zoom image source if needed
-        image.setAttribute('data-zoom-image', clickedImg.getAttribute('data-zoom-image'));
-        // Re-initialize ElevateZoom on the main image
-        $('#disp-img').elevateZoom({
-            cursor: "crosshair",
-            easing: true,
+    <script>
+        function changeImg(clickedImg) {
+            let image = document.getElementById("disp-img");
+            image.src = clickedImg.getAttribute('data-image');
+            // Optional: Update the zoom image source if needed
+            image.setAttribute('data-zoom-image', clickedImg.getAttribute('data-zoom-image'));
+            // Re-initialize ElevateZoom on the main image
+            $('#disp-img').elevateZoom({
+                cursor: "crosshair",
+                easing: true,
+            });
+        }
+        $(document).ready(function () {
+            $(".zoom-img").elevateZoom({
+                cursor: "crosshair",
+                easing: true,
+            });
         });
-    }
-    $(document).ready(function () {
-        $(".zoom-img").elevateZoom({
-            cursor: "crosshair",
-            easing: true,
-        });
-    });
-</script>
+    </script>
 
 
 
