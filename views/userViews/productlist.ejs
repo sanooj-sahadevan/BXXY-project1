@@ -42,19 +42,17 @@
 								<div class="toolbox-sort">
 									<label for="sortby">Sort by:</label>
 									<div class="select-custom">
-										<select name="sortby" id="sortby" class="form-control">
-											<option value="popularity" selected="selected">
-												Most Popular
-											</option>
-											<option value="rating">Most Rated</option>
-											<option value="date">Date</option>
+										<select id="sortDropdown" class="form-control" name="orderby" onchange="sortDropdownFn()">
+											<option id="default" value="default" selected="selected">Default sorting</option>
+											<option id="priceAscending" value="priceAscending">Sort by price: low to high</option>
+											<option id="priceDescending" value="priceDescending">Sort by price: high to low</option>
 										</select>
 									</div>
 								</div>
-								<!-- End .toolbox-sort -->
+								
 
 								
-								<!-- End .toolbox-layout -->
+							
 							</div>
 							<!-- End .toolbox-right -->
 						</div>
@@ -102,6 +100,65 @@
 								/* You can adjust the size based on your preference */
 							}
 						</style>
+
+
+
+
+
+<script>
+	async function sortDropdownFn() {
+		try {
+			
+			console.log('1');
+
+			console.log(sortDropdown.value)
+			if (sortDropdown.value == 'default') {
+				return window.location.href = '/productList'
+			}
+			console.log('2');
+
+			const response = await fetch('/shop/sort/' + sortDropdown.value, { method: 'GET' })
+			console.log('3');
+
+			const data = await response.json()
+			console.log('3vannn');
+
+			let sortDropdownElement = document.getElementById(`${sortDropdown.value}`)
+			sortDropdownElement.setAttribute('selected', true)
+			if (data.success) {
+				console.log('4');
+
+				localStorage.setItem('selectedDropdownOption', sortDropdown.value)
+				window.location.href = '/productList'
+			}
+		} catch (error) {
+			console.error(error)
+		}
+	}
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const selectedDropdownOption = localStorage.getItem('selectedDropdownOption')
+		if (selectedDropdownOption) {
+			document.getElementById('sortDropdown').value = selectedDropdownOption
+		}
+	})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<!-- <div class="w100 categoryFooter">
 							<div class="pagination pull-left no-margin-top">
 								<ul class="pagination no-margin-top">
@@ -526,6 +583,10 @@
 
 
 	</script>
+
+
+
+
 
 
 	<%- include('../partials/footer') %>

@@ -110,7 +110,7 @@ const addProduct = async (req, res) => {
           productImage2: req.files[1].filename,
           productImage3: req.files[2].filename,
           productPrice: req.body.productPrice,
-          productStock: req.body.productStock
+          productStock: req.body.productStock,
         },
       ]);
       res.redirect("/products");
@@ -121,7 +121,7 @@ const addProduct = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 const editAdminPage = async (req, res) => {
   res.render("adminViews/editPage");
@@ -168,8 +168,50 @@ const productlist = async (req, res) => {
   }
 };
 
+const filterPriceRange = async (req, res) => {
+  try {
+    req.session.shopProductData = await productCollection.find({
+      isListed: true,
+      productPrice: {
+        $gt: 0 + 500 * req.query.priceRange,
+        $lte: 500 + 500 * req.query.priceRange,
+      },
+    });
+    res.redirect("/productList");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+const sortPriceAscending = async (req, res) => {
+  try {
+
+    req.session.shopProductData = await productCollection
+      .find({ isListed: true })
+      .sort({ productPrice: 1 });
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+const sortPriceDescending = async (req, res) => {
+  try {
+    
+    req.session.shopProductData = await productCollection
+      .find({ isListed: true })
+      .sort({ productPrice: -1 });
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   productlist,
+  filterPriceRange,
+  sortPriceAscending,
+  sortPriceDescending,
   editAdminPage,
   addProductPage,
   addProduct,

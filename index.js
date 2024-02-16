@@ -44,8 +44,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(userRoutes);
 app.use(adminRoutes);
 
-app.use("/*", (req, res) => {
-  res.render("userViews/errorPage", { signIn: req.session.signIn,user:req.session.user });
+app.use("/*", async (req, res) => {
+  try {
+    // const cartData = await cartCollection
+    //   .find({ userId: req.session?.currentUser?._id })
+    //   .populate('productId');
+
+    res.render("userViews/errorPage", { signIn: req.session.signIn, user: req.session.user });
+  } catch (error) {
+    console.error("Error occurred while fetching cart data:", error);
+   
+  }
 });
 
 

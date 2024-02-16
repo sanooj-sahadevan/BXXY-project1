@@ -366,13 +366,12 @@ const productDetils = async (req, res) => {
 };
 
 
+
 const productspage = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
     let limit = 8;
     let skip = (page - 1) * limit;
-
-
     let productData = req.session?.shopProductData || await productCollection
       .find({ isListed: true }).skip(skip)
       .limit(limit)
@@ -386,11 +385,15 @@ const productspage = async (req, res) => {
     //   .limit(limit)
 
 
-    let count = req.session?.shopProductData.length || await productCollection.countDocuments({ isListed: true });
-
+    let count;
+    if (req.session && req.session.shopProductData) {
+        count = req.session.shopProductData.length;
+    } else {
+        count = await productCollection.countDocuments({ isListed: true });
+    }
+    
     let totalPages = Math.ceil(count / limit);
     let totalPagesArray = new Array(totalPages).fill(null);
-
     res.render("userViews/productlist", {
       categoryData,
       productData,
@@ -400,6 +403,7 @@ const productspage = async (req, res) => {
       limit,
       totalPagesArray,
       currentPage: page,
+      selectedFilter: req.session.selectedFilter,
       selectedFilter: req.session.selectedFilter,cartData
     });
 
@@ -427,10 +431,9 @@ const search = async (req, res) => {
   console.log('1');
 console.log(searchProduct);
     req.session.searchProduct = searchProduct;
-    res.redirect("back");
+    res.redirect("/productList");
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -458,7 +461,6 @@ const clearFilters = async (req, res) => {
       res.redirect("/productlist");
   } catch (error) {
       console.error(error);
-      res.status(500).send("Internal Server Error");
   }
 }
 

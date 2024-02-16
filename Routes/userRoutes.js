@@ -5,6 +5,7 @@ const userAuth = require("../Authentication.js/userAuth.js");
 const blockedUserCheck = require("../middleware/blockUserCheck.js");
 const accountController = require("../controller/profileController.js");
 const cartController = require("../controller/cartController.js");
+const productController = require('../controller/productController.js')
 const Userauth = require("../middleware/userAuth.js");
 const path = require("path");
 
@@ -28,6 +29,9 @@ userRoutes.get("/home", userController.userPage);
 
 userRoutes.get("/productList", userController.productspage);
 userRoutes.get("/productDetails/:id",blockedUserCheck,userController.productDetils);
+userRoutes.get('/shop/filter/priceRange', blockedUserCheck, productController.filterPriceRange)
+userRoutes.get('/shop/sort/priceAscending', blockedUserCheck, productController.sortPriceAscending)
+userRoutes.get('/shop/sort/priceDescending', blockedUserCheck, productController.sortPriceDescending)
 
 // -------------------------------------------------------FORGOTEN PASSWORD-------------------------------------------------------------------------
 
