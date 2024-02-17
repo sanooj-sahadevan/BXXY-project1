@@ -278,29 +278,37 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        async function cancelOrder(orderId) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, cancel it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('/profile/orderStatus/cancelOrder/' + orderId, { method: 'PUT' }).then(d => console.log(d));
-                    let cancelBtnElement = document.getElementById('cancelBtn');
-                    let cancelledBtnElement = document.getElementById('cancelledBtn');
-
-                    Swal.fire({
-                        title: "Cancelled!",
-                        text: "Your order has been cancelled.",
-                        icon: "success"
-                    });
+       async function cancelOrder(orderId) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!"
+    }).then(async (result) => { // Mark the function as async
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('/profile/orderStatus/cancelOrder/' + orderId, { method: 'PUT' });
+                const data = await response.json();
+                console.log(data);
+                if (data.success) {
+                    console.log('hello');
+                    location.reload();
+                } else {
+                    throw new Error("Cancellation failed"); // Handle cancellation failure
                 }
-            });
+            } catch (error) {
+                console.error(error); // Log the error
+                // Handle the error, e.g., show an error message to the user
+            }
+        } else {
+            console.log('Order cancellation cancelled');
         }
+    });
+}
+
     </script>
 
     <%- include('../partials/footer') %>

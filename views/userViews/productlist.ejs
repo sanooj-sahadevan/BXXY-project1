@@ -42,33 +42,36 @@
 								<div class="toolbox-sort">
 									<label for="sortby">Sort by:</label>
 									<div class="select-custom">
-										<select id="sortDropdown" class="form-control" name="orderby" onchange="sortDropdownFn()">
-											<option id="default" value="default" selected="selected">Default sorting</option>
-											<option id="priceAscending" value="priceAscending">Sort by price: low to high</option>
-											<option id="priceDescending" value="priceDescending">Sort by price: high to low</option>
+										<select id="sortDropdown" class="form-control" name="orderby"
+											onchange="sortDropdownFn()">
+											<option id="default" value="default" selected="selected">Default sorting
+											</option>
+											<option id="priceAscending" value="priceAscending">Sort by price: low to
+												high</option>
+											<option id="priceDescending" value="priceDescending">Sort by price: high to
+												low</option>
 										</select>
 									</div>
 								</div>
-								
 
-								
-							
+
+
+
 							</div>
 							<!-- End .toolbox-right -->
 						</div>
 						<!-- End .toolbox -->
 						<div class="row categoryProduct xsResponse clearfix">
-							<% productData.forEach(product=> { %>
+							<% productData.forEach(product => { %>
 								<div class="item col-sm-3 col-lg-3 col-md-3 col-xs-6 grid-view">
 									<div class="product">
 										<!-- Uncomment the following lines if you want to include the "Add to Wishlist" button -->
 										<!-- <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist" data-placement="left">
-																	<i class="glyphicon glyphicon-heart"></i>
-																</a> -->
+											<i class="glyphicon glyphicon-heart"></i>
+										</a> -->
 										<div class="image">
 											<a href="/productDetails/<%= product._id %>">
-												<img src="/upload/<%= product.productImage1 %>" alt="img"
-													class="img-responsive" />
+												<img src="/upload/<%= product.productImage1 %>" alt="img" class="img-responsive" />
 											</a>
 										</div>
 										<div class="description">
@@ -81,18 +84,23 @@
 										<div class="price">
 											<span>₹<%= product.productPrice %></span>
 										</div>
-										<div class="action-control">
-											<a href="/cart/<%= product._id %>" class="btn btn-primary"
-												onclick="addToCart()">
-												<span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"></i>
-													Add to cart</span>
-											</a>
-										</div>
+						
+										<% if(product.productStock <= 0) { %>
+											<p style="color: red;">Out of stock</p>
+										<% } else { %>
+											<div class="action-control">
+												<a href="/cart/<%= product._id %>" class="btn btn-primary" onclick="addToCart()">
+													<span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"></i> Add to cart</span>
+												</a>
+											</div>
+										<% } %>
 									</div>
 								</div>
-								<% }); %>
-									<!--/.item-->
+							<% }); %>
+							<!--/.item-->
 						</div>
+						
+
 						<style>
 							/* Add this CSS to your stylesheet */
 							.small-font-size {
@@ -105,46 +113,46 @@
 
 
 
-<script>
-	async function sortDropdownFn() {
-		try {
-			
-			console.log('1');
+						<script>
+							async function sortDropdownFn() {
+								try {
 
-			console.log(sortDropdown.value)
-			if (sortDropdown.value == 'default') {
-				return window.location.href = '/productList'
-			}
-			console.log('2');
+									console.log('1');
 
-			const response = await fetch('/shop/sort/' + sortDropdown.value, { method: 'GET' })
-			console.log('3');
+									console.log(sortDropdown.value)
+									if (sortDropdown.value == 'default') {
+										return window.location.href = '/productList'
+									}
+									console.log('2');
 
-			const data = await response.json()
-			console.log('3vannn');
+									const response = await fetch('/shop/sort/' + sortDropdown.value, { method: 'GET' })
+									console.log('3');
 
-			let sortDropdownElement = document.getElementById(`${sortDropdown.value}`)
-			sortDropdownElement.setAttribute('selected', true)
-			if (data.success) {
-				console.log('4');
+									const data = await response.json()
+									console.log('3vannn');
 
-				localStorage.setItem('selectedDropdownOption', sortDropdown.value)
-				window.location.href = '/productList'
-			}
-		} catch (error) {
-			console.error(error)
-		}
-	}
-</script>
+									let sortDropdownElement = document.getElementById(`${sortDropdown.value}`)
+									sortDropdownElement.setAttribute('selected', true)
+									if (data.success) {
+										console.log('4');
 
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		const selectedDropdownOption = localStorage.getItem('selectedDropdownOption')
-		if (selectedDropdownOption) {
-			document.getElementById('sortDropdown').value = selectedDropdownOption
-		}
-	})
-</script>
+										localStorage.setItem('selectedDropdownOption', sortDropdown.value)
+										window.location.href = '/productList'
+									}
+								} catch (error) {
+									console.error(error)
+								}
+							}
+						</script>
+
+						<script>
+							document.addEventListener('DOMContentLoaded', function () {
+								const selectedDropdownOption = localStorage.getItem('selectedDropdownOption')
+								if (selectedDropdownOption) {
+									document.getElementById('sortDropdown').value = selectedDropdownOption
+								}
+							})
+						</script>
 
 
 
@@ -241,21 +249,22 @@
 													<% categoryData.forEach(function(category) { %>
 														<li class="active dropdown-tree open-tree">
 															<label>
-																<a href="/product/filter/category/<%= category.categoryName %>">
+																<a
+																	href="/product/filter/category/<%= category.categoryName %>">
 																	<%= category.categoryName %>
 																</a>
 															</label>
 														</li>
-													<% }); %>
+														<% }); %>
 												</div>
 											</ul>
 											<!-- <a href="/clearfilters" id="clearFiltersButton">Clear Filters</a> -->
 										</div>
-										
-										
 
 
-										
+
+
+
 
 										<!-- <div class="filter-item">
 											<div class="custom-control custom-checkbox">

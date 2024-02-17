@@ -56,12 +56,14 @@ if(req.session.admin){
 const   userLogin = async (req, res) => {
   console.log("1");
   const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+  var message = req.query.message;
 
   res.render("userViews/signupLoginPage", {
    
-    user: req.session.user,cartData
+    user: req.session.user,cartData,message: message
   });
 };
+
 
 
 
@@ -73,48 +75,44 @@ const verifyLogin = async (req, res) => {
     console.log("loginakkum");
 
     const checking = await userCollection.findOne({ email: req.body.email });
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
 
     if (checking) {
       if (checking.block === false) {
-        
+
         if (checking.password === req.body.password) {
-          if(checking.admin===1){
-            req.session.admin  = true
+          if (checking.admin === 1) {
+            req.session.admin = true
             res.redirect("/adminHome");
-          }else{
-
-
-          req.session.user = checking;
-          req.session.currentUser = checking;
-          res.render("userViews/landingpage", {
-            user: req.session.user,
-            currentUser: req.session.currentUser,cartData
-          })};
-          console.log("login Successfull");
+          } else {
+            req.session.user = checking;
+            req.session.currentUser = checking;
+            res.render("userViews/landingpage", {
+              user: req.session.user,
+              currentUser: req.session.currentUser,
+              cartData,
+              message: null // No message to display
+            });
+          }
+          console.log("login Successful");
           console.log(req.session.currentUser);
         } else {
-          res.redirect('/loginpage')
-          // res.render("userViews/signupLoginPage", {
-          //   message: "Password Incorrect",
-          // });
+          res.redirect('/loginpage?message=Password%20Incorrect');
           console.log("wrong password");
         }
       } else {
-        res.redirect('/loginpage')
-        // res.render("userViews/signupLoginPage", { message: "Account blocked" });
-        // console.log("wrong password");
+        res.redirect('/loginpage?message=Account%20Blocked');
+        console.log("Account Blocked");
       }
     } else {
-      res.redirect('/loginpage')
-      // res.render("userViews/signupLoginPage", {
-      //   message: "Username Incorrect",
-      // });
+      res.redirect('/loginpage?message=Username%20Incorrect');
+      console.log("Username Incorrect");
     }
   } catch (error) {
-console.log(error);
+    console.log(error);
   }
 };
+
 
 //logout
 const userLogout = async (req, res) => {

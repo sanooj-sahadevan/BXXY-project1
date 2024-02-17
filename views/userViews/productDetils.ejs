@@ -104,7 +104,7 @@
 
                                     <!-- Product Ratings -->
                                     <div class="ratings-container">
-                                      
+
                                         <!-- <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
                                             )</a> -->
                                         <!-- Your rating HTML content goes here -->
@@ -112,7 +112,7 @@
 
                                     <!-- Product Price -->
                                     <div class="product-price">
-                                        <%= currentProduct.productPrice %>
+                                        ₹ <%= currentProduct.productPrice %>
                                     </div><!-- End .product-price -->
 
                                     <!-- Product Content/Description -->
@@ -122,26 +122,49 @@
                                         </p>
                                     </div><!-- End .product-content -->
 
-                     
+
 
                                     <div class="details-filter-row details-row-size">
-                                        <label for="qty"> Qty:<%= currentProduct.productStock %></label>
+                                        <!-- <label for="qty"> Qty:<%= currentProduct.productStock %></label> -->
                                         <div class="product-details-quantity">
-                                            <!-- <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required> -->
-                                        </div><!-- End .product-details-quantity -->
+                                            <!-- <input type="number" id="qty" class="form-control" value="1" min="1"
+                                                max="10" step="1" data-decimals="0" required> -->
+                                            <span id="stockMessage" style="color: red;"></span>
+                                        </div>
+                                        <script>
+                                            // Assume you have a variable 'stock' indicating the available stock
+                                            let stock = 5; // Example value, you should get the actual stock value from your backend
+
+                                            const qtyInput = document.getElementById('qty');
+                                            const stockMessage = document.getElementById('stockMessage');
+
+                                            qtyInput.addEventListener('change', function () {
+                                                const quantity = parseInt(qtyInput.value);
+                                                if (quantity > stock) {
+                                                    stockMessage.textContent = 'No stock available';
+                                                } else {
+                                                    stockMessage.textContent = '';
+                                                }
+                                            });
+
+                                        </script>
+                                        <!-- End .product-details-quantity -->
                                     </div><!-- End .details-filter-row -->
-
                                     <div class="product-details-action">
-                                        <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart"
-                                            onclick="addToCart()"><span>add to cart</span></a>
+                                        <% if(currentProduct.productStock <= 0) { %>
+                                            <p style="color: red;">Out of stock</p>
 
+                                        <% } else { %>
+                                            <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart" onclick="addToCart()">
+                                                <span>Add to cart</span>
+                                            </a>
+                                        <% } %>
                                         <div class="details-action-wrapper">
-                                            <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                                                    Wishlist</span></a>
-                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                                                    Compare</span></a> -->
+                                            <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> -->
                                         </div><!-- End .details-action-wrapper -->
                                     </div><!-- End .product-details-action -->
+                                    
 
                                 </div><!-- End .product-details-action -->
                                 <div class="product-details-footer">

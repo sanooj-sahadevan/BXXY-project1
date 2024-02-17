@@ -30,7 +30,7 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
-                <form class="regForm" action="/signup"  id="formData"  method="POST">
+                <form class="regForm" action="/signup" id="formData" method="POST">
                   <div class="form-group">
                     <label for="singin-email-2">Email address *</label>
                     <input type="text" class="form-control" id="singin-email-2" name="email"
@@ -137,24 +137,30 @@
 
                 </form>
                 <div class="form-choice">
-                  <p class="text-center">or sign in with</p>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <a href="#" class="btn btn-login btn-g">
-                        <i class="icon-google"></i>
-                        Login With Google
-                      </a>
-                    </div>
-                    <!-- End .col-6 -->
-                    <div class="col-sm-6">
-                      <a href="#" class="btn btn-login btn-f">
-                        <i class="icon-facebook-f"></i>
-                        Login With Facebook
-                      </a>
-                    </div>
-                    <!-- End .col-6 -->
-                  </div>
-                  <!-- End .row -->
+                  <% if (message) { %>
+                    <p style="color: red;">
+                      <%= message %>
+                    </p>
+                    <% } %>
+
+                      <p class="text-center">or sign in with</p>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <a href="#" class="btn btn-login btn-g">
+                            <i class="icon-google"></i>
+                            Login With Google
+                          </a>
+                        </div>
+                        <!-- End .col-6 -->
+                        <div class="col-sm-6">
+                          <a href="#" class="btn btn-login btn-f">
+                            <i class="icon-facebook-f"></i>
+                            Login With Facebook
+                          </a>
+                        </div>
+                        <!-- End .col-6 -->
+                      </div>
+                      <!-- End .row -->
                 </div>
                 <!-- End .form-choice -->
               </div>
@@ -174,29 +180,35 @@
 
   <!-- include validate.js // jquery plugin   -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
   <script>
+
+    $.validator.addMethod("noWhitespace", function (value, element) {
+      return value.trim() !== ""; // Check if the trimmed value is not empty
+    }, "Please enter a valid value.");
+
 
 
     $("#formData").validate({
       rules: {
         username: {
           required: true,
-          minlength: 4,
-          maxlength: 12,
+          noWhitespace: true, // Apply custom validation rule
+          pattern: /^[a-zA-Z]+$/,
+          minlength: 2,
+          maxlength: 20,
         },
         email: {
           required: true,
           email: true,
+          required: true,
+
         },
         phonenumber: {
           required: true,
+          digits: true,
           minlength: 10,
           maxlength: 10,
         },
@@ -204,6 +216,9 @@
           required: true,
           minlength: 6,
           maxlength: 100,
+          noWhitespace: true, // Apply custom validation rule
+          pattern: /^[a-zA-Z]+$/,
+
         },
       },
 

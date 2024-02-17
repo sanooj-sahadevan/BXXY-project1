@@ -100,7 +100,7 @@
                 <div class="container">
                     <div class="checkout-discount"></div>
                     <!-- End .checkout-discount -->
-                    <form action="/manageAddress" method="POST"   id="addAdrress" >
+                    <form action="/manageAddress" method="POST" id="addAdrress">
                         <div class="row">
                             <div class="col-lg-9">
                                 <h2 class="checkout-title">Add Adreess</h2>
@@ -109,7 +109,7 @@
                                     <div class="col-sm-6">
                                         <label>First Name *</label>
                                         <input type="text" class="form-control" required id="InputName"
-                                            placeholder="First Name" name="firstName" />
+                                            pattern="[a-zA-Z0-9]+" placeholder="First Name" name="firstName" />
                                     </div>
                                     <!-- End .col-sm-6 -->
 
@@ -158,8 +158,8 @@
                                 </div>
                                 <!-- End .col-sm-6 -->
 
-                                
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                             <!-- End .col-lg-9 -->
                         </div>
@@ -185,11 +185,12 @@
             </div>
         </div>
     </div>
-</aside> -->    <div class="col-lg-12 clearfix mt-4">
-    <ul class="pager">
-        <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
-    </ul>
-</div>
+</aside> -->
+                    <div class="col-lg-12 clearfix mt-4">
+                        <ul class="pager">
+                            <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- End .container -->
             </div>
@@ -200,47 +201,109 @@
     <!-- End .main -->
 
 
-
+    <!-- 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-    integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script>
-
-
-    $("#addAdrress").validate({
-      rules: {
-        firstName: {
-          required: true,
-          minlength: 4,
-          maxlength: 12,
-        },
-        lastName: {
-            required: true,
-            minlength: 4,
-            maxlength: 12,
-        },
-        phone: {
-          required: true,
-          minlength: 10,
-          maxlength: 10,
-        },
-        postcode: {
-          required: true,
-          minlength: 5,
-          maxlength: 6,
-        },
-      },
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 
-    });
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
+    <script>
 
 
-  </script>.
+        $.validator.addMethod("noWhitespace", function (value, element) {
+            return value.trim() !== ""; // Check if the trimmed value is not empty
+        }, "Please enter a valid value.");
 
-    
+        $("#addAdrress").validate({
+            rules: {
+                firstName: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z]+$/,
+                    minlength: 2,
+                    maxlength: 20,
+                },
+                lastName: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z0]+$/,
+                    minlength: 2,
+                    maxlength: 20,
+                },
+                addressLine1: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z0]+$/,
+                },
+                addressLine2: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z0]+$/,
+                },
+                addressTitle: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z0]+$/,
+                    minlength: 2,
+                    maxlength: 50,
+                },
+                phone: {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10,
+                },
+                postcode: {
+                    required: true,
+                    digits: true,
+                    minlength: 5,
+                    maxlength: 6,
+                },
+            },
+            messages: {
+                firstName: {
+                    required: "Please enter your first name",
+                    noWhitespace: "First name cannot be empty or contain only spaces",
+                    pattern: "First name can only contain letters",
+                    minlength: "First name must be at least 2 characters long",
+                    maxlength: "First name must not exceed 20 characters",
+                },
+                lastName: {
+                    required: "Please enter your last name",
+                    noWhitespace: "Last name cannot be empty or contain only spaces",
+                    pattern: "Last name can only contain letters and numbers",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name must not exceed 20 characters",
+                },
+                addressTitle: {
+                    minlength: "Address title must be at least 2 characters long",
+                    maxlength: "Address title cannot exceed 50 characters",
+                },
+                phone: {
+                    required: "Please enter your phone number",
+                    digits: "Please enter only digits",
+                    minlength: "Phone number must be 10 digits long",
+                    maxlength: "Phone number must be 10 digits long",
+                },
+                postcode: {
+                    required: "Please enter your postcode",
+                    digits: "Please enter only digits",
+                    minlength: "Postcode must be 5 to 6 digits long",
+                    maxlength: "Postcode must be 5 to 6 digits long",
+                },
+            },
+        });
+
+    </script>.
+
+
 
     <%- include('../partials/footer') %>
