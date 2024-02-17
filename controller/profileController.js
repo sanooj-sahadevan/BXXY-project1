@@ -3,6 +3,7 @@ let addressCollection = require("../models/profileModel.js");
 const orderCollection = require("../models/orderModel.js");
 const walletCollection = require("../models/walletModel.js");
 const cartCollection = require("../models/cartModel.js");
+const formatDate = require('../service/formerDataHelper.js')
 const { generatevoice } = require("../service/genertePDF.js");
 
 const profilePage = async (req, res) => {
@@ -108,9 +109,25 @@ const cancelOrder = async (req, res) => {
         { $inc: { wallet: orderData.grandTotalCost } }
       )
     );
-    res.json({ success: true });
+
+    let walletTransaction = {
+      transactionDate: new Date(),
+      transactionAmount: orderData.grandTotalCost,
+      transactionType: "Refund from cancelled Order",
+    };
+
+    await walletCollection.findOneAndUpdate(
+      { userId: req.session.currentUser._id },
+      {
+        $inc: { walletBalance: orderData.grandTotalCost },
+        $push: { walletTransaction },
+      }
+    );
+
+    res.json({ success: true }); // Moved this line here
   } catch (error) {
     console.error(error);
+    res.status(500).json({ success: false, error: error.message }); // You might want to handle errors properly
   }
 };
 
@@ -156,6 +173,10 @@ const addAddressPost = async (req, res) => {
       phone: req.body.phone,
     };
     console.log("7777");
+    let walletData = await walletCollection.findOne({
+      userId: req.session.currentUser._id,
+    });
+
     await addressCollection.insertMany([address]);
     // res.redirect("/profile/:id");
     let addressData = await addressCollection.find({
@@ -168,7 +189,7 @@ const addAddressPost = async (req, res) => {
       addressData,
       currentUser: req.session.currentUser,
       user: req.session.user,
-      orderData,
+      orderData,walletData
     });
   } catch (error) {
     console.error(error);

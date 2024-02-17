@@ -127,57 +127,63 @@ const userLogout = async (req, res) => {
 
 //signup
 const checkUser = async (req, res) => {
+  console.log("2");
   try {
-    const existingUser = await userCollection.findOne({ email: req.body.email });
-    console.log("existing User" + existingUser);
-    if (existingUser) {
-      return res.render("userViews/signupLoginPage", {
-        notice: "Already registered",
+    const checking = await userCollection.findOne({ email: req.body.email });
+    console.log(checking);
+
+    if (checking) {
+      console.log(checking);
+      return res.render("userViews/signupLoginPage", { notice: "Already registered" }); // Return the response to prevent further execution
+    } else {
+      console.log("3");
+      const data = new collection({
+        username: req.body.username,
+        email: req.body.email,
+        phonenumber: req.body.phonenumber,
+        password: req.body.password,
+        admin: 0,
       });
-    }else{
-    const newUser = new collection({
-      username: req.body.username,
-      email: req.body.email,
-      phonenumber: req.body.phonenumber,
-      password: req.body.password,
-      admin: 0,
-    });
-      
+      // await data.save(); // Save the data
 
-    // await newUser.save();
-    // req.session.user = await userModels.findOne({ email: req.body.email });
-
-    
-
-    console.log("req.session.user" + req.session.user);
-    const otp = generateOTP();
-    req.session.otp = otp
-    res.redirect("/otpPage");
-  }
+      req.session.userEmail = req.body.email;
+req.session.user  = data
+      return res.redirect("/otpPage"); // Redirect to OTP page
+    }
   } catch (error) {
     console.error(error);
+    return res.redirect('/loginpage'); // Redirect to login page on error
   }
 };
-
-
 
 
 //otp page
 const otpPage = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    let cartData; 
 
-    const userEmail = req.session.user.email;
-    const otp = req.session.otp;
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
+
+    console.log('1');
+    const userEmail = req.session.userEmail; 
+    console.log('1');
+
+    const otp = generateOTP(); 
     console.log("Generated OTP:", otp);
-
     const emailSent = await sendOTP(userEmail, otp);
     console.log(req.session.user);
+
     if (emailSent) {
-      req.session.otp = otp;  // Store the generated OTP in the session
+      req.session.otp = otp;  
+
       res.render("userViews/otp", {
-        otp,  // Pass OTP to the template
-        user: req.session.user,cartData
+        otp,  
+        user: req.session.user,
+        cartData
       });
     } else {
       throw new Error("Error sending OTP");
@@ -188,27 +194,29 @@ const otpPage = async (req, res) => {
   }
 };
 
-
-
-
-
+// Resend OTP
 const resendOtpPage = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    let cartData; 
 
-    const userEmail = req.session.user.email;
-    const otp = req.session.otp;
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
 
-    const resendOtp = generateOTP();
+    const userEmail = req.session.userEmail; // Changed from req.session.user.email
+    const otp = generateOTP(); // Generate new OTP for resend
     console.log("Generated OTP:", otp);
 
     const emailSent = await sendOTP(userEmail, otp);
     console.log(req.session.user);
     if (emailSent) {
-      req.session.otp = resendOtp;  // Store the generated OTP in the session
+      req.session.otp = otp; // Update OTP in session
       res.render("userViews/otp", {
-        otp,  // Pass OTP to the template
+        otp,
         user: req.session.user,cartData
+        
       });
     } else {
       throw new Error("Error sending OTP");
@@ -219,33 +227,44 @@ const resendOtpPage = async (req, res) => {
   }
 };
 
-
-
-
-// submit the otp
+// Submit the OTP
 const successOTP = async (req, res) => {
-  const successfulMessage = "Registration successful";
-  const userProvidedOTP = req.body.otp;
-  const generatedOTP = req.session.otp;  // Retrieve the stored OTP from the session
+  try {
+    let cartData; 
 
-  console.log(userProvidedOTP);
-  console.log(generatedOTP);
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
+    const userProvidedOTP = req.body.otp;
+    const generatedOTP = req.session.otp;
 
-  if (userProvidedOTP == generatedOTP) {
-    const newUser = req.session.user
-    console.log(newUser);
+    console.log('User Provided OTP:', userProvidedOTP);
+    console.log('Generated OTP:', generatedOTP);
 
-    const userInstance = new userCollection(newUser);
-    await userInstance.save();     // Save the user instance
-    req.session.user = newUser
-    await walletCollection.create({ userId : req.session.user._id })
+    if (userProvidedOTP == generatedOTP) {
+      const newUser = req.session.user;
+      console.log('New User:', newUser);
+      await walletCollection.create({ userId : req.session.user._id })
 
-    res.render("userViews/signupLoginPage", {
-      user: req.session.user, currentUser:req.session.currentUser,
-      // message: successfulMessage,
-    });
-  } else {
-    res.redirect('/otpPage')
+      // Save the new user data to the database
+      await userCollection.create(newUser);
+
+      // Create a new wallet entry for the user
+      await walletCollection.create({ userId: newUser._id });
+
+      res.render("userViews/signupLoginPage", {
+        user: newUser,
+        currentUser: req.session.currentUser,cartData
+      });
+    } else {
+      // Redirect to the OTP page if OTP verification fails
+      res.redirect('/otpPage');
+    }
+  } catch (error) {
+    console.error(error);
+    res.send("Error processing OTP");
   }
 };
 
@@ -254,9 +273,16 @@ const successOTP = async (req, res) => {
 
 const forgotPasswordPage = async (req, res) => {
   try {
+    let cartData; 
+
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
     res.render("userViews/forgottenPassword", {
       forgotUserEmailDoesntExist: req.session.forgotUserEmailDoesntExist,
-      user: req.session.user,
+      user: req.session.user,cartData
     });
     req.session.forgotUserEmailDoesntExist = null;
   } catch (error) {
@@ -266,6 +292,9 @@ const forgotPasswordPage = async (req, res) => {
 
 const forgotUserDetailsInModel = async (req, res, next) => {
   try {
+
+  
+
     console.log(req.body);
     const forgotUserData = await collection.findOne({
       email: req.body.email,
@@ -283,6 +312,12 @@ const forgotUserDetailsInModel = async (req, res, next) => {
 
 const sendForgotOTP = async (req, res) => {
   try {
+    
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
     const otp = Math.trunc(Math.random() * 10000);
     req.session.otp = otp;
     req.session.otpTime = new Date();
@@ -295,7 +330,7 @@ const sendForgotOTP = async (req, res) => {
     });
     res.render("userViews/forgottenPassword2", {
       currentOTP: req.session.otp,
-      user: req.session.user,
+      user: req.session.user,cartData
     });
   } catch (error) {
     console.error(error);
@@ -304,7 +339,13 @@ const sendForgotOTP = async (req, res) => {
 
 const forgotPasswordPage3 = async (req, res) => {
   try {
-    res.render("userViews/forgottenpasword3.ejs", { user: req.session.user });
+    
+    if (req.session.user) {
+      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    } else {
+      cartData = []; 
+    }
+    res.render("userViews/forgottenpasword3", { user: req.session.user,cartData });
   } catch (error) {
     console.error(error);
   }
@@ -312,7 +353,6 @@ const forgotPasswordPage3 = async (req, res) => {
 
 const forgotPasswordReset = async (req, res) => {
   try {
-    // let encryptedPassword = bcrypt.hashSync(req.body.newPassword, 10);
     await collection.findOneAndUpdate(
       { _id: req.session.forgotUserData._id },
       { $set: { password: req.body.password } }
@@ -376,8 +416,12 @@ const productspage = async (req, res) => {
       .find({ isListed: true }).skip(skip)
       .limit(limit)
 
-      const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
 
+      if (req.session.user) {
+        cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+      } else {
+        cartData = []; 
+      }
     let categoryData = await categoryCollection.find({ isListed: true });
     // let productData = await productCollection
     //   .find({ isListed: true })

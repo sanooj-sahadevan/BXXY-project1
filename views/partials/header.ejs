@@ -138,35 +138,11 @@
                     <div class="header-right">
 
 
-
-
-
-
-
-                        <!-- //------------------------------------------------------------------------------------------------------------------------------            -->
-
-                        <div class="header-search">
-                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                            <form action="/search" method="Post">
-                                <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
-                                        required>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
-
-
-
-
-
-
-
-
-
-
                         <div class="dropdown cart-dropdown">
-                            <% if (cartData.length>0 && user) { %>
+                       
+
+			
+                            <% if ( cartData.length>0 && user) { %>
 
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -176,7 +152,8 @@
 
 
                                 <% } %>
-
+                              
+                               
 
 
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -231,6 +208,33 @@
                                         </div><!-- End .dropdown-cart-total -->
                                     </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
+
+
+
+
+                        <!-- //------------------------------------------------------------------------------------------------------------------------------            -->
+
+                        <div class="header-search">
+                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="/search" method="Post">
+                                <div class="header-search-wrapper">
+                                    <label for="q" class="sr-only">Search</label>
+                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                                        required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+
+
+
+
+
+
+
+
+
+
+                    
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
