@@ -251,10 +251,10 @@ const successOTP = async (req, res) => {
 
       // Create a new wallet entry for the user
       await walletCollection.create({ userId: newUser._id });
-
+      var message = req.query.message;
       res.render("userViews/signupLoginPage", {
         user: newUser,
-        currentUser: req.session.currentUser,cartData
+        currentUser: req.session.currentUser,cartData, message: message
       });
     } else {
       // Redirect to the OTP page if OTP verification fails
@@ -278,9 +278,10 @@ const forgotPasswordPage = async (req, res) => {
     } else {
       cartData = []; 
     }
+    var message = req.query.message;
     res.render("userViews/forgottenPassword", {
       forgotUserEmailDoesntExist: req.session.forgotUserEmailDoesntExist,
-      user: req.session.user,cartData
+      user: req.session.user,cartData,message: message
     });
     req.session.forgotUserEmailDoesntExist = null;
   } catch (error) {
