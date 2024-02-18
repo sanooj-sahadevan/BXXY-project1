@@ -145,7 +145,7 @@ const checkUser = async (req, res) => {
       // await data.save(); // Save the data
 
       req.session.userEmail = req.body.email;
-req.session.user  = data
+      req.session.data = data;
       return res.redirect("/otpPage"); // Redirect to OTP page
     }
   } catch (error) {
@@ -154,67 +154,33 @@ req.session.user  = data
   }
 };
 
-
-//otp page
 const otpPage = async (req, res) => {
   try {
-    let cartData; 
+    let cartData;
 
-    if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+    if (req.session.data) {
+      cartData = await cartCollection.find({ userId: req.session.data._id }).populate('productId');
     } else {
-      cartData = []; 
+      cartData = [];
     }
 
     console.log('1');
-    const userEmail = req.session.userEmail; 
+    const userEmail = req.session.userEmail;
     console.log('1');
 
-    const otp = generateOTP(); 
+    const otp = generateOTP();
     console.log("Generated OTP:", otp);
     const emailSent = await sendOTP(userEmail, otp);
     console.log(req.session.user);
 
     if (emailSent) {
-      req.session.otp = otp;  
+      req.session.otp = otp;
 
-      res.render("userViews/otp", {
-        otp,  
-        user: req.session.user,
-        cartData
-      });
-    } else {
-      throw new Error("Error sending OTP");
-    }
-  } catch (error) {
-    console.error(error);
-    res.send("Error sending OTP");
-  }
-};
-
-// Resend OTP
-const resendOtpPage = async (req, res) => {
-  try {
-    let cartData; 
-
-    if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
-    } else {
-      cartData = []; 
-    }
-
-    const userEmail = req.session.userEmail; // Changed from req.session.user.email
-    const otp = generateOTP(); // Generate new OTP for resend
-    console.log("Generated OTP:", otp);
-
-    const emailSent = await sendOTP(userEmail, otp);
-    console.log(req.session.user);
-    if (emailSent) {
-      req.session.otp = otp; // Update OTP in session
       res.render("userViews/otp", {
         otp,
-        user: req.session.user,cartData
-        
+        data: req.session.data,
+        cartData,
+        user: req.session.user
       });
     } else {
       throw new Error("Error sending OTP");
@@ -225,26 +191,61 @@ const resendOtpPage = async (req, res) => {
   }
 };
 
-// Submit the OTP
+const resendOtpPage = async (req, res) => {
+  try {
+    let cartData;
+
+    if (req.session.data) {
+      cartData = await cartCollection.find({ userId: req.session.data._id }).populate('productId');
+    } else {
+      cartData = [];
+    }
+
+    const userEmail = req.session.userEmail;
+    const otp = generateOTP();
+    console.log("Generated OTP:", otp);
+
+    const emailSent = await sendOTP(userEmail, otp);
+    console.log(req.session.data);
+    if (emailSent) {
+      req.session.otp = otp;
+      res.render("userViews/otp", {
+        otp,
+        data: req.session.data,
+        cartData,
+        user: req.session.user
+      });
+    } else {
+      throw new Error("Error sending OTP");
+    }
+  } catch (error) {
+    console.error(error);
+    res.send("Error sending OTP");
+  }
+};
+
 const successOTP = async (req, res) => {
   try {
-    let cartData; 
-
+    let cartData;
+    console.log('1');
     if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+      cartData = await cartCollection.find({ userId: req.session.user._id }).populate('productId');
     } else {
-      cartData = []; 
+      cartData = [];
     }
+    console.log('2');
+
     const userProvidedOTP = req.body.otp;
     const generatedOTP = req.session.otp;
+    console.log('3');
 
     console.log('User Provided OTP:', userProvidedOTP);
     console.log('Generated OTP:', generatedOTP);
+    console.log('4');
 
     if (userProvidedOTP == generatedOTP) {
-      const newUser = req.session.user;
+      const newUser = req.session.data;
       console.log('New User:', newUser);
-      await walletCollection.create({ userId : req.session.user._id })
 
       // Save the new user data to the database
       await userCollection.create(newUser);
@@ -252,9 +253,13 @@ const successOTP = async (req, res) => {
       // Create a new wallet entry for the user
       await walletCollection.create({ userId: newUser._id });
       var message = req.query.message;
+
       res.render("userViews/signupLoginPage", {
         user: newUser,
-        currentUser: req.session.currentUser,cartData, message: message
+        currentUser: req.session.currentUser,
+        cartData,
+        user: req.session.user,
+        data: req.session.data,message: message
       });
     } else {
       // Redirect to the OTP page if OTP verification fails
@@ -265,6 +270,8 @@ const successOTP = async (req, res) => {
     res.send("Error processing OTP");
   }
 };
+
+
 
 
 

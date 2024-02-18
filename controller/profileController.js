@@ -161,6 +161,8 @@ const addAddress = async (req, res) => {
 
 const addAddressPost = async (req, res) => {
   try {
+    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+
     console.log(req.session.currentUser);
     const address = {
       userId: req.session.currentUser._id,
@@ -177,6 +179,7 @@ const addAddressPost = async (req, res) => {
       userId: req.session.currentUser._id,
     });
 
+
     await addressCollection.insertMany([address]);
     // res.redirect("/profile/:id");
     let addressData = await addressCollection.find({
@@ -189,7 +192,7 @@ const addAddressPost = async (req, res) => {
       addressData,
       currentUser: req.session.currentUser,
       user: req.session.user,
-      orderData,walletData
+      orderData,walletData,cartData
     });
   } catch (error) {
     console.error(error);
