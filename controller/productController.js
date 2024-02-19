@@ -187,7 +187,9 @@ const filterPriceRange = async (req, res) => {
 const sortPriceAscending = async (req, res) => {
   try {
 
-    req.session.shopProductData = await productCollection
+    req.session.shopProductData = 
+      req.session?.shopProductData?.sort( (a,b)=>a.productPrice-b.productPrice  ) ||
+    await productCollection
       .find({ isListed: true })
       .sort({ productPrice: 1 });
     res.json({ success: true });
@@ -198,7 +200,8 @@ const sortPriceAscending = async (req, res) => {
 const sortPriceDescending = async (req, res) => {
   try {
     
-    req.session.shopProductData = await productCollection
+    req.session.shopProductData = 
+    req.session?.shopProductData?.sort( (a,b)=>b.productPrice-a.productPrice  ) || await productCollection
       .find({ isListed: true })
       .sort({ productPrice: -1 });
     res.json({ success: true });

@@ -4,20 +4,14 @@ const transporter = require("../service/otp.js");
 const productCollection = require("../models/productModel.js");
 const categoryCollection = require("../models/category.js");
 const cartCollection = require("../models/cartModel.js");
-const userCollection = require('../models/userModels.js');
-const walletCollection =  require('../models/walletModel.js')
-
-
-
-
-
+const userCollection = require("../models/userModels.js");
+const walletCollection = require("../models/walletModel.js");
 
 // generate OTP
 
 const generateOTP = () => {
   return Math.trunc(Math.random() * 10000);
 };
-
 
 // send OTP
 const sendOTP = async (email, otp) => {
@@ -35,39 +29,33 @@ const sendOTP = async (email, otp) => {
   }
 };
 
-
-
-
-
-
 // first landing page
 const userPage = async (req, res) => {
   console.log();
-if(req.session.admin){
-  res.redirect("/adminHome");
-}else{
-  const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+  if (req.session.admin) {
+    res.redirect("/adminHome");
+  } else {
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
-    res.render("userViews/landingpage", { user: req.session?.user,cartData });
-}
-}
+    res.render("userViews/landingpage", { user: req.session?.user, cartData });
+  }
+};
 
-
-const   userLogin = async (req, res) => {
+const userLogin = async (req, res) => {
   console.log("1");
-  const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+  const cartData = await cartCollection
+    .find({ userId: req.session?.currentUser?._id })
+    .populate("productId");
   var message = req.query.message;
 
   res.render("userViews/signupLoginPage", {
-   
-    user: req.session.user,cartData,message: message
+    user: req.session.user,
+    cartData,
+    message: message,
   });
 };
-
-
-
-
-
 
 // login
 const verifyLogin = async (req, res) => {
@@ -75,14 +63,15 @@ const verifyLogin = async (req, res) => {
     console.log("loginakkum");
 
     const checking = await userCollection.findOne({ email: req.body.email });
-    const cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     if (checking) {
       if (checking.block === false) {
-
         if (checking.password === req.body.password) {
           if (checking.admin === 1) {
-            req.session.admin = true
+            req.session.admin = true;
             res.redirect("/adminHome");
           } else {
             req.session.user = checking;
@@ -91,21 +80,21 @@ const verifyLogin = async (req, res) => {
               user: req.session.user,
               currentUser: req.session.currentUser,
               cartData,
-              message: null // No message to display
+              message: null, // No message to display
             });
           }
           console.log("login Successful");
           console.log(req.session.currentUser);
         } else {
-          res.redirect('/loginpage?message=Password%20Incorrect');
+          res.redirect("/loginpage?message=Password%20Incorrect");
           console.log("wrong password");
         }
       } else {
-        res.redirect('/loginpage?message=Account%20Blocked');
+        res.redirect("/loginpage?message=Account%20Blocked");
         console.log("Account Blocked");
       }
     } else {
-      res.redirect('/loginpage?message=Username%20Incorrect');
+      res.redirect("/loginpage?message=Username%20Incorrect");
       console.log("Username Incorrect");
     }
   } catch (error) {
@@ -113,15 +102,10 @@ const verifyLogin = async (req, res) => {
   }
 };
 
-
 //logout
 const userLogout = async (req, res) => {
-  
   res.redirect("/");
-
 };
-
-
 
 //signup
 const checkUser = async (req, res) => {
@@ -132,7 +116,9 @@ const checkUser = async (req, res) => {
 
     if (checking) {
       console.log(checking);
-      return res.render("userViews/signupLoginPage", { notice: "Already registered" }); // Return the response to prevent further execution
+      return res.render("userViews/signupLoginPage", {
+        notice: "Already registered",
+      }); // Return the response to prevent further execution
     } else {
       console.log("3");
       const data = new collection({
@@ -150,7 +136,7 @@ const checkUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.redirect('/loginpage'); // Redirect to login page on error
+    return res.redirect("/loginpage"); // Redirect to login page on error
   }
 };
 
@@ -159,14 +145,16 @@ const otpPage = async (req, res) => {
     let cartData;
 
     if (req.session.data) {
-      cartData = await cartCollection.find({ userId: req.session.data._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session.data._id })
+        .populate("productId");
     } else {
       cartData = [];
     }
 
-    console.log('1');
+    console.log("1");
     const userEmail = req.session.userEmail;
-    console.log('1');
+    console.log("1");
 
     const otp = generateOTP();
     console.log("Generated OTP:", otp);
@@ -180,7 +168,7 @@ const otpPage = async (req, res) => {
         otp,
         data: req.session.data,
         cartData,
-        user: req.session.user
+        user: req.session.user,
       });
     } else {
       throw new Error("Error sending OTP");
@@ -196,7 +184,9 @@ const resendOtpPage = async (req, res) => {
     let cartData;
 
     if (req.session.data) {
-      cartData = await cartCollection.find({ userId: req.session.data._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session.data._id })
+        .populate("productId");
     } else {
       cartData = [];
     }
@@ -213,7 +203,7 @@ const resendOtpPage = async (req, res) => {
         otp,
         data: req.session.data,
         cartData,
-        user: req.session.user
+        user: req.session.user,
       });
     } else {
       throw new Error("Error sending OTP");
@@ -227,25 +217,27 @@ const resendOtpPage = async (req, res) => {
 const successOTP = async (req, res) => {
   try {
     let cartData;
-    console.log('1');
+    console.log("1");
     if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session.user._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session.user._id })
+        .populate("productId");
     } else {
       cartData = [];
     }
-    console.log('2');
+    console.log("2");
 
     const userProvidedOTP = req.body.otp;
     const generatedOTP = req.session.otp;
-    console.log('3');
+    console.log("3");
 
-    console.log('User Provided OTP:', userProvidedOTP);
-    console.log('Generated OTP:', generatedOTP);
-    console.log('4');
+    console.log("User Provided OTP:", userProvidedOTP);
+    console.log("Generated OTP:", generatedOTP);
+    console.log("4");
 
     if (userProvidedOTP == generatedOTP) {
       const newUser = req.session.data;
-      console.log('New User:', newUser);
+      console.log("New User:", newUser);
 
       // Save the new user data to the database
       await userCollection.create(newUser);
@@ -259,11 +251,12 @@ const successOTP = async (req, res) => {
         currentUser: req.session.currentUser,
         cartData,
         user: req.session.user,
-        data: req.session.data,message: message
+        data: req.session.data,
+        message: message,
       });
     } else {
       // Redirect to the OTP page if OTP verification fails
-      res.redirect('/otpPage');
+      res.redirect("/otpPage");
     }
   } catch (error) {
     console.error(error);
@@ -271,24 +264,23 @@ const successOTP = async (req, res) => {
   }
 };
 
-
-
-
-
-
 const forgotPasswordPage = async (req, res) => {
   try {
-    let cartData; 
+    let cartData;
 
     if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session?.currentUser?._id })
+        .populate("productId");
     } else {
-      cartData = []; 
+      cartData = [];
     }
     var message = req.query.message;
     res.render("userViews/forgottenPassword", {
       forgotUserEmailDoesntExist: req.session.forgotUserEmailDoesntExist,
-      user: req.session.user,cartData,message: message
+      user: req.session.user,
+      cartData,
+      message: message,
     });
     req.session.forgotUserEmailDoesntExist = null;
   } catch (error) {
@@ -298,9 +290,6 @@ const forgotPasswordPage = async (req, res) => {
 
 const forgotUserDetailsInModel = async (req, res, next) => {
   try {
-
-  
-
     console.log(req.body);
     const forgotUserData = await collection.findOne({
       email: req.body.email,
@@ -318,11 +307,12 @@ const forgotUserDetailsInModel = async (req, res, next) => {
 
 const sendForgotOTP = async (req, res) => {
   try {
-    
     if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session?.currentUser?._id })
+        .populate("productId");
     } else {
-      cartData = []; 
+      cartData = [];
     }
     const otp = Math.trunc(Math.random() * 10000);
     req.session.otp = otp;
@@ -336,7 +326,8 @@ const sendForgotOTP = async (req, res) => {
     });
     res.render("userViews/forgottenPassword2", {
       currentOTP: req.session.otp,
-      user: req.session.user,cartData
+      user: req.session.user,
+      cartData,
     });
   } catch (error) {
     console.error(error);
@@ -345,13 +336,17 @@ const sendForgotOTP = async (req, res) => {
 
 const forgotPasswordPage3 = async (req, res) => {
   try {
-    
     if (req.session.user) {
-      cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
+      cartData = await cartCollection
+        .find({ userId: req.session?.currentUser?._id })
+        .populate("productId");
     } else {
-      cartData = []; 
+      cartData = [];
     }
-    res.render("userViews/forgottenpasword3", { user: req.session.user,cartData });
+    res.render("userViews/forgottenpasword3", {
+      user: req.session.user,
+      cartData,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -371,77 +366,81 @@ const forgotPasswordReset = async (req, res) => {
   }
 };
 
-
-
-
-
 const productDetils = async (req, res) => {
   try {
-    console.log('comes');
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
-    console.log('comes2');
+    console.log("comes");
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
+    console.log("comes2");
 
     const currentProduct = await productCollection.findOne({
       _id: req.params.id,
     });
-    console.log('comes3');
-    var cartProductQuantity=0
-    if(req.session?.user?._id){
-      const cartProduct = await cartCollection.findOne({ userId: req.session.user._id})
-      if(cartProduct){
-        var cartProductQuantity= cartProduct.productQuantity
+    console.log("comes3");
+    var cartProductQuantity = 0;
+    if (req.session?.user?._id) {
+      const cartProduct = await cartCollection.findOne({
+        userId: req.session.user._id,
+      });
+      if (cartProduct) {
+        var cartProductQuantity = cartProduct.productQuantity;
       }
-    }     
-    console.log('comes4');
-
-    let productQtyLimit= [],i=0
-    while(i<(currentProduct.productStock - cartProductQuantity )){
-      productQtyLimit.push(i+1)
-      i++
     }
-    console.log('comes5');
+    console.log("comes4");
 
-  res.render("userViews/productDetils",{
+    let productQtyLimit = [],
+      i = 0;
+    while (i < currentProduct.productStock - cartProductQuantity) {
+      productQtyLimit.push(i + 1);
+      i++;
+    }
+    console.log("comes5");
+
+    res.render("userViews/productDetils", {
       user: req.session.user,
-      cartData,currentProduct
+      cartData,
+      currentProduct,
     });
-    console.log('comes6');
+    console.log("comes6");
 
     console.log(currentProduct);
-  } catch (error) { }
+  } catch (error) {}
 };
-
-
 
 const productspage = async (req, res) => {
   try {
     let page = Number(req.query.page) || 1;
     let limit = 8;
     let skip = (page - 1) * limit;
-    let productData = req.session?.shopProductData || await productCollection
-      .find({ isListed: true }).skip(skip)
-      .limit(limit)
+    let productData =
+      req.session?.shopProductData?.slice(skip, limit*page )
+       ||
+      (await productCollection
+        .find({ isListed: true })
+        .skip(skip)
+        .limit(limit));
 
-
-      if (req.session.user) {
-        cartData = await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId');
-      } else {
-        cartData = []; 
-      }
+    if (req.session.user) {
+      cartData = await cartCollection
+        .find({ userId: req.session?.currentUser?._id })
+        .populate("productId");
+    } else {
+      cartData = [];
+    }
     let categoryData = await categoryCollection.find({ isListed: true });
     // let productData = await productCollection
     //   .find({ isListed: true })
     //   .skip(skip)
     //   .limit(limit)
 
-
     let count;
     if (req.session && req.session.shopProductData) {
-        count = req.session.shopProductData.length;
+      count = req.session.shopProductData.length;
     } else {
-        count = await productCollection.countDocuments({ isListed: true });
+      count = await productCollection.countDocuments({ isListed: true });
     }
-    
+
     let totalPages = Math.ceil(count / limit);
     let totalPagesArray = new Array(totalPages).fill(null);
     res.render("userViews/productlist", {
@@ -454,7 +453,8 @@ const productspage = async (req, res) => {
       totalPagesArray,
       currentPage: page,
       selectedFilter: req.session.selectedFilter,
-      selectedFilter: req.session.selectedFilter,cartData
+      selectedFilter: req.session.selectedFilter,
+      cartData,
     });
 
     console.log(req.session.currentUser);
@@ -464,33 +464,26 @@ const productspage = async (req, res) => {
   }
 };
 
-
-
 const search = async (req, res) => {
   try {
-    console.log('1');
-    const { q: searchQuery } = req.body; // Adjust according to the name attribute of your form input
-    const searchProduct = await productCollection.find({
-      $or: [
-        { productName: { $regex: searchQuery, $options: "i" } },
-        { parentCategory: { $regex: searchQuery, $options: "i" } },
-      ],    
-
-    }) 
-     
-  console.log('1');
-console.log(searchProduct);
-    req.session.searchProduct = searchProduct;
+    const { search } = req.body;
+    console.log("search : ", search);
+    const products = await productCollection
+      .find({
+        $or: [{ productName: { $regex: search, $options: "i" } }],
+      })
+      .populate("parentCategory");
+    console.log(products);
+    req.session.shopProductData = products;
     res.redirect("/productList");
   } catch (error) {
     console.log(error);
   }
 };
 
-
 const filterCategory = async (req, res) => {
   try {
-    console.log('filter');
+    console.log("filter");
     req.session.shopProductData = await productCollection.find({
       isListed: true,
       parentCategory: req.params.categoryName,
@@ -501,25 +494,16 @@ const filterCategory = async (req, res) => {
   } catch (error) {
     console.error(error);
   }
-}
-
-
+};
 
 const clearFilters = async (req, res) => {
   try {
-      req.session.shopProductData = null;
-      res.redirect("/productlist");
+    req.session.shopProductData = null;
+    res.redirect("/productlist");
   } catch (error) {
-      console.error(error);
+    console.error(error);
   }
-}
-
-
-
-
-
-
-
+};
 
 module.exports = {
   userPage,
@@ -535,5 +519,9 @@ module.exports = {
   sendForgotOTP,
   forgotPasswordPage3,
   forgotPasswordReset,
-  productDetils,resendOtpPage,search,filterCategory,clearFilters
+  productDetils,
+  resendOtpPage,
+  search,
+  filterCategory,
+  clearFilters,
 };
