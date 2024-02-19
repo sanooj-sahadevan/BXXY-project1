@@ -9,7 +9,7 @@ blockuser = async (req, res, next) => {
     let currentUser = await userCollection.findOne({
       _id: req.session?.currentUser?._id,
     });
-    if ( currentUser?.isBlocked) {
+    if ( currentUser?.block) {
       req.session.destroy();
       res.redirect(req.originalUrl)
     } else {

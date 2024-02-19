@@ -11,7 +11,7 @@ const editProduct = async (req, res) => {
       const updateFields = {
         $set: {
           productName: req.body.productName,
-          parentCategory: req.body.parentCategory,
+          parentCategory: req.body.category,
           productPrice: req.body.productPrice,
           productStock: req.body.productStock,
         },
