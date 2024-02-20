@@ -3,6 +3,12 @@ const productCollection = require("../models/productModel.js");
 
 const editCategoriesPage = async (req, res) => {
   console.log(req.body);
+
+  let categoryName = req.body.categoriesName;
+  let categoryExists = await categoryCollection.findOne({
+    categoryName: { $regex: new RegExp(`^${categoryName}$`, "i") },
+  });
+if(!categoryExists){
   await categoryCollection.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -14,7 +20,11 @@ const editCategoriesPage = async (req, res) => {
   );
   // console.log();
   res.redirect("/categories");
-};
+}else{
+  console.log('already done');
+  res.redirect('/categories')
+}
+}
 
 const addCategoriesPage = async (req, res) => {
   res.render("adminViews/addCategory.ejs");

@@ -12,8 +12,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
             <div class="container d-flex align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Products</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/productList">Products</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Default</li>
                 </ol>
 
@@ -30,7 +30,6 @@
                 </nav> -->
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
-
 
 
 
@@ -59,7 +58,7 @@
                                         <figure class="product-main-image">
                                             <img id="disp-img" src="/upload/<%= currentProduct.productImage1 %>"
                                                 data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
-                                                alt="product image">
+                                                class="zoom-img" alt="product image">
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
                                             </a>
@@ -90,9 +89,39 @@
                                             </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
-
                                 </div><!-- End .product-gallery -->
                             </div><!-- End .col-md-6 -->
+
+                            <!-- jQuery library -->
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script
+                                src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    $(".zoom-img").elevateZoom({
+                                        cursor: "crosshair",
+                                        easing: true,
+                                    });
+                                });
+                                
+
+
+                                function changeImg(clickedImg) {
+                                    let image = document.getElementById("disp-img");
+                                    image.src = clickedImg.getAttribute('data-image');
+                                    // Optional: Update the zoom image source if needed
+                                    $(image).data('zoom-image', clickedImg.getAttribute('data-zoom-image'));
+                            
+                                }
+                            </script>
+
+
+
+
+
+
+
 
                             <!-- Product Details Column -->
                             <div class="col-md-6">
@@ -151,20 +180,21 @@
                                         <!-- End .product-details-quantity -->
                                     </div><!-- End .details-filter-row -->
                                     <div class="product-details-action">
-                                        <% if(currentProduct.productStock <= 0) { %>
+                                        <% if(currentProduct.productStock <=0) { %>
                                             <p style="color: red;">Out of stock</p>
 
-                                        <% } else { %>
-                                            <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart" onclick="addToCart()">
-                                                <span>Add to cart</span>
-                                            </a>
-                                        <% } %>
-                                        <div class="details-action-wrapper">
-                                            <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                            <% } else { %>
+                                                <a href="/cart/<%= currentProduct._id %>" class="btn-product btn-cart"
+                                                    onclick="addToCart()">
+                                                    <span>Add to cart</span>
+                                                </a>
+                                                <% } %>
+                                                    <div class="details-action-wrapper">
+                                                        <!-- <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                                             <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> -->
-                                        </div><!-- End .details-action-wrapper -->
+                                                    </div><!-- End .details-action-wrapper -->
                                     </div><!-- End .product-details-action -->
-                                    
+
 
                                 </div><!-- End .product-details-action -->
                                 <div class="product-details-footer">
@@ -193,25 +223,6 @@
 
 
 
-        <script>
-            // Get reference to the main image and the thumbnail images
-            const mainImage = document.getElementById('product-zoom');
-            const thumbnailImages = document.querySelectorAll('.product-gallery-item');
-
-            // Loop through thumbnail images and attach click event listeners
-            thumbnailImages.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent default link behavior
-
-                    // Get the URL of the clicked thumbnail image
-                    const imageURL = this.getAttribute('data-image');
-
-                    // Update the source of the main image
-                    mainImage.src = imageURL;
-                    mainImage.setAttribute('data-zoom-image', this.getAttribute('data-zoom-image'));
-                });
-            });
-        </script>
 
 
 
@@ -394,13 +405,9 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="path/to/jquery.elevatezoom.js"></script>
 
 
 
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -422,27 +429,7 @@
 
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/elevatezoom.js"></script>
 
-    <script>
-        function changeImg(clickedImg) {
-            let image = document.getElementById("disp-img");
-            image.src = clickedImg.getAttribute('data-image');
-            // Optional: Update the zoom image source if needed
-            image.setAttribute('data-zoom-image', clickedImg.getAttribute('data-zoom-image'));
-            // Re-initialize ElevateZoom on the main image
-            $('#disp-img').elevateZoom({
-                cursor: "crosshair",
-                easing: true,
-            });
-        }
-        $(document).ready(function () {
-            $(".zoom-img").elevateZoom({
-                cursor: "crosshair",
-                easing: true,
-            });
-        });
-    </script>
 
 
 
