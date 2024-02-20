@@ -76,27 +76,26 @@
                                 <a href="#">Links</a>
                                 <ul>
                                     <!-- <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li> -->
-                                    <!-- <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist -->
-                                            <!-- <span>(3)</span></a></li> -->
-                                    <!-- <li><a href="about.html">About Us</a></li> -->
+                                    <!-- <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist
+                                      <span>(3)</span></a></li>  -->
+                                    <li><a href="/aboutus">About Us</a></li>
 
 
 
 
 
-                                    <!-- <li><a href="/loginpage">LOG IN</a></li> -->
 
                                     <% if (user) { %>
-                                        <li><a href="/logout">Log out</a></li>
+                                        <li><a href="/logout">LOG OUT</a></li>
 
 
 
-                                        <li><a href="/profile/<%= user._id %>">Profile</a></li>
+                                        <li><a href="/profile/<%= user._id %>">PROFILE</a></li>
 
 
 
                                         <% } else { %>
-                                            <li><a href="/loginpage">LOG IN</a></li>
+                                            <li><a href="/loginpage">LOG IN & Sign UP</a></li>
 
 
                                             <% } %>
@@ -132,18 +131,19 @@
                             <span class="sr-only">Toggle mobile menu</span>
                             <i class="icon-bars"></i>
                         </button> -->
-                    
+
                         <% if (user) { %>
                             <a href="/home" class="sf-with-ul">
                                 <img src="/assets/R.jpeg" class="footer-logo" alt="BXXY Logo" width="155" height="35">
                             </a>
-                        <% } else { %>
-                            <span class="sf-with-ul">
-                                <img src="/assets/R.jpeg" class="footer-logo" alt="BXXY Logo" width="155" height="35">
-                            </span>
-                        <% } %>
+                            <% } else { %>
+                                <span class="sf-with-ul">
+                                    <img src="/assets/R.jpeg" class="footer-logo" alt="BXXY Logo" width="155"
+                                        height="35">
+                                </span>
+                                <% } %>
                     </div><!-- End .header-left -->
-                    
+
 
                     <div class="header-right">
                         <div class="header-search">
@@ -151,8 +151,8 @@
                             <form action="/search" method="Post">
                                 <div class="header-search-wrapper">
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="search" id="search" placeholder="Search in..."
-                                        required>
+                                    <input type="search" class="form-control" name="search" id="search"
+                                        placeholder="Search in..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
@@ -160,9 +160,9 @@
 
 
                         <div class="dropdown cart-dropdown">
-                       
 
-			
+
+
                             <% if ( cartData.length>0 && user) { %>
 
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
@@ -173,8 +173,8 @@
 
 
                                 <% } %>
-                              
-                               
+
+
 
 
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -200,7 +200,9 @@
                                                                             <%= item.productId.productName %>
                                                                         </a>
                                                                     </h9>
-                                                                    <div class="price"><span> ₹<%= item.productId.productPrice %> </span></div>
+                                                                    <div class="price"><span> ₹<%=
+                                                                                item.productId.productPrice %> </span>
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                             <td style="width: 15%" class="miniCartQuantity">
@@ -230,14 +232,13 @@
                                     </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
 
-<div>
-    <br><br><br>
-</div>
+                        <div>
+                            <br><br><br>
+                        </div>
 
 
                         <!-- //------------------------------------------------------------------------------------------------------------------------------            -->
 
-                      
 
 
 
@@ -247,7 +248,8 @@
 
 
 
-                    
+
+
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->

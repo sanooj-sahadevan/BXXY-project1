@@ -78,9 +78,11 @@ userRoutes.post("/checkout/applyCoupon",blockedUserCheck,Userauth, cartControlle
 // -------------------------------------------------------filters------------------------------------------------------------------------------
 
 
-userRoutes.post("/search",  userController.search);/* no work put some extra tym*/
+userRoutes.post("/search",  userController.search);
 userRoutes.get("/clearfilters",  blockedUserCheck, userController.clearFilters);
 userRoutes.get('/product/filter/category/:categoryName', blockedUserCheck, userController.filterCategory)
+userRoutes.get('/aboutus',  userController.aboutUs)
+
 
 
 module.exports = userRoutes;

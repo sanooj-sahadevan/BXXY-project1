@@ -505,6 +505,20 @@ const clearFilters = async (req, res) => {
   }
 };
 
+
+
+
+const aboutUs = async(req,res) =>{
+  try {
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
+    res.render('userViews/aboutus',{user:req.session.user,cartData})
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
   userPage,
   userLogin,
@@ -523,5 +537,5 @@ module.exports = {
   resendOtpPage,
   search,
   filterCategory,
-  clearFilters,
+  clearFilters,aboutUs
 };
