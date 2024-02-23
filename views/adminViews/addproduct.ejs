@@ -20,23 +20,22 @@
                         <h4>Add Your New Products</h4>
                     </div>
                     <div class="card-body">
-                        <form action="/addproduct" method="POST" enctype="multipart/form-data">
+
+                        <form id="addProductForm" action="/addproduct" method="POST" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="input-group mb-3">
-                                    <input name="productName" id="productName" type="name" class="form-control"
-                                        placeholder="Product Name" required />
+                                    <input name="productName" id="productName" type="text" class="form-control" placeholder="Product Name" required />
                                 </div>
-
+                        
                                 <div class="input-group mb-3">
                                     <label class="container">
                                         <span>Select Parent Category</span>
-                                        <select name="parentCategory" class="form-select"
-                                            aria-label="Default select example">
-                                            <% categories.forEach((value)=>{ %>
-                                                <option value="<%=value.categoryName%>">
-                                                    <%= value.categoryName %>
-                                                </option>
-                                                <% }) %>
+                                        <select name="parentCategory" class="form-select" aria-label="Default select example" required>
+                                            <% categories.forEach((value) => { %>
+                                            <option value="<%=value.categoryName%>">
+                                                <%= value.categoryName %>
+                                            </option>
+                                            <% }) %>
                                         </select>
                                     </label>
                                 </div>
