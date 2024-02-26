@@ -5,7 +5,7 @@ const categoryCollection = require("../models/category.js");
 const editProduct = async (req, res) => {
   try {
     let existingProduct = await productCollection.findOne({
-      productName: { $regex: new RegExp(req.body.productName, "i") },
+      productName: { $regex: new RegExp(req.body.productName, ) },
     });
     if (!existingProduct || existingProduct._id == req.params.id) {
       const updateFields = {

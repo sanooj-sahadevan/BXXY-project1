@@ -18,7 +18,7 @@
                 <div class="container mt-5">
                     <h2>Edit Product</h2>
 
-                    <form action="/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data">
+                    <form  id="editProductForm" action="/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="productName">Product Name</label>
                             <input type="text" class="form-control" id="productName"
@@ -52,7 +52,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <label for=" productPrice">Product Price:: &nbsp; &nbsp; &nbsp;</label> <br>
-                            <input name="productPrice" type="text" class="form-control"
+                            <input name="productPrice" type="number" class="form-control"
                                    value="<%= productData.productPrice %>" placeholder="price" />
                         </div>
                         
@@ -60,7 +60,7 @@
                         <div class="input-group mb-3">
                             <label for="productStock">Product Stock: &nbsp; &nbsp; &nbsp;</label> 
 
-                            <input name="productStock" type="text" class="form-control"
+                            <input name="productStock" type="number" class="form-control"
                                 value="<%= productData.productStock %>"  />
                         </div>
 
@@ -107,6 +107,74 @@
         </section>
         <!-- content-main end// -->
     </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
+    <script>
+
+
+
+
+
+    $.validator.addMethod("noWhitespace", function (value, element) {
+        return value.trim() !== ""; // Check if the trimmed value is not empty
+    }, "Please enter a valid value.");
+
+    $("#editProductForm").validate({
+
+        rules: {
+            productName: {
+                required: true,
+                noWhitespace: true, // Apply custom validation rule
+                pattern: /^[a-zA-Z]+$/,
+                minlength: 2,
+                maxlength: 20,
+            },
+            productPrice: {
+                required: true,
+                noWhitespace: true, // Apply custom validation rule
+                minlength: 2,
+                maxlength: 20,
+            },
+            productStock: {
+                required: true,
+                noWhitespace: true, // Apply custom validation rule
+                minlength: 2,
+                maxlength: 20,
+            },
+
+        },
+        messages: {
+            productName: {
+                required: "Please enter your first name",
+                noWhitespace: "First name cannot be empty or contain only spaces",
+                pattern: "First name can only contain letters",
+                minlength: "First name must be at least 2 characters long",
+                maxlength: "First name must not exceed 20 characters",
+            },
+            productPrice: {
+                required: "Please enter your last name",
+                noWhitespace: "Last name cannot be empty or contain only spaces",
+                minlength: "Last name must be at least 2 characters long",
+                maxlength: "Last name must not exceed 20 characters",
+            },
+            productStock: {
+                required: "Please enter your last name",
+                noWhitespace: "Last name cannot be empty or contain only spaces",
+                minlength: "Last name must be at least 2 characters long",
+                maxlength: "Last name must not exceed 20 characters",
+            },
+
+        },
+    });
+
+</script>.
+
+
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
         integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="

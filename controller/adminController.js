@@ -50,12 +50,17 @@ const adminHome = async (req, res) => {
 
 const adminLogout = async (req, res) => {
   try {
-    req.session.admin = false;
+    delete req.session.admin; // Deleting the admin property from the session
     res.redirect("/");
+    console.log(req.session.admin);
+    return; // Added return statement
   } catch (error) {
     console.error("Error during logout:", error);
   }
 };
+
+
+
 
 const userManagement = async (req, res) => {
   try {

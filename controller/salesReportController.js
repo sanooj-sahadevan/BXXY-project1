@@ -7,6 +7,7 @@ const exceljs = require("exceljs");
 
 const salesReport = async (req, res) => {
   try {
+    
     if (req.session?.admin?.salesData) {
       let { salesData, dateValues } = req.session.admin;
       return res.render("adminViews/salesReport", { salesData, dateValues });

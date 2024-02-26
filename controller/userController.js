@@ -32,16 +32,16 @@ const sendOTP = async (email, otp) => {
 // first landing page
 const userPage = async (req, res) => {
   console.log();
-  if (req.session.admin) {
-    res.redirect("/adminHome");
-  } else {
+  // if (req.session.admin) {
+  //   res.redirect("/adminHome");
+  // } else {
     const cartData = await cartCollection
       .find({ userId: req.session?.currentUser?._id })
       .populate("productId");
 
-    res.render("userViews/landingpage", { user: req.session?.user, cartData });
+    res.render("userViews/landingpage", { user: req.session?.user, cartData ,admin: req.session?.admin});
   }
-};
+// };
 
 const userLogin = async (req, res) => {
   console.log("1");
@@ -54,6 +54,7 @@ const userLogin = async (req, res) => {
     user: req.session.user,
     cartData,
     message: message,
+    admin: req.session?.admin
   });
 };
 
@@ -443,6 +444,7 @@ const productspage = async (req, res) => {
 
     let totalPages = Math.ceil(count / limit);
     let totalPagesArray = new Array(totalPages).fill(null);
+    console.log(req.session.button);
     res.render("userViews/productlist", {
       categoryData,
       productData,
@@ -452,12 +454,10 @@ const productspage = async (req, res) => {
       limit,
       totalPagesArray,
       currentPage: page,
-      selectedFilter: req.session.selectedFilter,
-      selectedFilter: req.session.selectedFilter,
+      selectedFilter: req.session.button,
       cartData,
     });
 
-    console.log(req.session.currentUser);
   } catch (error) {
     console.error("Error fetching product data:", error);
     res.status(500).send("Internal Server Error");
@@ -489,7 +489,7 @@ const filterCategory = async (req, res) => {
       parentCategory: req.params.categoryName,
     });
     console.log(req.session.shopProductData);
-
+    req.session.button = req.params.categoryName
     res.redirect("/productlist");
   } catch (error) {
     console.error(error);

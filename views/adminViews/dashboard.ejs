@@ -475,11 +475,12 @@
                         shipping,
                     } = data;
                     console.log("11");
+                    let fourteenDaysRevenueTotal= fourteenDaysRevenue.revenue.reduce( (acc,curr)=>acc+curr,0   )
                     document.getElementById('currentDayRevenue').innerText = '₹' + currentDayRevenue
                     document.getElementById('completedOrdersCount').innerText = completedOrdersCount
                     document.getElementById('productsCount').innerText = productsCount
                     document.getElementById('categoryCount').innerText = 'in ' + categoryCount + ' categories'
-                    document.getElementById('fourteenDaysRevenue').innerText = '₹' + fourteenDaysRevenue.revenue
+                    document.getElementById('fourteenDaysRevenue').innerText = '₹' + fourteenDaysRevenueTotal
 
                     // document.getElementById('pendingOrdersCount').innerText = pendingOrdersCount
 

@@ -30,7 +30,7 @@
                   <input type="text" class="form-control flex-grow-1 mr-2" name="couponCode" required
                     id="appendedInputButton">
                   <hr><br><br>
-                  <button class="btn btn-primary square-btn" type="submit"></button>
+                  <button class="btn btn-primary square-btn" type="submit">Press Here</button>
                 </form>
                 <label for="checkout-discount-input" class="text-truncate mt-2">Have a coupon?<span>Click the
                     button</span> </label>
@@ -232,7 +232,7 @@
                         </td>
                       </tr>
 
-
+                    
 
                 </tbody>
 
@@ -423,15 +423,32 @@
               <tr class="summary-total">
 
 
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="panel-heading-id">
-                    <h6 class="panel-title">
-                      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                        href="#Paymentmethod" aria-expanded="false" aria-controls="Paymentmethod">
-                        Payment method:
-                      </a>
-                    </h6>
-                  </div>
+                <div class="panel-heading" role="tab" id="panel-heading-id">
+                  <h6 class="panel-title">
+                      <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-parent="#accordion"
+                          href="#Paymentmethod" aria-expanded="false" aria-controls="Paymentmethod">
+                          Payment method:
+                      </button>
+                  </h6>
+              </div>
+              
+              <style>
+                .panel-heading button {
+                    background-color: #041d39; /* Blue color for the button background */
+                    color: #ffffff; /* White color for the button text */
+                    border-radius: 5px; /* Rounded corners */
+                    border-color: #041d39;
+                    padding: 8px 16px; /* Padding for the button */
+                    border: none; /* Remove border */
+                    cursor: pointer; /* Change cursor to pointer on hover */
+                }
+            
+                .panel-heading button:hover {
+                    background-color: #ffffff; /* Darker shade of blue on hover */
+                    color: #000000;
+                }
+            </style>
+            
 
                   <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
                     <div class="panel-body">
@@ -463,19 +480,22 @@
                           </label>
                         </div>
 
+                        <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+                          <span class="btn-text">Place Order</span>
+                          <span class="btn-hover-text">Proceed to Checkout</span>
+                        </button>
+
                       </div>
                     </div>
                   </div>
                 </div>
 
-
-
-
+              
               </tr>
-              <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+              <!-- <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span class="btn-text">Place Order</span>
                 <span class="btn-hover-text">Proceed to Checkout</span>
-              </button>
+              </button> -->
 
             </div>
             <!-- End .summary -->

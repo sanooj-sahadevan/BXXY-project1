@@ -3,12 +3,18 @@ let addressCollection = require("../models/profileModel.js");
 const orderCollection = require("../models/orderModel.js");
 const walletCollection = require("../models/walletModel.js");
 const cartCollection = require("../models/cartModel.js");
-const formatDate = require('../service/formerDataHelper.js')
+const formatDate = require("../service/formerDataHelper.js");
 const { generatevoice } = require("../service/genertePDF.js");
+const productCollection = require("../models/productModel.js");
+
+const mongoose = require('mongoose');
+
 
 const profilePage = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser._id,
@@ -20,7 +26,7 @@ const profilePage = async (req, res) => {
     let orderData = await orderCollection.find({
       userId: req.session.currentUser._id,
     });
-    orderData = orderData.filter(order => order.paymentType !== "toBeChosen");
+    orderData = orderData.filter((order) => order.paymentType !== "toBeChosen");
 
     // .skip(skip)
     // .limit(limit);
@@ -55,26 +61,46 @@ const profilePage = async (req, res) => {
       currentUser: req.session.currentUser,
       addressData,
       existingAddress,
-      walletData,cartData
+      walletData,
+      cartData,
     });
   } catch (error) {
     console.log(error);
   }
 };
-
 const orderStatus = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
-
-    let orderData = await orderCollection
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
+console.log(cartData);
+    const orderData = await orderCollection
       .findOne({ _id: req.params.id })
-      .populate("addressChosen");
+      .populate("addressChosen")
+      .populate("cartData.productId");
 
-    let isCancelled = orderData.orderStatus === "Cancelled";
-    let isReturn = orderData.orderStatus === "Return";
-    let isDelivered = orderData.orderStatus === "Delivered";
+    // Ensure orderData exists before accessing its properties
+    if (!orderData) {
+      console.log("Order not found.");
+    }
 
-    let orderStatus = {
+    // Logging should use `console.log`, not `res.render`
+    console.log("Order Data:", orderData);
+    console.log(orderData.cartData+'kooi');
+
+
+    console.log("Cart Data:");
+    orderData.cartData.forEach((item) => {
+      console.log("Product ID:", item.productId._id);
+      console.log("Product Name:", item.productId.productName);
+      console.log("Product Price:", item.productId.productPrice);
+    });
+
+    const isCancelled = orderData.orderStatus === "Cancelled";
+    const isReturn = orderData.orderStatus === "Return";
+    const isDelivered = orderData.orderStatus === "Delivered";
+
+    const orderStatus = {
       Cancelled: isCancelled,
       Return: isReturn,
       Delivered: isDelivered,
@@ -87,53 +113,103 @@ const orderStatus = async (req, res) => {
       isDelivered,
       orderStatus,
       user: req.session.user,
-      currentUser: req.session.currentUser,cartData
+      currentUser: req.session.currentUser,
+      cartData,
     });
   } catch (error) {
     console.error(error);
   }
 };
 
-const cancelOrder = async (req, res) => {
-  try {
-    const orderData = await orderCollection.findOne({ _id: req.params.id });
 
+
+
+
+
+
+
+
+
+const cancelOrder = async (req, res) => {
+  console.log("Cancelling order...");
+  try {
+    // Fetch cart data
+    const cartData = await cartCollection.findOne({ orderId: req.params.id }).populate("productId");
+    
+    // Fetch order data
+    const orderData = await orderCollection.findOne({ _id: req.params.id }).populate("cartData.productId");
+    
+    // Update product stock and stock sold
+    for (const item of orderData.cartData) {
+      console.log("Product ID:", item.productId._id);
+      console.log("Product Name:", item.productId.productName);
+      console.log("Product Price:", item.productId.productPrice);
+
+      try {
+        // Update product directly in the database
+        await productCollection.updateOne(
+          { _id: item.productId._id },
+          {
+            $inc: {
+              productStock: +item.productQuantity, // Reduce quantity
+              stockSold: -item.productQuantity, // Increase stock sold
+            },
+          }
+        );
+        console.log("Product updated successfully.");
+      } catch (error) {
+        console.error("Error updating product:", error);
+        throw error; // Throw the error to handle it outside of the loop
+      }
+    }
+    
+    // Update order status to "Cancelled"
     await orderCollection.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: { orderStatus: "Cancelled" } }
     );
 
-    console.log(
-      await userCollection.findByIdAndUpdate(
-        { _id: req.session.currentUser._id },
-        { $inc: { wallet: orderData.grandTotalCost } }
-      )
+    // Increase user's wallet balance with the refunded amount
+    await userCollection.findByIdAndUpdate(
+      { _id: req.session.currentUser._id },
+      { $inc: { wallet: orderData.grandTotalCost } }
     );
 
-    let walletTransaction = {
+    // Record wallet transaction for the refund
+    const walletTransaction = {
       transactionDate: new Date(),
       transactionAmount: orderData.grandTotalCost,
       transactionType: "Refund from cancelled Order",
     };
-
     await walletCollection.findOneAndUpdate(
       { userId: req.session.currentUser._id },
       {
         $inc: { walletBalance: orderData.grandTotalCost },
-        $push: { walletTransaction },
+        $push: { walletTransactions: walletTransaction },
       }
     );
 
-    res.json({ success: true }); // Moved this line here
+    res.json({ success: true }); // Send success response
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, error: error.message }); // You might want to handle errors properly
+    console.error("Error cancelling order:", error);
+    res.status(500).json({ success: false, error: "An error occurred while cancelling the order." });
   }
 };
 
+
+
+
+
+
+
+
+
+
 const addAddress = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     let addressData = await addressCollection.find({
       userId: req.session.currentUser._id,
@@ -152,7 +228,8 @@ const addAddress = async (req, res) => {
       user: req.session.user,
       currentUser: req.session.currentUser,
       addressData,
-      orderData,cartData
+      orderData,
+      cartData,
     });
   } catch (error) {
     console.error(error);
@@ -161,7 +238,9 @@ const addAddress = async (req, res) => {
 
 const addAddressPost = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     console.log(req.session.currentUser);
     const address = {
@@ -179,7 +258,6 @@ const addAddressPost = async (req, res) => {
       userId: req.session.currentUser._id,
     });
 
-
     await addressCollection.insertMany([address]);
     // res.redirect("/profile/:id");
     let addressData = await addressCollection.find({
@@ -192,7 +270,9 @@ const addAddressPost = async (req, res) => {
       addressData,
       currentUser: req.session.currentUser,
       user: req.session.user,
-      orderData,walletData,cartData
+      orderData,
+      walletData,
+      cartData,
     });
   } catch (error) {
     console.error(error);
@@ -201,7 +281,9 @@ const addAddressPost = async (req, res) => {
 
 const editProfile = async (req, res) => {
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     const existingAddress = await addressCollection.findOne({
       userId: req.session.currentUser,
@@ -211,7 +293,8 @@ const editProfile = async (req, res) => {
     res.render("userViews/editProfile", {
       // currentUser: req.session.currentUser,
       user: req.session.user,
-      existingAddress,cartData
+      existingAddress,
+      cartData,
     });
   } catch (error) {
     console.error(error);
@@ -219,9 +302,10 @@ const editProfile = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-
   try {
-    const cartData= await cartCollection.find({ userId: req.session?.currentUser?._id }).populate('productId')
+    const cartData = await cartCollection
+      .find({ userId: req.session?.currentUser?._id })
+      .populate("productId");
 
     console.log(req.session.currentUser);
 
@@ -229,7 +313,8 @@ const changePassword = async (req, res) => {
 
     res.render("userViews/changePassword", {
       user: req.session.user,
-      orderData: req.session.currentOrder,cartData,
+      orderData: req.session.currentOrder,
+      cartData,
 
       currentUser: req.session.currentUser,
     });

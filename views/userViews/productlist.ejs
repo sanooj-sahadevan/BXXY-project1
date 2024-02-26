@@ -62,7 +62,7 @@
 						</div>
 						<!-- End .toolbox -->
 						<div class="row categoryProduct xsResponse clearfix">
-							<% productData.forEach(product => { %>
+							<% productData.forEach(product=> { %>
 								<div class="item col-sm-3 col-lg-3 col-md-3 col-xs-6 grid-view">
 									<div class="product">
 										<!-- Uncomment the following lines if you want to include the "Add to Wishlist" button -->
@@ -71,7 +71,8 @@
 										</a> -->
 										<div class="image">
 											<a href="/productDetails/<%= product._id %>">
-												<img src="/upload/<%= product.productImage1 %>" alt="img" class="img-responsive" />
+												<img src="/upload/<%= product.productImage1 %>" alt="img"
+													class="img-responsive" />
 											</a>
 										</div>
 										<div class="description">
@@ -84,22 +85,25 @@
 										<div class="price">
 											<span>₹<%= product.productPrice %></span>
 										</div>
-						
-										<% if(product.productStock <= 0) { %>
+
+										<% if(product.productStock <=0) { %>
 											<p style="color: red;">Out of stock</p>
-										<% } else { %>
-											<div class="action-control">
-												<a href="/cart/<%= product._id %>" class="btn btn-primary" onclick="addToCart()">
-													<span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"></i> Add to cart</span>
-												</a>
-											</div>
-										<% } %>
+											<% } else { %>
+												<div class="action-control">
+													<a href="/cart/<%= product._id %>" class="btn btn-primary"
+														onclick="addToCart()">
+														<span class="add2cart"><i
+																class="glyphicon glyphicon-shopping-cart"></i> Add to
+															cart</span>
+													</a>
+												</div>
+												<% } %>
 									</div>
 								</div>
-							<% }); %>
-							<!--/.item-->
+								<% }); %>
+									<!--/.item-->
 						</div>
-						
+
 
 						<style>
 							/* Add this CSS to your stylesheet */
@@ -247,14 +251,21 @@
 											<ul class="nav nav-pills nav-stacked tree">
 												<div class="panel-body">
 													<% categoryData.forEach(function(category) { %>
+														<% let val= (category.categoryName === selectedFilter)  %>
+														<% if(val){ val='red'} else {val='black'}  %>
 														<li class="active dropdown-tree open-tree">
 															<label>
-																<a
-																	href="/product/filter/category/<%= category.categoryName %>">
+																<button type="button" id="<%=category.categoryName%>Button"
+																		onclick="redirectToCategory('<%= category.categoryName %>')"
+																		class="btn"
+																		style="color: <%=val%>;" >
 																	<%= category.categoryName %>
-																</a>
+																</button>
 															</label>
 														</li>
+														
+														
+														
 														<% }); %>
 												</div>
 											</ul>
@@ -262,7 +273,18 @@
 										</div>
 
 
-
+										<script>
+											function redirectToCategory(categoryName) {
+												// Construct the URL for the category
+												var categoryUrl = "/product/filter/category/" + encodeURIComponent(categoryName);
+												// Redirect to the category URL
+												window.location.href = categoryUrl;
+											}
+											
+											
+										</script>
+										
+										
 
 
 

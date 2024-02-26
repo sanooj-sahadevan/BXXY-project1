@@ -103,6 +103,65 @@
         </div>
     </section>
     <!-- content-main end// -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
+    <script>
+
+
+        $.validator.addMethod("noWhitespace", function (value, element) {
+            return value.trim() !== ""; // Check if the trimmed value is not empty
+        }, "Please enter a valid value.");
+
+        $("#addProductForm").validate({
+
+            rules: {
+                productName: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z]+$/,
+                    minlength: 2,
+                    maxlength: 20,
+                },
+                productPrice: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    minlength: 2,
+                    maxlength: 20,
+                },
+                productStock: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    minlength: 2,
+                    maxlength: 20,
+                },
+
+            },
+            messages: {
+                productName: {
+                    required: "Please enter your first name",
+                    noWhitespace: "First name cannot be empty or contain only spaces",
+                    pattern: "First name can only contain letters",
+                    minlength: "First name must be at least 2 characters long",
+                    maxlength: "First name must not exceed 20 characters",
+                },
+                productPrice: {
+                    required: "Please enter your last name",
+                    noWhitespace: "Last name cannot be empty or contain only spaces",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name must not exceed 20 characters",
+                },
+                productStock: {
+                    required: "Please enter your last name",
+                    noWhitespace: "Last name cannot be empty or contain only spaces",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name must not exceed 20 characters",
+                },
+
+            },
+        });
+
+    </script>.
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
@@ -351,65 +410,7 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
-    <script>
-
-
-        $.validator.addMethod("noWhitespace", function (value, element) {
-            return value.trim() !== ""; // Check if the trimmed value is not empty
-        }, "Please enter a valid value.");
-
-        $("#addAdrress").validate({
-            rules: {
-                productName: {
-                    required: true,
-                    noWhitespace: true, // Apply custom validation rule
-                    pattern: /^[a-zA-Z]+$/,
-                    minlength: 2,
-                    maxlength: 20,
-                },
-                productPrice: {
-                    required: true,
-                    noWhitespace: true, // Apply custom validation rule
-                    minlength: 2,
-                    maxlength: 20,
-                },
-                productStock: {
-                    required: true,
-                    noWhitespace: true, // Apply custom validation rule
-                    minlength: 2,
-                    maxlength: 20,
-                },
-
-            },
-            messages: {
-                productName: {
-                    required: "Please enter your first name",
-                    noWhitespace: "First name cannot be empty or contain only spaces",
-                    pattern: "First name can only contain letters",
-                    minlength: "First name must be at least 2 characters long",
-                    maxlength: "First name must not exceed 20 characters",
-                },
-                productPrice: {
-                    required: "Please enter your last name",
-                    noWhitespace: "Last name cannot be empty or contain only spaces",
-                    minlength: "Last name must be at least 2 characters long",
-                    maxlength: "Last name must not exceed 20 characters",
-                },
-                productStock: {
-                    required: "Please enter your last name",
-                    noWhitespace: "Last name cannot be empty or contain only spaces",
-                    minlength: "Last name must be at least 2 characters long",
-                    maxlength: "Last name must not exceed 20 characters",
-                },
-
-            },
-        });
-
-    </script>.
-
+    
 
 
 

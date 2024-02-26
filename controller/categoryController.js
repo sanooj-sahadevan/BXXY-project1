@@ -6,7 +6,7 @@ const editCategoriesPage = async (req, res) => {
 
   let categoryName = req.body.categoriesName;
   let categoryExists = await categoryCollection.findOne({
-    categoryName: { $regex: new RegExp(`^${categoryName}$`, "i") },
+    categoryName: { $regex: new RegExp(`^${categoryName}$`) },
   });
 if(!categoryExists){
   await categoryCollection.findOneAndUpdate(
