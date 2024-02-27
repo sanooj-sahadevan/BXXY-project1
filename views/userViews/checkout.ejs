@@ -615,8 +615,10 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
   <script>
+    // Define a variable to keep track of the applied coupon count
+    let appliedCouponCount = 0;
+  
     // Attach a submit event listener to the couponApplyForm element
     document.addEventListener('DOMContentLoaded', function () {
       const couponApplyFormElement = document.getElementById('couponApplyForm');
@@ -625,39 +627,59 @@
         await couponApply();
       });
     });
-
+  
     // Async function to handle coupon application
     async function couponApply() {
       try {
         // Prepare form data with the coupon code
         const couponApplyForm = document.getElementById('couponApplyForm');
         const formData = { couponCode: couponApplyForm.couponCode.value };
-
+  
         // Send a POST request to the server to apply the coupon
         const response = await fetch('/checkout/applyCoupon', {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
-
+  
         // Parse the JSON response from the server
-        const { couponApplied, discountAmount } = await response.json();
-
+        const { couponApplied, discountAmount, couponExpired } = await response.json();
+  
         // Check if the coupon is applied or not
         if (couponApplied) {
+          // Increment the applied coupon count
+          appliedCouponCount++;
+  
+          // If the coupon is applied more than once, show an error message
+          if (appliedCouponCount > 1) {
+            await Swal.fire({
+              icon: "error",
+              title: "Coupon expired",
+              text: "Sorry! This coupon has expired.",
+            });
+            return;
+          }
+  
           // If the coupon is applied, update the UI and show a success message
           const grandTotalElement = document.getElementById('grandTotal');
           const grandTotal = parseFloat(grandTotalElement.innerHTML.replace('₹', '')) - discountAmount;
           grandTotalElement.innerHTML = '₹' + grandTotal.toFixed(2);
-
+  
           const totalDiscountElement = document.getElementById('totalDiscount');
           totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
-
+  
           await Swal.fire({
             icon: "success",
             title: "Coupon has been applied",
             showConfirmButton: false,
             timer: 1500,
+          });
+        } else if (couponExpired) {
+          // If the coupon is expired, show an error message
+          await Swal.fire({
+            icon: "error",
+            title: "Coupon expired",
+            text: "Sorry! This coupon has expired.",
           });
         } else {
           // If the coupon is not applicable, show an error message
@@ -673,8 +695,7 @@
       }
     }
   </script>
-
-
+  
 
 
 

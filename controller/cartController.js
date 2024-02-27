@@ -326,14 +326,13 @@ const orderPlacedEnd = async (req, res) => {
 
 const applyCoupon = async (req, res) => {
   try {
-    console.log("1");
+   
     let { couponCode } = req.body;
 
     let couponData = await couponCollection.findOne({ couponCode });
 
     if (couponData) {
       
-      console.log("2");
       console.log(couponData);
 
       let { grandTotal } = req.session;
