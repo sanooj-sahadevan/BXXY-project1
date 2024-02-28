@@ -16,7 +16,7 @@ connectToMongoDB();
 
 
 
-// app.use(morgan('dev'))
+app.use(morgan('dev'))
 
 
 
