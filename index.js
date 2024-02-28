@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 
 
-const { connectToMongoDB } = require("./config/mongooseConnect.js");
+const connectToMongoDB = require("./config/mongooseConnect.js");
 connectToMongoDB();
 
 

@@ -1,85 +1,127 @@
 <%- include('../adminPartials/header') %>
 
 
-        
-        <section class="content-main">
-            <div class="row">
-                <div class="col-9">
-                    <div class="content-header">
-                        <h2 class="content-title">USER MANAGEMENT</h2>
-                        <!-- <div>
+
+    <section class="content-main">
+        <div class="row">
+            <div class="col-9">
+                <div class="content-header">
+                    <h2 class="content-title">USER MANAGEMENT</h2>
+                    <!-- <div>
                             <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
                             <button class="btn btn-md rounded font-sm hover-up">Publich</button>
                         </div> -->
-                    </div>
                 </div>
+            </div>
 
-                <table id="example" class="display" style="width:100%">
-                    <thead>
+            <table id="example" class="display custom-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% userData.reverse().forEach(user=> { %>
                         <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% userData.reverse().forEach(user=> { %>
-                            <tr>
+                            <td>
+                                <%= user.username %>
+                            </td>
+                            <td>
+                                <%= user.email %>
+                            </td>
+                            <td>
+                                <%= user.phonenumber %>
+                            </td>
+                            <% if (user.block) { %>
                                 <td>
-                                    <%= user.username %>
-
+                                    <form action="/userManagement/unBlock/<%= user._id %>" method="POST">
+                                        <button type="submit" class="btn btn-danger">Unblock</button>
+                                    </form>
                                 </td>
-                                <td>
-                                    <%= user.email %>
-                                </td>
-                                <td>
-                                    <%= user.phonenumber %>
-                                </td>
-                                <% if (user.block) { %>
+                                <% } else { %>
                                     <td>
-                                        <form action="/userManagement/unBlock/<%= user._id %>" method="POST">
-                                            <button type="submit" class="btn btn-danger">Unblock</button>
+                                        <form action="/userManagement/block/<%= user._id %>" method="POST">
+                                            <button type="submit" class="btn btn-success">Block</button>
                                         </form>
                                     </td>
-                                    <% } else { %>
-                                        <td>
-                                            <form action="/userManagement/block/<%= user._id %>" method="POST">
-                                                <button type="submit" class="btn btn-success">Block</button>
-                                            </form>
-                                        </td>
-                                        <% } %>
-                            </tr>
-                            <% }) %>
-                    </tbody>
-
-                </table>
+                                    <% } %>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
 
 
+        </div>
+<style>.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 8px;
+}
+
+.custom-table th {
+    background-color: #f2f2f2; /* Light gray background color for headers */
+    text-align: left;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row background color */
+}
+
+.custom-table tbody tr:hover {
+    background-color: #ddd; /* Hover effect */
+}
+
+.custom-table button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.custom-table button:hover {
+    opacity: 0.8;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+</style>
+
+        <div class="d-flex justify-content-center py-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+
+                    <% for( let i=0; i < count/limit; i++ ) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/userManagement/?page=<%=i+1 %>">
+                                <%= i+1 %>
+                            </a>
+                        </li>
+                        <% } %>
+
+                </ul>
+
+        </div>
+    </section>
 
 
 
 
 
-            </div>
-
-
-            <div class="d-flex justify-content-center py-3">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-
-                        <% for( let i=0; i < count/limit; i++ ) { %>
-                            <li class="page-item">
-                                <a class="page-link" href="/userManagement/?page=<%=i+1 %>">
-                                    <%= i+1 %>
-                                </a>
-                            </li>
-                            <% } %>
-
-                    </ul>
-
-            </div>
-        </section>
 
 
 
@@ -92,9 +134,4 @@
 
 
 
-
-
-
-
-
-        <%- include('../adminPartials/footer') %>
+    <%- include('../adminPartials/footer') %>

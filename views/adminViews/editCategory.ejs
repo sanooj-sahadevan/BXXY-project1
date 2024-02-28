@@ -21,7 +21,7 @@
             <body>
                 <div class="container mt-5">
                     <h2>Edit Category</h2>
-                    <form action="/editCategories/<%=data._id%>" method="POST" class="mt-4">
+                    <form   id="editCategoryForm" action="/editCategories/<%=data._id%>" method="POST" class="mt-4">
                         <div class="form-group">
                             <label for="categoriesName">Category Name</label>
                             <input type="text" class="form-control" id="categoriesName" value="<%=data.categoryName%>" name="categoriesName" required>
@@ -53,18 +53,7 @@
 
 
 
-            <!-- <div class="pagination-area mt-15 mb-50">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-start">
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-                </ul>
-            </nav>
-        </div> -->
+           
         </section> <!-- content-main end// -->
         
     </main>
@@ -72,6 +61,49 @@
 
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
+    <script>
+        $.validator.addMethod("noWhitespace", function (value, element) {
+            return value.trim() !== ""; // Check if the trimmed value is not empty
+        }, "Please enter a valid value.");
+    
+        $("#editCategoryForm").validate({
+            rules: {
+                categoriesName: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z]+$/,
+                    minlength: 2,
+                    maxlength: 20,
+                },
+                categoriesDescription: {
+                    required: true,
+                    noWhitespace: true, // Apply custom validation rule
+                    pattern: /^[a-zA-Z]+$/,
+                    minlength: 2,
+                    maxlength: 200,
+                },
+            },
+            messages: {
+                categoriesName: {
+                    required: "Please enter your correct name",
+                    noWhitespace: "First name cannot be empty or contain only spaces",
+                    pattern: "First name can only contain letters",
+                    minlength: "First name must be at least 2 characters long",
+                    maxlength: "First name must not exceed 20 characters",
+                },
+                categoriesDescription: {
+                    required: "Please enter your Description name",
+                    noWhitespace: "Last name cannot be empty or contain only spaces",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name must not exceed 200 characters",
+                },
+            }
+        });
+    </script>
+    
 
 
 
@@ -79,7 +111,7 @@
 
 
 
-    {{!-- onchange image display --}}
+<!-- 
     <script>
         function displayImage1() {
             const reader = new FileReader()
@@ -114,7 +146,7 @@
                 reader.readAsDataURL(file)
             }
         }
-    </script>
+    </script> -->
 
 
 

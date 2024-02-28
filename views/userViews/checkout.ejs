@@ -232,7 +232,7 @@
                         </td>
                       </tr>
 
-                    
+
 
                 </tbody>
 
@@ -425,99 +425,107 @@
 
                 <div class="panel-heading" role="tab" id="panel-heading-id">
                   <h6 class="panel-title">
-                      <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-parent="#accordion"
-                          href="#Paymentmethod" aria-expanded="false" aria-controls="Paymentmethod">
-                          Payment method:
-                      </button>
+                    <button class="btn btn-primary collapsed" type="button" data-toggle="collapse"
+                      data-parent="#accordion" href="#Paymentmethod" aria-expanded="false"
+                      aria-controls="Paymentmethod">
+                      Payment method:
+                    </button>
                   </h6>
-              </div>
-              
-              <style>
-                .panel-heading button {
-                    background-color: #041d39; /* Blue color for the button background */
-                    color: #ffffff; /* White color for the button text */
-                    border-radius: 5px; /* Rounded corners */
+                </div>
+
+                <style>
+                  .panel-heading button {
+                    background-color: #041d39;
+                    /* Blue color for the button background */
+                    color: #ffffff;
+                    /* White color for the button text */
+                    border-radius: 5px;
+                    /* Rounded corners */
                     border-color: #041d39;
-                    padding: 8px 16px; /* Padding for the button */
-                    border: none; /* Remove border */
-                    cursor: pointer; /* Change cursor to pointer on hover */
-                }
-            
-                .panel-heading button:hover {
-                    background-color: #ffffff; /* Darker shade of blue on hover */
+                    padding: 8px 16px;
+                    /* Padding for the button */
+                    border: none;
+                    /* Remove border */
+                    cursor: pointer;
+                    /* Change cursor to pointer on hover */
+                  }
+
+                  .panel-heading button:hover {
+                    background-color: #ffffff;
+                    /* Darker shade of blue on hover */
                     color: #000000;
-                }
-            </style>
-            
-
-                  <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
-                    <div class="panel-body">
-                      <div class="onepage-payment">
-                        <div style="clear:both;"></div>
+                  }
+                </style>
 
 
-
-
-                        <div class="card-paynemt-box payment-method">
-                          <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                            <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
-                          </label>
-                        </div>
+                <div id="Paymentmethod" class="panel-collapse collapse" role="tabpanel">
+                  <div class="panel-body">
+                    <div class="onepage-payment">
+                      <div style="clear:both;"></div>
 
 
 
-                        <div class="card-paynemt-box payment-method">
-                          <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
-                            <input name="radios" id="wallet" value="wallet" type="radio">Wallet
-                          </label>
-                        </div>
 
-
-
-                        <div class="card-paynemt-box payment-method">
-                          <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
-                            <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
-                          </label>
-                        </div>
-
-                        <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
-                          <span class="btn-text">Place Order</span>
-                          <span class="btn-hover-text">Proceed to Checkout</span>
-                        </button>
-
+                      <div class="card-paynemt-box payment-method">
+                        <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
+                          <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+                        </label>
                       </div>
+
+
+
+                      <div class="card-paynemt-box payment-method">
+                        <label class="radio-inline" for="wallet" aria-controls="CashOnDeliveryCollapse">
+                          <input name="radios" id="wallet" value="wallet" type="radio">Wallet
+                        </label>
+                      </div>
+
+
+
+                      <div class="card-paynemt-box payment-method">
+                        <label class="radio-inline" for="razorpay" aria-controls="CashOnDeliveryCollapse">
+                          <input name="radios" id="razorpay" value="razorpay" type="radio">Razorpay
+                        </label>
+                      </div>
+
+                      <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+                        <span class="btn-text">Place Order</span>
+                        <span class="btn-hover-text">Proceed to Checkout</span>
+                      </button>
+
                     </div>
                   </div>
                 </div>
+            </div>
 
-              
-              </tr>
-              <!-- <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+
+            </tr>
+            <!-- <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span class="btn-text">Place Order</span>
                 <span class="btn-hover-text">Proceed to Checkout</span>
               </button> -->
 
-            </div>
-            <!-- End .summary -->
-
-          </aside>
-         
-
-
-          <!-- End .col-lg-3 -->
         </div>
-        <div class="col-lg-12 clearfix mt-4">
-          <ul class="pager">
-            <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
-          </ul>
-        </div>
-        <!-- End .row -->
+        <!-- End .summary -->
+
+        </aside>
+
+
+
+        <!-- End .col-lg-3 -->
       </div>
-      <!-- End .container -->
+      <div class="col-lg-12 clearfix mt-4">
+        <ul class="pager">
+          <li class="previous pull-right"><a href="/"> <i class="fa fa-home"></i> Go to Shop </a></li>
+        </ul>
+      </div>
+      <!-- End .row -->
+    </div>
+    <!-- End .container -->
   </main>
   <!-- End .main -->
 
-  
+
 
 
 
@@ -618,7 +626,7 @@
   <script>
     // Define a variable to keep track of the applied coupon count
     let appliedCouponCount = 0;
-  
+
     // Attach a submit event listener to the couponApplyForm element
     document.addEventListener('DOMContentLoaded', function () {
       const couponApplyFormElement = document.getElementById('couponApplyForm');
@@ -627,30 +635,28 @@
         await couponApply();
       });
     });
-  
+
     // Async function to handle coupon application
     async function couponApply() {
       try {
         // Prepare form data with the coupon code
         const couponApplyForm = document.getElementById('couponApplyForm');
         const formData = { couponCode: couponApplyForm.couponCode.value };
-  
+
         // Send a POST request to the server to apply the coupon
         const response = await fetch('/checkout/applyCoupon', {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
-  
-        // Parse the JSON response from the server
+
         const { couponApplied, discountAmount, couponExpired } = await response.json();
-  
-        // Check if the coupon is applied or not
+        console.log('3');
+
         if (couponApplied) {
-          // Increment the applied coupon count
           appliedCouponCount++;
-  
-          // If the coupon is applied more than once, show an error message
+          console.log('3');
+
           if (appliedCouponCount > 1) {
             await Swal.fire({
               icon: "error",
@@ -659,21 +665,26 @@
             });
             return;
           }
-  
+          console.log('1');
           // If the coupon is applied, update the UI and show a success message
           const grandTotalElement = document.getElementById('grandTotal');
           const grandTotal = parseFloat(grandTotalElement.innerHTML.replace('₹', '')) - discountAmount;
           grandTotalElement.innerHTML = '₹' + grandTotal.toFixed(2);
-  
-          const totalDiscountElement = document.getElementById('totalDiscount');
-          totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
-  
+          console.log('2');
+
+          // const totalDiscountElement = document.getElementById('totalDiscount');
+          // totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
+          console.log('3');
+
           await Swal.fire({
             icon: "success",
             title: "Coupon has been applied",
             showConfirmButton: false,
             timer: 1500,
           });
+          console.log('3');
+
+
         } else if (couponExpired) {
           // If the coupon is expired, show an error message
           await Swal.fire({
@@ -695,7 +706,7 @@
       }
     }
   </script>
-  
+
 
 
 
