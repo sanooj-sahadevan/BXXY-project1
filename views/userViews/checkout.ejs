@@ -468,9 +468,10 @@
 
                       <div class="card-paynemt-box payment-method">
                         <label class="radio-inline" for="CashOnDelivery" aria-controls="CashOnDeliveryCollapse">
-                          <input name="radios" id="COD" value="COD" type="radio" checked>Cash On Delivery
+                          <input name="radios" id="COD" value="COD" type="radio" >Cash On Delivery
                         </label>
                       </div>
+                      <div id="codMessage" style="display: none;">Above 4000, no COD we provide</div>
 
 
 
@@ -500,10 +501,7 @@
 
 
             </tr>
-            <!-- <button type="submit" id="orderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
-                <span class="btn-text">Place Order</span>
-                <span class="btn-hover-text">Proceed to Checkout</span>
-              </button> -->
+
 
         </div>
         <!-- End .summary -->
@@ -542,9 +540,12 @@
 
 
     if ('<%= grandTotal %>' >= 4000) {
-      CODElement.disabled = true;
-      CODElement.parentElement.style.display = 'none';
-    }
+  CODElement.disabled = true;
+  CODElement.parentElement.style.display = 'none';
+  document.getElementById('codMessage').style.display = 'block';
+}
+
+
 
     orderBtnElement.addEventListener('click', orderBtnClickFunction);
     console.log('a');
@@ -574,12 +575,18 @@
             window.location.href = '/checkout/orderPlacedEnd'
           }
         } else if (razorpayElement.checked) {
-          console.log('razz');
           const orderResponse = await fetch('/checkout/razorpay/create/orderId', { method: 'POST' });
           const order = await orderResponse.json();
           console.log(order.amount);
           await openRazorpay(order.amount, order.id);
-        } console.log('ww');
+        }
+        else{
+          return Swal.fire({
+              icon: "error",
+              title: "Choose any payment method",
+              text: "Plaese choose any Payment method"
+            });
+        } 
       } catch (error) {
         console.error(error);
       }

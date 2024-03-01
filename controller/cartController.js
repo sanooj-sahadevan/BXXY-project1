@@ -304,7 +304,7 @@ const orderPlacedEnd = async (req, res) => {
   if (orderData.paymentType === "toBeChosen") {
     console.log("tobechosen");
     await orderCollection.findByIdAndUpdate(orderData._id, {
-      $set: { paymentType: "COD" },
+      $set: { paymentType: "Wallet" },
     });
   }
 
